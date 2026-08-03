@@ -1,0 +1,48 @@
+// ============================================================
+// Abbos — minimal base layer (opt-in resets + body defaults)
+// Kept intentionally light so it composes with host apps.
+// ============================================================
+@mixin base {
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    background: var(--ab-bg);
+    color: var(--ab-text);
+    font: var(--ab-text-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a {
+    color: var(--ab-primary);
+    text-decoration: none;
+    transition: color var(--ab-dur-fast) var(--ab-ease-standard);
+  }
+
+  a:hover {
+    color: var(--ab-primary-hover);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--ab-primary-soft);
+    color: var(--ab-text);
+  }
+
+  code,
+  kbd,
+  samp {
+    font-family: var(--ab-font-mono);
+    font-size: 0.9em;
+  }
+}

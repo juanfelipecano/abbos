@@ -1,0 +1,30 @@
+// ============================================================
+// Abbos — Elevation (shadow) & motion tokens
+// Soft, low-contrast shadows in the minimalist spirit.
+// ============================================================
+@mixin light {
+  --ab-shadow-xs: 0 1px 2px rgba(23, 28, 34, 0.06);
+  --ab-shadow-sm: 0 1px 2px rgba(23, 28, 34, 0.06), 0 2px 6px rgba(23, 28, 34, 0.05);
+  --ab-shadow-md: 0 4px 12px rgba(23, 28, 34, 0.08), 0 1px 3px rgba(23, 28, 34, 0.05);
+  --ab-shadow-lg: 0 12px 28px rgba(23, 28, 34, 0.12), 0 2px 6px rgba(23, 28, 34, 0.06);
+  --ab-shadow-xl: 0 24px 48px rgba(23, 28, 34, 0.16);
+}
+
+@mixin dark {
+  --ab-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ab-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 2px 6px rgba(0, 0, 0, 0.35);
+  --ab-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --ab-shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.45);
+  --ab-shadow-xl: 0 24px 48px rgba(0, 0, 0, 0.7);
+}
+
+@mixin motion {
+  --ab-ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ab-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ab-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ab-dur-fast: 120ms;
+  --ab-dur-normal: 200ms;
+  --ab-dur-slow: 320ms;
+
+  --ab-focus-ring: 0 0 0 3px var(--ab-ring);
+}

@@ -1,0 +1,58 @@
+// ============================================================
+// Abbos — Typography tokens
+// Public Sans for UI + headings; JetBrains Mono for code/tokens.
+// ============================================================
+@mixin typography {
+  // families
+  --ab-font-sans:
+    'Public Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+    sans-serif;
+  --ab-font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  // weights
+  --ab-fw-light: 300;
+  --ab-fw-regular: 400;
+  --ab-fw-medium: 500;
+  --ab-fw-semibold: 600;
+  --ab-fw-bold: 700;
+  --ab-fw-extra: 800;
+
+  // type scale (rem, 16px base) — minor-third-ish, tuned for UI
+  --ab-fs-11: 0.6875rem; // 11px  micro / captions
+  --ab-fs-12: 0.75rem; // 12px  labels
+  --ab-fs-13: 0.8125rem; // 13px  small body
+  --ab-fs-14: 0.875rem; // 14px  body (default UI)
+  --ab-fs-16: 1rem; // 16px  body large
+  --ab-fs-18: 1.125rem; // 18px  subtitle
+  --ab-fs-20: 1.25rem; // 20px  h6
+  --ab-fs-24: 1.5rem; // 24px  h5
+  --ab-fs-30: 1.875rem; // 30px  h4
+  --ab-fs-38: 2.375rem; // 38px  h3
+  --ab-fs-48: 3rem; // 48px  h2
+  --ab-fs-64: 4rem; // 64px  h1 / display
+
+  // line heights
+  --ab-lh-tight: 1.1;
+  --ab-lh-snug: 1.25;
+  --ab-lh-normal: 1.5;
+  --ab-lh-relaxed: 1.7;
+
+  // letter spacing
+  --ab-ls-tight: -0.02em;
+  --ab-ls-snug: -0.01em;
+  --ab-ls-normal: 0;
+  --ab-ls-wide: 0.04em;
+
+  // semantic roles (font shorthand values)
+  --ab-text-display: var(--ab-fw-extra) var(--ab-fs-64) / var(--ab-lh-tight) var(--ab-font-sans);
+  --ab-text-h1: var(--ab-fw-bold) var(--ab-fs-48) / var(--ab-lh-tight) var(--ab-font-sans);
+  --ab-text-h2: var(--ab-fw-bold) var(--ab-fs-38) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-h3: var(--ab-fw-semibold) var(--ab-fs-30) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-h4: var(--ab-fw-semibold) var(--ab-fs-24) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-h5: var(--ab-fw-semibold) var(--ab-fs-20) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-body: var(--ab-fw-regular) var(--ab-fs-14) / var(--ab-lh-normal) var(--ab-font-sans);
+  --ab-text-body-lg: var(--ab-fw-regular) var(--ab-fs-16) / var(--ab-lh-normal) var(--ab-font-sans);
+  --ab-text-label: var(--ab-fw-semibold) var(--ab-fs-13) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-caption: var(--ab-fw-regular) var(--ab-fs-12) / var(--ab-lh-snug) var(--ab-font-sans);
+  --ab-text-code: var(--ab-fw-regular) var(--ab-fs-13) / var(--ab-lh-normal) var(--ab-font-mono);
+}

@@ -1,0 +1,45 @@
+// ============================================================
+// Abbos — core Sass API
+// `core` emits every design token as --ab-* custom properties:
+//   :root                  -> palette + light semantic tokens
+//   [data-ab-theme='dark'] -> dark remap of the semantic layer
+//   [data-ab-accent='…']   -> alternate accent themes
+// `custom-theme` lets consumers build their own theme by emitting
+// an arbitrary map of token overrides under their own selector.
+// ============================================================
+@use 'tokens/colors';
+@use 'tokens/typography';
+@use 'tokens/spacing';
+@use 'tokens/radius';
+@use 'tokens/shadows';
+@use 'tokens/accents';
+
+@mixin core {
+  :root {
+    @include colors.palette;
+    @include colors.light;
+    @include typography.typography;
+    @include spacing.spacing;
+    @include radius.radius;
+    @include shadows.light;
+    @include shadows.motion;
+  }
+
+  [data-ab-theme='dark'] {
+    @include colors.dark;
+    @include shadows.dark;
+  }
+
+  @include accents.accents;
+}
+
+/// Emits a flat map as --ab-* custom properties under the current selector.
+/// Keys are token names WITHOUT the --ab- prefix, e.g.
+///   [data-ab-accent='ocean'] {
+///     @include ab.custom-theme((primary: #0e7490, primary-hover: #155e75));
+///   }
+@mixin custom-theme($tokens) {
+  @each $name, $value in $tokens {
+    --ab-#{$name}: #{$value};
+  }
+}

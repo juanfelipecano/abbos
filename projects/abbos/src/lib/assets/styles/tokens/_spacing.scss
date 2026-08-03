@@ -1,0 +1,27 @@
+// ============================================================
+// Abbos — Spacing scale (4px base grid)
+// ============================================================
+@mixin spacing {
+  --ab-space-0: 0;
+  --ab-space-1: 0.25rem; // 4
+  --ab-space-2: 0.5rem; // 8
+  --ab-space-3: 0.75rem; // 12
+  --ab-space-4: 1rem; // 16
+  --ab-space-5: 1.25rem; // 20
+  --ab-space-6: 1.5rem; // 24
+  --ab-space-8: 2rem; // 32
+  --ab-space-10: 2.5rem; // 40
+  --ab-space-12: 3rem; // 48
+  --ab-space-16: 4rem; // 64
+  --ab-space-20: 5rem; // 80
+  --ab-space-24: 6rem; // 96
+
+  // component control heights
+  --ab-control-h-sm: 32px;
+  --ab-control-h-md: 40px;
+  --ab-control-h-lg: 48px;
+
+  // layout
+  --ab-container-max: 1200px;
+  --ab-gutter: var(--ab-space-6);
+}

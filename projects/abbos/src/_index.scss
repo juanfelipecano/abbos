@@ -1,0 +1,11 @@
+// ============================================================
+// Abbos Design System — public Sass API.
+// Consumers: @use '@juanbetancur/abbos' as abbos;
+//   @include abbos.fonts;  // top of the file, before any rules (optional)
+//   @include abbos.core;   // all --ab-* tokens + dark theme + accents
+//   @include abbos.base;   // opt-in body/reset defaults
+//   .my-theme { @include abbos.custom-theme((primary: #0e7490)); }
+// ============================================================
+@forward './lib/assets/styles/core' show core, custom-theme;
+@forward './lib/assets/styles/base' show base;
+@forward './lib/assets/styles/fonts' show fonts;

@@ -1,0 +1,22 @@
+// ============================================================
+// Abbos — Radius & shape tokens
+// --ab-radius is the default (8px). The component "shape" input maps:
+//   square -> --ab-radius-none, round -> --ab-radius-control, circle -> --ab-radius-full
+// ============================================================
+@mixin radius {
+  --ab-radius-none: 0px;
+  --ab-radius-xs: 4px;
+  --ab-radius-sm: 6px;
+  --ab-radius-md: 8px; // default
+  --ab-radius-lg: 12px;
+  --ab-radius-xl: 16px;
+  --ab-radius-2xl: 24px;
+  --ab-radius-full: 9999px;
+
+  --ab-radius: var(--ab-radius-md);
+
+  // semantic shape aliases per surface
+  --ab-radius-control: var(--ab-radius-md);
+  --ab-radius-card: var(--ab-radius-lg);
+  --ab-radius-pill: var(--ab-radius-full);
+}

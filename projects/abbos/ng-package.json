@@ -3,5 +3,12 @@
   "dest": "../../dist/abbos",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    {
+      "input": "./src",
+      "glob": "**/*.scss",
+      "output": "."
+    }
+  ]
 }

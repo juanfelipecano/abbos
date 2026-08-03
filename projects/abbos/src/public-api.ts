@@ -1,5 +1,4 @@
 /*
  * Public API Surface of abbos
  */
-
-export * from './lib/abbos';
+export * from './lib/services';

@@ -1,0 +1,8 @@
+// Abbos webfonts — Public Sans (UI + display) and JetBrains Mono (code/tokens).
+// Loaded from Google Fonts. Include this mixin at the VERY TOP of your global
+// stylesheet (CSS requires @import before all other rules), or skip it and add
+// the equivalent <link> tags to index.html. If you ship self-hosted binaries,
+// replace this with local @font-face rules pointing at the files.
+@mixin fonts {
+  @import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+}
