@@ -1,0 +1,90 @@
+:host {
+    --background: var(--ab-surface);
+    --background-transition: var(--ab-dur-fast) var(--ab-ease-standard);
+    --color: var(--ab-text);
+    --placeholder-color: var(--ab-text-secondary);
+
+    &.ab-input {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        font: var(--ab-text-body);
+        color: var(--color);
+        background-color: var(--background);
+        border: 1px solid var(--ab-border);
+        transition:
+            border-color var(--ab-dur-fast) var(--ab-ease-standard),
+            box-shadow var(--ab-dur-fast) var(--ab-ease-standard),
+            background-color var(--background-transition);
+
+        &::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        &:hover:not(:disabled) {
+            border-color: var(--ab-border-strong);
+        }
+
+        &:focus-visible {
+            outline: none;
+            border-color: var(--ab-border-focus);
+            box-shadow: var(--ab-focus-ring);
+        }
+
+        &:disabled {
+            background-color: var(--ab-surface-2);
+            color: var(--ab-text-disabled);
+            cursor: not-allowed;
+        }
+
+        &:read-only:not(:disabled) {
+            background-color: var(--ab-surface-2);
+            cursor: default;
+        }
+
+        // invalid — Angular's forms module applies these classes automatically,
+        // no code required in AbInput (see ADR-0001)
+        &_invalid,
+        &.ng-invalid.ng-touched {
+            border-color: var(--ab-danger);
+
+            &:focus-visible {
+                border-color: var(--ab-danger);
+                box-shadow: 0 0 0 3px color-mix(in srgb, var(--ab-danger) 35%, transparent);
+            }
+        }
+
+        // size
+        &_sm {
+            height: var(--ab-control-h-sm);
+            padding-inline: var(--ab-space-2);
+            font-size: var(--ab-fs-13);
+        }
+
+        &_md {
+            height: var(--ab-control-h-md);
+            padding-inline: var(--ab-space-3);
+            font-size: var(--ab-fs-14);
+        }
+
+        &_lg {
+            height: var(--ab-control-h-lg);
+            padding-inline: var(--ab-space-4);
+            font-size: var(--ab-fs-16);
+        }
+
+        // shape
+        &_square {
+            border-radius: var(--ab-radius-none);
+        }
+
+        &_circle {
+            border-radius: var(--ab-radius-full);
+        }
+
+        &_round {
+            border-radius: var(--ab-radius-control);
+        }
+    }
+}
