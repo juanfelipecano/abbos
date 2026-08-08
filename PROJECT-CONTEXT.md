@@ -6,7 +6,8 @@
 
 - **Project**: Abbos
 - **What it does**: An Angular component library (design system, in the spirit of PrimeNG) — buttons, inputs, theming services, and design tokens as CSS custom properties — published as `@juanbetancur/abbos`, with a `playground` Angular app that hosts and demos the components as they're built.
-- **Stage**: prototype — only the theming service, config, and constants exist so far; no components (`AbButton`, `AbInput`, etc.) are implemented yet.
+- **Stage**: prototype — the theming service, config, constants, `AbInput`, `AbButton`, and
+  `AbSwitch` exist so far; `AbIconButton` is not implemented yet.
 - **Users**: internal — the maintainer(s) of apps that consume `@juanbetancur/abbos` via yalc/npm.
 
 ## Stack
@@ -121,7 +122,9 @@ Things that must not change without human approval. Roles treat these as read-on
 | Area | Issue | Do instead |
 |---|---|---|
 | `projects/abbos/README.md` | Says tests run via Karma | They run via Vitest (`@angular/build:unit-test`) — trust `CLAUDE.md`/this file, not that README |
-| Components | `AbButton`, `AbIconButton`, `AbSwitch` described in `CLAUDE.md` do not exist in `src/lib/` yet — `AbInput` now does (`input[ab-input]`, see `specs/ab-input/`) | Treat the remaining three as roadmap, not current API; verify against `public-api.ts` before assuming a component exists |
+| Components | `AbIconButton` described in `CLAUDE.md` does not exist in `src/lib/` yet — `AbInput` (`input[ab-input]`, see `specs/ab-input/`), `AbButton` (`button[ab-button]`, see `specs/ab-button/`), and `AbSwitch` (`ab-switch`, see `specs/ab-switch/`) now do | Treat `AbIconButton` as roadmap, not current API; verify against `public-api.ts` before assuming a component exists |
+| Public TS surface | `AbControlShape`/`AbControlSize` (`src/lib/constants/`) are not re-exported from `public-api.ts`, and no component re-exports them locally either (unlike `AbButtonVariant`, which `button.ts` defines and exports) — confirmed 2026-08-05 while building `AbSwitch`'s playground demo (`ng build playground` failed with `TS2459` on `import { AbControlShape, AbControlSize } from 'abbos'`) | A consumer/demo that needs to type a `size`/`shape` value externally must use an inline literal union or `as const`, not import the shared type — until someone deliberately re-exports `./lib/constants` from `public-api.ts` |
+| `AbInput` test suite | `input.spec.ts` currently fails all 12 of its tests (confirmed 2026-08-05, `ng test abbos --watch=false`) — not the "7 of 12, data-attribute mismatch" `specs/ab-input/spec.md` documents. Root cause: `input.ts` injects `CONTROL_SIZE`/`CONTROL_SHAPE` with no default, and `input.spec.ts`'s `TestBed.configureTestingModule` calls supply no provider for either token, so every test throws `NG0201` before its assertions run | Add `{ provide: CONTROL_SIZE, useValue: 'md' }, { provide: CONTROL_SHAPE, useValue: 'round' }` to `input.spec.ts`'s `TestBed` configs (the pattern `button.spec.ts` now uses) — out of scope for the `ab-button` run that found it, see `BACKLOG.md` |
 | CI | No CI/CD pipeline configured | Run the verify command locally before every commit |
 
 ## Documentation map

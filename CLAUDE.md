@@ -13,7 +13,35 @@ The library implements the **Abbos Design System** (design source of truth: the 
 
 - **Tokens**: SCSS partials under `projects/abbos/src/lib/styles/tokens/` emit CSS custom properties, all prefixed `--ab-` (e.g. `--ab-primary`, `--ab-space-4`, `--ab-radius-control`). Components consume only semantic tokens (`var(--ab-*)`), never raw values.
 - **Theming**: dark mode keys off `[data-ab-theme='dark']`, alternate accents (indigo/blue/amber/mono; emerald is the default) off `[data-ab-accent='…']` — both on `<html>`, managed by `AbThemeService` (signal-based; also supports runtime token overrides via `setCustomTokens`). The Sass API (`_index.scss`) exposes the `core` (all tokens), `base`, `fonts`, and `custom-theme($map)` mixins.
-- **Components**: `AbButton` (`button[ab-button]`), `AbIconButton` (`button[ab-icon-button]`, requires `label`), `AbInput` (`input[ab-input]` — a template-less `Directive`, not a `Component`, since a native `<input>` can't have its own view; renders no label and takes no `ControlValueAccessor`, relying entirely on Angular's own `DefaultValueAccessor`, see ADR-0001), `AbSwitch` (`ab-switch`, `[(checked)]` model + ControlValueAccessor). Shared vocabulary: `variant` (not yet defined for `AbInput` — see `specs/ab-input/spec.md` Open questions), `size` (sm/md/lg), `shape` (square/round/circle). Variant/size/shape are reflected as `data-*` attributes on the host; for `AbInput` they're styled via a global Sass partial (`components/form/input/_input.scss`, aggregated into `_index.scss`'s `components` mixin), not `:host([data-…])`, since a Directive has no `styleUrl`. Icons/adornments via projected `abStart`/`abEnd` are aspirational roadmap text, not implemented by `AbInput` — that would be a different, wrapper-based component.
+- **Components**: `AbButton` (`button[ab-button]`, implemented — a `@Component` with a real
+  template: projected label content plus `abStart`/`abEnd` icon slots and a conditional
+  loading spinner; variant `'primary' | 'secondary' | 'soft' | 'outline' | 'ghost' | 'danger'`
+  (default `'primary'`), `size`/`shape` default from the injected `CONTROL_SIZE`/
+  `CONTROL_SHAPE` tokens, all three reflected as `ab-button_{value}` host classes nested
+  under `:host` in `button.scss` — not `data-*` attributes; see
+  `docs/architecture/adr/0002-abbutton-component-with-content-projection.md`), `AbIconButton`
+  (`button[ab-icon-button]`, requires `label`, not yet implemented), `AbInput`
+  (`input[ab-input]` — a `@Component` with an intentionally empty template (not a
+  `Directive`), since a native `<input>` can't have its own view; renders no label and takes
+  no `ControlValueAccessor`, relying entirely on Angular's own `DefaultValueAccessor`, see
+  ADR-0001's 2026-08-04 amendment), `AbSwitch` (`ab-switch`, implemented — a `@Component`
+  wrapping a `<label>` + native `<button type="button" role="switch">` + decorative knob
+  (native keyboard/focus semantics, no hand-built keydown handling); `checked` is a
+  `model<boolean>(false)`, the single source of truth for both `[(checked)]` two-way binding
+  and a real `ControlValueAccessor` (`formControlName`/`[formControl]`/`[(ngModel)]`);
+  `size`/`shape` default from the injected `CONTROL_SIZE`/`CONTROL_SHAPE` tokens, both
+  reflected as `ab-switch_{value}` host classes nested under `:host` in `switch.scss`;
+  `disabled` input and forms' `setDisabledState` combine (either can disable); optional
+  `ariaLabel` passes through to the inner button for icon-only/label-elsewhere usage — see
+  `docs/architecture/adr/0003-abswitch-synthetic-control-with-cva.md`). Shared vocabulary:
+  `variant` (defined for `AbButton`; still not defined for `AbInput` — see
+  `specs/ab-input/spec.md` Open questions), `size` (sm/md/lg), `shape` (square/round/circle,
+  though `AbSwitch`'s shared `'round'` default does not read as a full-pill switch shape —
+  only `'circle'` does, see `architecture-ab-switch.md`'s Trade-offs). Variant/size/shape are
+  reflected as `ab-{component}_{value}` BEM-style host classes nested under `:host` in each
+  component's own `styleUrl`, not `data-*` attributes nor a global Sass partial. Icons/
+  adornments via projected `abStart`/`abEnd` are implemented by `AbButton`; `AbInput` still
+  renders no adornments (a native `<input>` can't host projected content at all).
 
 The root `tsconfig.json` is a solution-style config with no direct compiler files; each project has its own `tsconfig.lib.json` / `tsconfig.lib.prod.json` / `tsconfig.spec.json` (library) or `tsconfig.app.json` / `tsconfig.spec.json` (app) extending it.
 

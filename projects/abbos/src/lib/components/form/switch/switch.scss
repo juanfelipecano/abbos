@@ -1,0 +1,92 @@
+:host {
+    --_track-w: 40px;
+    --_track-h: 22px;
+    --_knob: 18px;
+    --_pad: calc((var(--_track-h) - var(--_knob)) / 2);
+    --_radius: var(--ab-radius-control);
+
+    display: inline-flex;
+
+    &.ab-switch_sm {
+        --_track-w: 32px;
+        --_track-h: 18px;
+        --_knob: 14px;
+    }
+
+    &.ab-switch_lg {
+        --_track-w: 50px;
+        --_track-h: 28px;
+        --_knob: 23px;
+    }
+
+    &.ab-switch_square {
+        --_radius: var(--ab-radius-none);
+    }
+
+    &.ab-switch_circle {
+        --_radius: var(--ab-radius-full);
+    }
+
+    label {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ab-space-3);
+        font: var(--ab-text-body);
+        color: var(--ab-text);
+        cursor: pointer;
+    }
+
+    &.ab-switch_disabled label {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    button {
+        position: relative;
+        flex: none;
+        width: var(--_track-w);
+        height: var(--_track-h);
+        padding: 0;
+        border: none;
+        border-radius: var(--_radius);
+        background: var(--ab-border-strong);
+        cursor: pointer;
+        outline: none;
+        transition:
+            background var(--ab-dur-normal) var(--ab-ease-standard),
+            box-shadow var(--ab-dur-fast) var(--ab-ease-standard);
+
+        &[aria-checked='true'] {
+            background: var(--ab-primary);
+        }
+
+        &:focus-visible {
+            box-shadow: var(--ab-focus-ring);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+    }
+
+    .ab-switch-knob {
+        position: absolute;
+        top: var(--_pad);
+        left: var(--_pad);
+        width: var(--_knob);
+        height: var(--_knob);
+        border-radius: var(--ab-radius-full);
+        background: var(--ab-surface);
+        box-shadow: var(--ab-shadow-sm);
+        transition: left var(--ab-dur-normal) var(--ab-ease-out);
+    }
+
+    button[aria-checked='true'] .ab-switch-knob {
+        left: calc(100% - var(--_knob) - var(--_pad));
+    }
+
+    .ab-switch-label:empty {
+        display: none;
+    }
+}
