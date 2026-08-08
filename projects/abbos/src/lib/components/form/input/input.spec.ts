@@ -1,8 +1,17 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
 import { AbControlShape, AbControlSize } from '../../../constants';
 import { AbInput } from './input';
+
+// AbInput injects CONTROL_SIZE/CONTROL_SHAPE with no default provider of its own — every
+// TestBed module that constructs it must supply one, the same way `provideAbbos()` does at
+// application bootstrap (same pattern `button.spec.ts` uses).
+const CONTROL_TOKEN_PROVIDERS = [
+    { provide: CONTROL_SIZE, useValue: 'md' },
+    { provide: CONTROL_SHAPE, useValue: 'round' },
+];
 
 @Component({
     imports: [AbInput],
@@ -25,6 +34,7 @@ describe('AbInput', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [TestHost],
+            providers: CONTROL_TOKEN_PROVIDERS,
         }).compileComponents();
 
         fixture = TestBed.createComponent(TestHost);
@@ -41,10 +51,10 @@ describe('AbInput', () => {
         expect(input?.children.length).toBe(0);
     });
 
-    it('defaults size to md and shape to round', () => {
+    it('defaults size to md and shape to round (from the injected CONTROL_SIZE/CONTROL_SHAPE tokens)', () => {
         const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
-        expect(input.getAttribute('data-size')).toBe('md');
-        expect(input.getAttribute('data-shape')).toBe('round');
+        expect(input.classList.contains('ab-input_md')).toBe(true);
+        expect(input.classList.contains('ab-input_round')).toBe(true);
     });
 });
 
@@ -55,6 +65,7 @@ describe('AbInput size/shape', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [ConfigurableTestHost],
+            providers: CONTROL_TOKEN_PROVIDERS,
         }).compileComponents();
 
         fixture = TestBed.createComponent(ConfigurableTestHost);
@@ -63,25 +74,25 @@ describe('AbInput size/shape', () => {
 
     const sizes: AbControlSize[] = ['sm', 'md', 'lg'];
     for (const size of sizes) {
-        it(`reflects size="${size}" as data-size`, async () => {
+        it(`reflects size="${size}" as ab-input_${size}`, async () => {
             component.size = size;
             fixture.detectChanges();
             await fixture.whenStable();
 
             const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
-            expect(input.getAttribute('data-size')).toBe(size);
+            expect(input.classList.contains(`ab-input_${size}`)).toBe(true);
         });
     }
 
     const shapes: AbControlShape[] = ['square', 'round', 'circle'];
     for (const shape of shapes) {
-        it(`reflects shape="${shape}" as data-shape`, async () => {
+        it(`reflects shape="${shape}" as ab-input_${shape}`, async () => {
             component.shape = shape;
             fixture.detectChanges();
             await fixture.whenStable();
 
             const input: HTMLInputElement = fixture.nativeElement.querySelector('input');
-            expect(input.getAttribute('data-shape')).toBe(shape);
+            expect(input.classList.contains(`ab-input_${shape}`)).toBe(true);
         });
     }
 });
@@ -106,6 +117,13 @@ class NgModelTestHost {
 }
 
 describe('AbInput forms integration', () => {
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ReactiveFormTestHost, NgModelTestHost],
+            providers: CONTROL_TOKEN_PROVIDERS,
+        }).compileComponents();
+    });
+
     it('writes the FormControl value to the native input (formControl)', async () => {
         const fixture = TestBed.createComponent(ReactiveFormTestHost);
         fixture.componentInstance.control.setValue('hello');

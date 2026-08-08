@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CONTROL_SHAPE, CONTROL_SIZE } from '../../config';
-import { AbControlShape, AbControlSize } from '../../constants';
+import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
+import { AbControlShape, AbControlSize } from '../../../constants';
 import { AbSwitch } from './switch';
 
 // AbSwitch injects CONTROL_SIZE/CONTROL_SHAPE with no default provider of its own — every
