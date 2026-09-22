@@ -68,7 +68,7 @@ Findings discovered during AIDD runs that are out of scope for the run that foun
   to `input.spec.ts`'s `TestBed` configs — `button.spec.ts` already does this and its
   20-test suite is fully green.
 
-## From architecture (`docs/architecture/architecture.md`)
+## From architecture (`/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Architecture/AbInput Architecture.md`)
 
 - **`CONTROL_SIZE`/`CONTROL_SHAPE` DI tokens** (`src/lib/config/tokens.ts`) remain unused.
   They imply a parent (e.g. a future form-field wrapper) broadcasting size/shape defaults to
@@ -84,7 +84,7 @@ Findings discovered during AIDD runs that are out of scope for the run that foun
   the library-wide `AbControlShape` (square/round/circle) for `AbSwitch`'s track means the
   design-system-wide default (`'round'` → `--ab-radius-control`, 8px) renders as a rounded
   rectangle, not the conventional full-pill toggle shape — only `shape="circle"` produces
-  that. Recorded as an accepted trade-off in `docs/architecture/architecture-ab-switch.md`
+  that. Recorded as an accepted trade-off in `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Architecture/AbSwitch Architecture.md`
   ("Decision — `shape` included, mapped to track border-radius") rather than solved by
   guessing at a better default. Worth a design review: either change `provideAbbos`'s
   default `controlShape` globally, or give `AbSwitch` its own component-local default-shape

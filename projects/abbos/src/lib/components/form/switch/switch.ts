@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AbControlShape, AbControlSize } from '../../../constants';
-import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
+import { CONTROL_SIZE } from '../../../config';
 
 /**
  * Abbos Switch — a boolean toggle with an optional inline label. Renders a `<label>`
@@ -67,7 +67,7 @@ import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
 })
 export class AbSwitch implements ControlValueAccessor {
     private readonly _defaultSize = inject(CONTROL_SIZE);
-    private readonly _defaultShape = inject(CONTROL_SHAPE);
+    private readonly _defaultShape: AbControlShape = 'circle';
 
     /** On/off state. Supports `[(checked)]` and is written by `ControlValueAccessor`. */
     public readonly checked = model(false);

@@ -7,7 +7,7 @@ Status: closed, amended 2026-08-04 — see "Amendment (2026-08-04)" below. Sever
 Owner: aidd-architect (base) + aidd-security + aidd-qa (appended) — no aidd-frontend role
        available as a separate pass in this session; a11y criteria appended by aidd-architect
        under the AC-U prefix, same rigor the frontend role would apply (Article IX).
-Sources: docs/architecture/architecture.md, docs/architecture/adr/0001-abinput-directive-no-custom-cva.md
+Sources: /Users/juano/Docs/Projects/Apollo/Projects/Abbos/Architecture/AbInput Architecture.md, /Users/juano/Docs/Projects/Apollo/Projects/Abbos/Decisions/ADR-0001 AbInput as component without custom CVA.md
 
 ## Current state
 

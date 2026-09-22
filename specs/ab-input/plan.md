@@ -172,7 +172,7 @@ explicit direction) after this plan's Status was already `DONE`:
    `&.ab-input_sm`, …), which compiles against `_nghost-*` instead — the attribute the host
    element actually carries. See ADR-0001's 2026-08-04 amendment for the full mechanism.
 
-This plan, `spec.md`, and `docs/architecture/adr/0001-abinput-directive-no-custom-cva.md` have
+This plan, `spec.md`, and `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Decisions/ADR-0001 AbInput as component without custom CVA.md` have
 been updated in place (tasks 1, 3, 4, 5, 9, 10, and the criteria coverage table above) to
 describe what actually shipped. One item remains open and is **not** resolved by this amendment:
 `input.spec.ts` still asserts `data-size`/`data-shape` attributes (AC-F3/AC-F4's original

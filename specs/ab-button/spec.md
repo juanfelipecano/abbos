@@ -6,8 +6,8 @@ Status: closed 2026-08-05. All 22 criteria met and verified; see plan.md's Crite
 Owner: aidd-architect (base, AC-F) + aidd-frontend (AC-U) + aidd-security (AC-S) +
        aidd-qa (AC-Q) — all four passes done in this session per Article XI's rigor, no
        separate agent invocation this run (same convention `specs/ab-input/spec.md` used).
-Sources: `docs/architecture/architecture-ab-button.md`,
-         `docs/architecture/adr/0002-abbutton-component-with-content-projection.md`,
+Sources: `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Architecture/AbButton Architecture.md`,
+         `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Decisions/ADR-0002 AbButton with content projection.md`,
          reference implementation at `/Users/juano/Docs/Projects/abbos.old/projects/abbos/src/lib/old/button/`
          (prior iteration of this library, same author — see architecture doc's Context)
 
@@ -192,8 +192,8 @@ architecture doc for the full design and the rationale behind every decision bel
 | `projects/abbos/src/lib/components/index.ts` | Barrel: add `AbButton` re-export | Modified |
 | `projects/playground/src/app/pages/button-demo/button-demo.ts` | Demo route (`/button`) rendering `AbButton` across variant/size/shape/icon/loading/disabled combinations | New |
 | `projects/playground/src/app/app.routes.ts` | Registers the `/button` lazy route | Modified |
-| `docs/architecture/architecture-ab-button.md` | Architecture doc for this run | New |
-| `docs/architecture/adr/0002-abbutton-component-with-content-projection.md` | ADR | New |
+| `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Architecture/AbButton Architecture.md` | Architecture doc for this run | New |
+| `/Users/juano/Docs/Projects/Apollo/Projects/Abbos/Decisions/ADR-0002 AbButton with content projection.md` | ADR | New |
 | `CLAUDE.md` | `AbButton` bullet updated with concrete variant enumeration + confirmed pattern | Modified |
 | `PROJECT-CONTEXT.md` | "Known debt" Components row updated (`AbButton` now exists) | Modified |
 | `BACKLOG.md` | Append: `fullWidth` deferral, `data-*`-vs-class follow-up note, `AbIconButton` still unbuilt | Modified |

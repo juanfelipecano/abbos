@@ -34,7 +34,9 @@ ng test playground           # playground tests only
 npx prettier --check .      # lint/format check (source of truth over .editorconfig on conflicts)
 npx prettier --write .      # fix formatting
 
-ng build                    # production build of playground (default project)
+ng build playground         # production build of playground
+                             # (bare `ng build` errors: no defaultProject configured
+                             #  in angular.json, so the project must be named explicitly)
 ```
 
 **Verify command** (gates a commit): `npx prettier --check . && ng build abbos && ng test`.
@@ -92,8 +94,8 @@ their `size`/`shape` defaults (`round`/`md` unless overridden).
 Each control lives under `lib/components/**` with a co-located `.ts` + `.scss` (+ `.spec.ts`).
 `size`/`shape`/state are reflected as `ab-{component}_{value}` BEM-style classes in the
 component's `host` object — not `data-*` attributes, despite what some older docs/ADRs say
-(`docs/architecture/architecture.md`'s original design predates this and is stale on this
-point; trust the component source and `PROJECT-CONTEXT.md`).
+(the original design in the vault's `AbInput Architecture` note predates this and is stale on
+this point; trust the component source and `PROJECT-CONTEXT.md`).
 
 - **`AbButton`** (`button[ab-button]`) — a `@Component` with a real template: projected label
   plus `abStart`/`abEnd` icon slots and a conditional loading spinner. `variant` is
@@ -133,14 +135,22 @@ propagate into a child's signal `input()` on a second `detectChanges()`, prefer
 
 ## AIDD workflow
 
-This repo uses an AI-Driven Development method installed at `.claude/skills/aidd/`
-(its own nested git repo — a submodule-like checkout, not part of this repo's history).
-`CONSTITUTION.md` (non-negotiable articles: spec-before-code, evidence-before-done,
-minimum-diff, frozen scope, explicit unknowns) and `PIPELINE.md` govern any non-trivial
-feature work; role-specific skills live in `aidd-*/SKILL.md` subdirectories. Feature specs
-and plans live in `specs/<feature>/{spec,plan}.md`; the currently active feature (if any) is
-named in `.aidd-active`. Findings frozen out of a run's scope go in `BACKLOG.md` rather than
-being silently fixed.
+This repo uses an AI-Driven Development method vendored at `.claude/skills/aidd/` — a plain
+copy of `/Users/juano/Docs/Projects/AIDD`, tracked in this repo's history, so method edits
+upstream must be re-synced deliberately. `CONSTITUTION.md` (non-negotiable articles:
+spec-before-code, evidence-before-done, minimum-diff, frozen scope, explicit unknowns) and
+`PIPELINE.md` govern any non-trivial feature work; role-specific skills live in
+`aidd-*/SKILL.md` subdirectories.
+
+**Where artifacts go** is decided by `PROJECT-CONTEXT.md`'s Documentation map, not by the
+`docs/…` defaults in the skills. Durable documentation — architecture, ADRs, feature notes,
+QA reports, retrospectives — lives in the Apollo Obsidian vault at
+`/Users/juano/Docs/Projects/Apollo/Projects/Abbos/`. Read
+`/Users/juano/Docs/Projects/Apollo/Meta/Vault conventions.md` before writing a note there.
+
+Loop state stays here: feature specs and plans in `specs/<feature>/{spec,plan}.md`, the active
+feature named in `.aidd-active`, and findings frozen out of a run's scope in `BACKLOG.md`
+rather than being silently fixed.
 
 ## Coding rules
 

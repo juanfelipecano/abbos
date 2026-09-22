@@ -41,7 +41,8 @@ ng build abbos   # ng-packagr / tsc surfaces type errors; there is no standalone
 
 # Build for production
 ng build abbos   # library, outputs to dist/abbos — build this BEFORE building/serving playground
-ng build         # playground app (default project), production config
+ng build playground # playground app, production config — bare `ng build` errors,
+                     # no defaultProject configured in angular.json
 
 # Run locally
 ng serve                 # serves playground only, against whatever is already in dist/abbos
@@ -124,18 +125,39 @@ Things that must not change without human approval. Roles treat these as read-on
 | `projects/abbos/README.md` | Says tests run via Karma | They run via Vitest (`@angular/build:unit-test`) — trust `CLAUDE.md`/this file, not that README |
 | Components | `AbIconButton` described in `CLAUDE.md` does not exist in `src/lib/` yet — `AbInput` (`input[ab-input]`, see `specs/ab-input/`), `AbButton` (`button[ab-button]`, see `specs/ab-button/`), and `AbSwitch` (`ab-switch`, see `specs/ab-switch/`) now do | Treat `AbIconButton` as roadmap, not current API; verify against `public-api.ts` before assuming a component exists |
 | Public TS surface | `AbControlShape`/`AbControlSize` (`src/lib/constants/`) are not re-exported from `public-api.ts`, and no component re-exports them locally either (unlike `AbButtonVariant`, which `button.ts` defines and exports) — confirmed 2026-08-05 while building `AbSwitch`'s playground demo (`ng build playground` failed with `TS2459` on `import { AbControlShape, AbControlSize } from 'abbos'`) | A consumer/demo that needs to type a `size`/`shape` value externally must use an inline literal union or `as const`, not import the shared type — until someone deliberately re-exports `./lib/constants` from `public-api.ts` |
-| `AbInput` test suite | `input.spec.ts` currently fails all 12 of its tests (confirmed 2026-08-05, `ng test abbos --watch=false`) — not the "7 of 12, data-attribute mismatch" `specs/ab-input/spec.md` documents. Root cause: `input.ts` injects `CONTROL_SIZE`/`CONTROL_SHAPE` with no default, and `input.spec.ts`'s `TestBed.configureTestingModule` calls supply no provider for either token, so every test throws `NG0201` before its assertions run | Add `{ provide: CONTROL_SIZE, useValue: 'md' }, { provide: CONTROL_SHAPE, useValue: 'round' }` to `input.spec.ts`'s `TestBed` configs (the pattern `button.spec.ts` now uses) — out of scope for the `ab-button` run that found it, see `BACKLOG.md` |
 | CI | No CI/CD pipeline configured | Run the verify command locally before every commit |
+| Workspace config | `angular.json` has no `defaultProject`, so bare `ng build`/`ng test` are ambiguous between `abbos`/`playground` for build (test runs both, sequentially) — confirmed 2026-08-08 | Always name the project explicitly for builds: `ng build abbos` / `ng build playground`; `CLAUDE.md`/this file now say so |
+| Verify command | `npx prettier --check . && ng build abbos && ng test` currently fails end-to-end — `npx prettier --check .` reports 161 files out of format, and bare `ng test` fails on `projects/playground/src/app/app.spec.ts` ("should render title") — confirmed 2026-08-08, not yet triaged | Run `npx prettier --write .` and fix `app.spec.ts`/`app.ts` before relying on the verify command as a gate; flagged, not fixed here — out of scope for this pass |
 
 ## Documentation map
 
-| Artifact | Location |
-|---|---|
-| Workspace/tooling guide | `CLAUDE.md` (repo root) |
-| Angular/TS coding rules | `.claude/CLAUDE.md` |
-| AIDD method | `.claude/skills/aidd/CONSTITUTION.md`, `.claude/skills/aidd/PIPELINE.md` |
-| Library usage (stale in places, see Known debt) | `projects/abbos/README.md` |
-| Specs | `specs/<feature>/spec.md` (e.g. `specs/ab-input/spec.md`) |
-| Active feature pointer | `.aidd-active` |
-| Plans | `specs/<feature>/plan.md` (e.g. `specs/ab-input/plan.md`) |
-| Backlog | `BACKLOG.md` |
+**This table is the address for every artifact the pipeline produces.** Role skills show
+`docs/…` defaults; this wins. Durable documentation lives in the Apollo Obsidian vault; the
+repo keeps loop state. Read `/Users/juano/Docs/Projects/Apollo/Meta/Vault conventions.md`
+before writing a note there — frontmatter, unique names, link it from `Abbos.md`.
+
+Vault root: `/Users/juano/Docs/Projects/Apollo` (an accessible working directory).
+
+| Artifact | Owner | Location |
+|---|---|---|
+| Project hub | — | `<vault>/Projects/Abbos/Abbos.md` |
+| Architecture | `aidd-architect` | `<vault>/Projects/Abbos/Architecture/<Subject> Architecture.md` |
+| ADRs | `aidd-architect` | `<vault>/Projects/Abbos/Decisions/ADR-NNNN <slug>.md` |
+| Feature notes | `aidd-architect` | `<vault>/Projects/Abbos/Features/<feature>.md` |
+| UX spec | `aidd-frontend` | `<vault>/Projects/Abbos/Architecture/<feature> UX Spec.md` |
+| Threat model | `aidd-security` | `<vault>/Projects/Abbos/Architecture/<feature> Threat Model.md` |
+| QA report | `aidd-qa` | `<vault>/Projects/Abbos/Runs/<feature> QA Iter-N.md` |
+| Retrospective | `aidd-orchestrator` | `<vault>/Projects/Abbos/Runs/<feature> Retrospective.md` |
+| Cross-project knowledge | anyone | `<vault>/Engineering/<area>/<title>.md` |
+| **Specs** | `aidd-planner` | `specs/<feature>/spec.md` — **stays in the repo** |
+| **Plans** | `aidd-planner` | `specs/<feature>/plan.md` — **stays in the repo** |
+| **Active feature pointer** | `aidd-implementer` | `.aidd-active` — **stays in the repo** |
+| **Backlog** | everyone | `BACKLOG.md` — **stays in the repo** |
+| Workspace/tooling guide | — | `CLAUDE.md` (repo root) |
+| Angular/TS coding rules | — | `.claude/CLAUDE.md` |
+| AIDD method | — | `.claude/skills/aidd/CONSTITUTION.md`, `.claude/skills/aidd/PIPELINE.md` |
+| Library usage (stale in places, see Known debt) | — | `projects/abbos/README.md` |
+
+Product brief and PRD: none. Abbos has never had an L3 run.
+
+No backend spec — there is no server side.
