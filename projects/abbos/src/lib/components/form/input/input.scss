@@ -88,3 +88,9 @@
         }
     }
 }
+
+@media (prefers-reduced-motion: reduce) {
+    :host.ab-input {
+        transition: none;
+    }
+}

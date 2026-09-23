@@ -1,15 +1,9 @@
 :host {
-    // variant defaults (primary); each variant remaps these private vars.
-    // Resting bg is darkened from the raw --ab-primary token via color-mix — the raw
-    // pairing (white text on --ab-primary) is only 3.46:1 in light theme, below the 4.5:1
-    // AA minimum for this text size (see spec.md AC-U6). Reverted to the raw tokens in
-    // dark theme below, where the pairing already passes (dark ink via
-    // --ab-text-on-primary) and further darkening would drop it below AA instead.
-    --_bg: color-mix(in srgb, var(--ab-primary) 85%, black);
-    --_bg-hover: color-mix(in srgb, var(--ab-primary) 70%, black);
-    --_bg-active: color-mix(in srgb, var(--ab-primary) 55%, black);
-    --_color: var(--ab-text-on-primary);
-    --_border: transparent;
+    --background: color-mix(in srgb, var(--ab-primary) 85%, black);
+    --background-hover: color-mix(in srgb, var(--ab-primary) 70%, black);
+    --background-active: color-mix(in srgb, var(--ab-primary) 55%, black);
+    --color: var(--ab-text-on-primary);
+    --border: transparent;
 
     &.ab-button {
         box-sizing: border-box;
@@ -22,9 +16,9 @@
         font: var(--ab-fw-semibold) var(--ab-fs-14) / 1 var(--ab-font-sans);
         letter-spacing: var(--ab-ls-snug);
         white-space: nowrap;
-        background: var(--_bg);
-        color: var(--_color);
-        border: 1px solid var(--_border);
+        background: var(--background);
+        color: var(--color);
+        border: 1px solid var(--border);
         border-radius: var(--ab-radius-control);
         cursor: pointer;
         user-select: none;
@@ -34,12 +28,12 @@
             transform var(--ab-dur-fast) var(--ab-ease-standard),
             box-shadow var(--ab-dur-fast) var(--ab-ease-standard);
 
-        &:hover:not(:disabled) {
-            background: var(--_bg-hover);
+        &:hover:not([aria-disabled='true']) {
+            background: var(--background-hover);
         }
 
-        &:active:not(:disabled) {
-            background: var(--_bg-active);
+        &:active:not([aria-disabled='true']) {
+            background: var(--background-active);
             transform: scale(0.98);
         }
 
@@ -47,50 +41,47 @@
             box-shadow: var(--ab-focus-ring);
         }
 
-        &:disabled {
+        &[aria-disabled='true'] {
             cursor: not-allowed;
+            pointer-events: none;
             opacity: 0.5;
         }
 
         // ---- variants ----
         &_secondary {
-            --_bg: var(--ab-surface-2);
-            --_bg-hover: var(--ab-border);
-            --_bg-active: var(--ab-border-strong);
-            --_color: var(--ab-text);
+            --background: var(--ab-surface-2);
+            --background-hover: var(--ab-border);
+            --background-active: var(--ab-border-strong);
+            --color: var(--ab-text);
         }
 
         &_soft {
-            --_bg: var(--ab-primary-soft);
-            --_bg-hover: color-mix(in srgb, var(--ab-primary-soft) 70%, var(--ab-primary));
-            --_bg-active: var(--ab-primary-border);
-            --_color: var(--ab-primary-active);
+            --background: var(--ab-primary-soft);
+            --background-hover: color-mix(in srgb, var(--ab-primary-soft) 70%, var(--ab-primary));
+            --background-active: var(--ab-primary-border);
+            --color: var(--ab-primary-active);
         }
 
         &_outline {
-            --_bg: transparent;
-            --_bg-hover: var(--ab-surface-hover);
-            --_bg-active: var(--ab-surface-2);
-            --_color: var(--ab-text);
-            --_border: var(--ab-border-strong);
+            --background: transparent;
+            --background-hover: var(--ab-surface-hover);
+            --background-active: var(--ab-surface-2);
+            --color: var(--ab-text);
+            --border: var(--ab-border-strong);
         }
 
         &_ghost {
-            --_bg: transparent;
-            --_bg-hover: var(--ab-surface-hover);
-            --_bg-active: var(--ab-surface-2);
-            --_color: var(--ab-text);
+            --background: transparent;
+            --background-hover: var(--ab-surface-hover);
+            --background-active: var(--ab-surface-2);
+            --color: var(--ab-text);
         }
 
-        // Resting/hover/active bg darkened from raw --ab-danger via color-mix — the raw
-        // pairing (white text on --ab-danger) is only 3.91:1 (light) / 2.94:1 (dark),
-        // below 4.5:1 AA. 70% passes in both themes (light 6.69:1, dark 5.50:1 — see
-        // spec.md AC-U6), so unlike primary this needs no dark-theme override.
         &_danger {
-            --_bg: color-mix(in srgb, var(--ab-danger) 70%, black);
-            --_bg-hover: color-mix(in srgb, var(--ab-danger) 55%, black);
-            --_bg-active: color-mix(in srgb, var(--ab-danger) 45%, black);
-            --_color: #fff;
+            --background: color-mix(in srgb, var(--ab-danger) 70%, black);
+            --background-hover: color-mix(in srgb, var(--ab-danger) 55%, black);
+            --background-active: color-mix(in srgb, var(--ab-danger) 45%, black);
+            --color: #fff;
         }
 
         // ---- sizes ----
@@ -115,19 +106,18 @@
         &_circle {
             border-radius: var(--ab-radius-full);
         }
+
+        &_full {
+            width: 100%;
+        }
     }
 }
 
-// Dark theme already passes AA with the raw --ab-primary/--ab-text-on-primary pairing
-// (dark ink on emerald-400, 6.30:1) — the light-theme-only darkening above would drop
-// that to 3.32:1, so it's reverted back to the raw tokens here (see spec.md AC-U6).
-// :host-context reacts to the [data-ab-theme='dark'] attribute AbThemeService reflects
-// onto <html>, an ancestor of this component.
 :host-context([data-ab-theme='dark']) {
     &.ab-button_primary {
-        --_bg: var(--ab-primary);
-        --_bg-hover: var(--ab-primary-hover);
-        --_bg-active: var(--ab-primary-active);
+        --background: var(--ab-primary);
+        --background-hover: var(--ab-primary-hover);
+        --background-active: var(--ab-primary-active);
     }
 }
 
@@ -159,5 +149,19 @@
 @keyframes ab-button-spin {
     to {
         transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host.ab-button {
+        transition: none;
+
+        &:active:not([aria-disabled='true']) {
+            transform: none;
+        }
+    }
+
+    .ab-button-spinner {
+        animation-duration: 1.5s;
     }
 }

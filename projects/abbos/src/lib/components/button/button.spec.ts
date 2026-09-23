@@ -4,9 +4,6 @@ import { CONTROL_SHAPE, CONTROL_SIZE } from '../../config';
 import { AbControlShape, AbControlSize } from '../../constants';
 import { AbButton, AbButtonVariant } from './button';
 
-// AbButton injects CONTROL_SIZE/CONTROL_SHAPE (see AC-F4/AC-F5) with no default provider
-// of its own — every TestBed module that constructs it must supply one, the same way
-// `provideAbbos()` does at application bootstrap.
 const CONTROL_TOKEN_PROVIDERS = [
     { provide: CONTROL_SIZE, useValue: 'md' },
     { provide: CONTROL_SHAPE, useValue: 'round' },
@@ -70,7 +67,7 @@ describe('AbButton', () => {
 
     it('is not disabled and not busy by default', () => {
         const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
-        expect(button.disabled).toBe(false);
+        expect(button.getAttribute('aria-disabled')).toBeNull();
         expect(button.getAttribute('aria-busy')).toBeNull();
     });
 });
@@ -133,7 +130,6 @@ describe('AbButton variant/size/shape', () => {
     }
 });
 
-// AC-F6
 describe('AbButton icon slots', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -167,20 +163,6 @@ describe('AbButton icon slots', () => {
     });
 });
 
-// AC-F7, AC-F8, AC-U4
-//
-// Constructs AbButton directly (TestBed.createComponent(AbButton), no host wrapper) and
-// drives its inputs via fixture.componentRef.setInput() rather than rebinding a plain field
-// on a wrapper host template. A wrapper-host + plain-field-mutation version of these same
-// tests was tried first and flaked: on the *second* fixture.detectChanges() call following
-// an earlier one, a plain (non-signal) field mutated on the OnPush host and re-bound via
-// `[disabled]="disabled"` did not reach AbButton's `disabled` input, while the identical
-// sequence using a signal (`disabled.set(true)`) or `setInput()` did. Root-caused to
-// Angular's OnPush host + signal-input interaction in this TestBed setup, not to anything
-// in AbButton's own code (confirmed with a minimal reproduction outside this component);
-// `setInput()` is also the pattern Angular's own testing docs recommend for signal inputs,
-// so used here rather than treated as a workaround. Flagged in BACKLOG.md for anyone hitting
-// the same thing testing a *consumer* of AbButton with a wrapper host.
 describe('AbButton loading/disabled state', () => {
     let fixture: ComponentFixture<AbButton>;
 
@@ -195,7 +177,7 @@ describe('AbButton loading/disabled state', () => {
         await fixture.whenStable();
     });
 
-    it('shows a decorative spinner, sets aria-busy, and disables the button while loading', async () => {
+    it('shows a decorative spinner, sets aria-busy, and marks the button aria-disabled while loading', async () => {
         fixture.componentRef.setInput('loading', true);
         fixture.detectChanges();
         await fixture.whenStable();
@@ -203,7 +185,7 @@ describe('AbButton loading/disabled state', () => {
         const button: HTMLButtonElement = fixture.nativeElement;
         const spinner = button.querySelector('.ab-button-spinner');
 
-        expect(button.disabled).toBe(true);
+        expect(button.getAttribute('aria-disabled')).toBe('true');
         expect(button.getAttribute('aria-busy')).toBe('true');
         expect(spinner).toBeTruthy();
         expect(spinner?.getAttribute('aria-hidden')).toBe('true');
@@ -216,22 +198,124 @@ describe('AbButton loading/disabled state', () => {
         expect(button.getAttribute('aria-busy')).toBeNull();
     });
 
-    it('reflects the native disabled attribute from the disabled input', async () => {
+    it('reflects aria-disabled (not the native disabled attribute) from the disabled input, staying focusable', async () => {
         fixture.componentRef.setInput('disabled', true);
         fixture.detectChanges();
         await fixture.whenStable();
 
         const button: HTMLButtonElement = fixture.nativeElement;
-        expect(button.disabled).toBe(true);
+        expect(button.getAttribute('aria-disabled')).toBe('true');
+        expect(button.hasAttribute('disabled')).toBe(false);
     });
 
-    it('stays disabled while loading even if disabled is explicitly false', async () => {
+    it('stays aria-disabled while loading even if disabled is explicitly false', async () => {
         fixture.componentRef.setInput('disabled', false);
         fixture.componentRef.setInput('loading', true);
         fixture.detectChanges();
         await fixture.whenStable();
 
         const button: HTMLButtonElement = fixture.nativeElement;
-        expect(button.disabled).toBe(true);
+        expect(button.getAttribute('aria-disabled')).toBe('true');
+    });
+
+    it('preventDefaults its own click handling while disabled', async () => {
+        fixture.componentRef.setInput('disabled', true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const button: HTMLButtonElement = fixture.nativeElement;
+        const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+        button.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('preventDefaults its own click handling while loading', async () => {
+        fixture.componentRef.setInput('loading', true);
+        fixture.detectChanges();
+        await fixture.whenStable();
+
+        const button: HTMLButtonElement = fixture.nativeElement;
+        const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+        button.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(true);
+    });
+
+    it('does not preventDefault a click when neither disabled nor loading', async () => {
+        const button: HTMLButtonElement = fixture.nativeElement;
+        const event = new MouseEvent('click', { bubbles: true, cancelable: true });
+        button.dispatchEvent(event);
+
+        expect(event.defaultPrevented).toBe(false);
+    });
+
+    it('blocks the default action for a Space/Enter keydown while disabled, preventing a click from ever being synthesized', () => {
+        fixture.componentRef.setInput('disabled', true);
+        fixture.detectChanges();
+
+        const button: HTMLButtonElement = fixture.nativeElement;
+        for (const key of ['Enter', ' ']) {
+            const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+            button.dispatchEvent(event);
+            expect(event.defaultPrevented).toBe(true);
+        }
+    });
+
+    it('blocks the default action for a Space/Enter keydown while loading', () => {
+        fixture.componentRef.setInput('loading', true);
+        fixture.detectChanges();
+
+        const button: HTMLButtonElement = fixture.nativeElement;
+        for (const key of ['Enter', ' ']) {
+            const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+            button.dispatchEvent(event);
+            expect(event.defaultPrevented).toBe(true);
+        }
+    });
+
+    it('leaves other keys and the enabled state untouched', () => {
+        const button: HTMLButtonElement = fixture.nativeElement;
+        const event = new KeyboardEvent('keydown', {
+            key: 'Enter',
+            bubbles: true,
+            cancelable: true,
+        });
+        button.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(false);
+    });
+});
+
+describe('AbButton loading/disabled state and a sibling consumer click handler', () => {
+    @Component({
+        imports: [AbButton],
+        template: `<button ab-button [disabled]="disabled" [loading]="loading" (click)="onClick()">
+            Save
+        </button>`,
+    })
+    class ClickHostTest {
+        public disabled = false;
+        public loading = false;
+        public clicks = 0;
+        protected onClick(): void {
+            this.clicks++;
+        }
+    }
+
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [ClickHostTest],
+            providers: CONTROL_TOKEN_PROVIDERS,
+        }).compileComponents();
+    });
+
+    it('still invokes the consumer click handler once enabled and not loading', () => {
+        const fixture = TestBed.createComponent(ClickHostTest);
+        fixture.detectChanges();
+
+        const button: HTMLButtonElement = fixture.nativeElement.querySelector('button');
+        button.click();
+
+        expect(fixture.componentInstance.clicks).toBe(1);
     });
 });

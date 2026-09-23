@@ -1,0 +1,14 @@
+<label>
+    <button
+        type="button"
+        role="switch"
+        [attr.aria-checked]="checked()"
+        [attr.aria-label]="ariaLabel() ?? null"
+        [attr.aria-disabled]="isDisabled() || null"
+        (click)="toggle()"
+        (blur)="onTouched()"
+    >
+        <span class="ab-switch-knob"></span>
+    </button>
+    <span class="ab-switch-label"><ng-content /></span>
+</label>

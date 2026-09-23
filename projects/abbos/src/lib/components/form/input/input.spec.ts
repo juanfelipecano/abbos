@@ -5,9 +5,6 @@ import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
 import { AbControlShape, AbControlSize } from '../../../constants';
 import { AbInput } from './input';
 
-// AbInput injects CONTROL_SIZE/CONTROL_SHAPE with no default provider of its own — every
-// TestBed module that constructs it must supply one, the same way `provideAbbos()` does at
-// application bootstrap (same pattern `button.spec.ts` uses).
 const CONTROL_TOKEN_PROVIDERS = [
     { provide: CONTROL_SIZE, useValue: 'md' },
     { provide: CONTROL_SHAPE, useValue: 'round' },
@@ -97,9 +94,6 @@ describe('AbInput size/shape', () => {
     }
 });
 
-// Forms integration (AC-F6, AC-F7). AbInput implements no ControlValueAccessor —
-// these tests exist to prove Angular's own DefaultValueAccessor already does the
-// job on a plain `input[ab-input]`, per ADR-0001.
 @Component({
     imports: [AbInput, ReactiveFormsModule],
     template: `<input ab-input [formControl]="control" />`,

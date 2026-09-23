@@ -12,6 +12,7 @@ playground:
 	npm run dev
 
 build-abbos:
+	$(REMOVE) .angular
 	npm run build:abbos
 	npm run abbos:yalc:publish
 

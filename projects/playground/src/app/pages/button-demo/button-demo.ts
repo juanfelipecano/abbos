@@ -26,6 +26,10 @@ import { AbButton, AbButtonVariant } from 'abbos';
                     <button ab-button size="md">Medium</button>
                     <button ab-button size="lg">Large</button>
                 </div>
+
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <button ab-button full>Full</button>
+                </div>
             </section>
 
             <section style="display: flex; flex-direction: column; gap: 0.75rem;">

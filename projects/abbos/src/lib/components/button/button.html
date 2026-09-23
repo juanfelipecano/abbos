@@ -1,0 +1,6 @@
+@if (loading()) {
+    <span class="ab-button-spinner" aria-hidden="true"></span>
+}
+<span class="ab-button-slot"><ng-content select="[abStart]" /></span>
+<ng-content />
+<span class="ab-button-slot"><ng-content select="[abEnd]" /></span>

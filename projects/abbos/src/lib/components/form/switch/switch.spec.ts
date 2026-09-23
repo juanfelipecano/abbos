@@ -5,9 +5,6 @@ import { CONTROL_SHAPE, CONTROL_SIZE } from '../../../config';
 import { AbControlShape, AbControlSize } from '../../../constants';
 import { AbSwitch } from './switch';
 
-// AbSwitch injects CONTROL_SIZE/CONTROL_SHAPE with no default provider of its own — every
-// TestBed module that constructs it must supply one, the same way `provideAbbos()` does at
-// application bootstrap (same pattern `button.spec.ts` uses).
 const CONTROL_TOKEN_PROVIDERS = [
     { provide: CONTROL_SIZE, useValue: 'md' },
     { provide: CONTROL_SHAPE, useValue: 'round' },
@@ -65,13 +62,11 @@ describe('AbSwitch', () => {
         expect(host.textContent).toContain('Email notifications');
     });
 
-    // AC-F1, AC-U1
     it('defaults to unchecked, reflected via aria-checked', () => {
         const button = getButton(fixture);
         expect(button.getAttribute('aria-checked')).toBe('false');
     });
 
-    // AC-F2, AC-F3, AC-U1
     it('toggles checked on click and updates the two-way [(checked)] binding', async () => {
         const button = getButton(fixture);
 
@@ -83,17 +78,6 @@ describe('AbSwitch', () => {
     });
 });
 
-// AC-F6, AC-F7, AC-F8, AC-U5
-//
-// Constructs AbSwitch directly (TestBed.createComponent(AbSwitch), no host wrapper) and
-// drives its inputs via fixture.componentRef.setInput() rather than rebinding a plain field
-// on a wrapper host template. A wrapper-host + plain-field-mutation version of these tests
-// was tried first and reproduced the exact flake `button.spec.ts` documents: a plain
-// (non-signal) host field mutated and re-bound via `[disabled]="disabled"`/`[size]="size"`
-// after the fixture's first `detectChanges()` did not reach AbSwitch's signal inputs on the
-// *second* `detectChanges()` call, while `setInput()` worked every time — same root cause
-// (Angular OnPush-host + signal-input interaction in this TestBed setup), not a defect in
-// AbSwitch. See `button.spec.ts`'s identical comment and `BACKLOG.md`.
 describe('AbSwitch size/shape/disabled (direct construction)', () => {
     let fixture: ComponentFixture<AbSwitch>;
 
@@ -136,13 +120,14 @@ describe('AbSwitch size/shape/disabled (direct construction)', () => {
         });
     }
 
-    it('ignores clicks and reflects the disabled attribute while disabled', async () => {
+    it('ignores clicks and reflects aria-disabled (not the native disabled attribute) while disabled', async () => {
         fixture.componentRef.setInput('disabled', true);
         fixture.detectChanges();
         await fixture.whenStable();
 
         const button = getButton(fixture);
-        expect(button.disabled).toBe(true);
+        expect(button.getAttribute('aria-disabled')).toBe('true');
+        expect(button.disabled).toBe(false);
         expect(fixture.nativeElement.classList.contains('ab-switch_disabled')).toBe(true);
 
         button.click();
@@ -152,7 +137,6 @@ describe('AbSwitch size/shape/disabled (direct construction)', () => {
     });
 });
 
-// AC-U3
 describe('AbSwitch ariaLabel', () => {
     it('applies ariaLabel to the inner button, not the host', async () => {
         await TestBed.configureTestingModule({
@@ -185,7 +169,6 @@ describe('AbSwitch ariaLabel', () => {
     });
 });
 
-// AC-F4, AC-F5
 describe('AbSwitch ControlValueAccessor / Reactive Forms', () => {
     let fixture: ComponentFixture<ReactiveFormsTestHost>;
 
@@ -224,6 +207,6 @@ describe('AbSwitch ControlValueAccessor / Reactive Forms', () => {
         fixture.detectChanges();
         await fixture.whenStable();
 
-        expect(getButton(fixture).disabled).toBe(true);
+        expect(getButton(fixture).getAttribute('aria-disabled')).toBe('true');
     });
 });
