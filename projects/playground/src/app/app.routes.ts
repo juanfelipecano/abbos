@@ -13,4 +13,8 @@ export const routes: Routes = [
     path: 'switch',
     loadComponent: () => import('./pages/switch-demo/switch-demo').then((m) => m.SwitchDemo),
   },
+  {
+    path: 'logo',
+    loadComponent: () => import('./pages/logo-demo/logo-demo').then((m) => m.LogoDemo),
+  },
 ];

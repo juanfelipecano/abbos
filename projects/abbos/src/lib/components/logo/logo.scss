@@ -1,0 +1,90 @@
+:host {
+    --tone: var(--ab-success);
+    --tone-soft: var(--ab-success-soft);
+    --tone-contrast: #ffffff;
+    --diameter: 80px;
+
+    &.ab-logo {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: var(--diameter);
+        height: var(--diameter);
+        background: var(--tone-soft);
+        color: var(--tone);
+        border: 1px solid transparent;
+        border-radius: var(--ab-radius-full);
+
+        // ---- tones ----
+        &.ab-logo_primary {
+            --tone: var(--ab-primary);
+            --tone-soft: var(--ab-primary-soft);
+            --tone-contrast: var(--ab-primary-contrast);
+        }
+
+        &.ab-logo_info {
+            --tone: var(--ab-info);
+            --tone-soft: var(--ab-info-soft);
+        }
+
+        &.ab-logo_warning {
+            --tone: var(--ab-warning);
+            --tone-soft: var(--ab-warning-soft);
+            --tone-contrast: #2a1c00;
+        }
+
+        &.ab-logo_danger {
+            --tone: var(--ab-danger);
+            --tone-soft: var(--ab-danger-soft);
+        }
+
+        &.ab-logo_neutral {
+            --tone: var(--ab-text-secondary);
+            --tone-soft: var(--ab-surface-2);
+            --tone-contrast: var(--ab-surface);
+        }
+
+        // ---- appearances ----
+        &.ab-logo_solid {
+            background: var(--tone);
+            color: var(--tone-contrast);
+        }
+
+        &.ab-logo_outline {
+            background: transparent;
+            border-color: var(--tone);
+        }
+
+        &.ab-logo_clear {
+            background: transparent;
+        }
+
+        // ---- sizes ----
+        &.ab-logo_sm {
+            --diameter: 32px;
+        }
+
+        &.ab-logo_md {
+            --diameter: 48px;
+        }
+
+        &.ab-logo_lg {
+            --diameter: 80px;
+        }
+
+        &.ab-logo_xl {
+            --diameter: 112px;
+        }
+
+        // ---- shapes ----
+        &.ab-logo_square {
+            border-radius: var(--ab-radius-none);
+        }
+
+        &.ab-logo_round {
+            border-radius: var(--ab-radius-xl);
+        }
+    }
+}
