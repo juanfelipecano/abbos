@@ -1,0 +1,13 @@
+<div #group tabindex="-1" role="group" aria-label="Tags" class="pg-row">
+    @for (tag of tags(); track tag) {
+        <ab-chip removable [removeLabel]="'Remove tag'" (removed)="remove(tag, group)">
+            {{ tag }}
+        </ab-chip>
+    } @empty {
+        <span>No tags</span>
+    }
+</div>
+
+@if (tags().length < 4) {
+    <button ab-button size="sm" variant="ghost" (click)="restore()">Restore</button>
+}

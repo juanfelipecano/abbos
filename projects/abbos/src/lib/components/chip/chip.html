@@ -1,0 +1,44 @@
+<ng-template #content>
+    <span class="ab-chip-slot ab-chip-slot_avatar"><ng-content select="[abAvatar]" /></span>
+    @if (selectable() && selected()) {
+        <svg class="ab-chip-check" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5" />
+        </svg>
+    } @else {
+        <span class="ab-chip-slot"><ng-content select="[abStart]" /></span>
+    }
+    <span class="ab-chip-label" [id]="uid + '-label'"><ng-content /></span>
+</ng-template>
+
+@if (selectable()) {
+    <button
+        type="button"
+        class="ab-chip-body"
+        [attr.aria-pressed]="selected()"
+        [attr.aria-disabled]="disabled() || null"
+        (click)="toggle()"
+    >
+        <ng-container [ngTemplateOutlet]="content" />
+    </button>
+} @else {
+    <span class="ab-chip-body">
+        <ng-container [ngTemplateOutlet]="content" />
+        @if (isRemovable()) {
+            <button
+                type="button"
+                class="ab-chip-remove"
+                tabindex="-1"
+                [id]="uid + '-remove'"
+                [attr.aria-label]="removeLabel()"
+                [attr.aria-labelledby]="uid + '-remove ' + uid + '-label'"
+                [attr.aria-disabled]="disabled() || null"
+                (click)="remove()"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                </svg>
+            </button>
+        }
+    </span>
+}

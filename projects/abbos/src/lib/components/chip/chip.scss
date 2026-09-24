@@ -1,0 +1,213 @@
+:host {
+    --h: 32px;
+    --px: 12px;
+    --fs: var(--ab-fs-13);
+    --gap: 6px;
+    --ic: 16px;
+    --av: 24px;
+    --rm: 20px;
+    --avatar-radius: var(--ab-radius-full);
+    --background: color-mix(in srgb, var(--ab-text) 7%, var(--ab-surface));
+    --avatar-background: var(--ab-primary);
+    --color: var(--ab-text);
+    --border: transparent;
+
+    &.ab-chip {
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        height: var(--h);
+        font: var(--ab-fw-medium) var(--fs) / 1 var(--ab-font-sans);
+        white-space: nowrap;
+        background: var(--background);
+        color: var(--color);
+        border: 1px solid var(--border);
+        border-radius: var(--ab-radius-control);
+        outline: none;
+        transition:
+            background-color var(--ab-dur-fast) var(--ab-ease-standard),
+            color var(--ab-dur-fast) var(--ab-ease-standard),
+            border-color var(--ab-dur-fast) var(--ab-ease-standard);
+
+        &:focus-visible,
+        &:has(.ab-chip-body:focus-visible) {
+            box-shadow: var(--ab-focus-ring);
+        }
+
+        // ---- variants ----
+        &_soft {
+            --background: color-mix(in srgb, var(--ab-primary) 14%, var(--ab-surface));
+            --color: var(--ab-primary);
+        }
+
+        &_outline {
+            --background: transparent;
+            --border: var(--ab-border-strong);
+        }
+
+        &_dotted {
+            --background: transparent;
+            --color: var(--ab-text-secondary);
+            --border: var(--ab-border-strong);
+            border-style: dashed;
+
+            &.ab-chip_selectable:hover,
+            &.ab-chip_removable:hover {
+                --color: var(--ab-text);
+                --border: var(--ab-text-tertiary);
+            }
+        }
+
+        &_solid,
+        &_selected {
+            --background: var(--ab-primary);
+            --avatar-background: color-mix(
+                in srgb,
+                var(--ab-primary-contrast) 22%,
+                var(--ab-primary)
+            );
+            --color: var(--ab-primary-contrast);
+            --border: transparent;
+            border-style: solid;
+        }
+
+        // ---- sizes ----
+        &_sm {
+            --h: 24px;
+            --px: 8px;
+            --fs: var(--ab-fs-12);
+            --gap: 4px;
+            --ic: 14px;
+            --av: 18px;
+            --rm: 16px;
+        }
+
+        &_lg {
+            --h: 40px;
+            --px: 14px;
+            --fs: var(--ab-fs-14);
+            --ic: 18px;
+            --av: 30px;
+            --rm: 24px;
+        }
+
+        // ---- shapes ----
+        &_square {
+            --avatar-radius: var(--ab-radius-none);
+            border-radius: var(--ab-radius-none);
+        }
+
+        &_round {
+            --avatar-radius: var(--ab-radius-sm);
+        }
+
+        &_circle {
+            border-radius: var(--ab-radius-full);
+        }
+
+        // ---- states ----
+        &_selectable .ab-chip-body {
+            cursor: pointer;
+        }
+
+        &_disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    }
+}
+
+// the padded row; a <span> or, when selectable, a native <button>
+.ab-chip-body {
+    display: inline-flex;
+    align-items: center;
+    align-self: stretch;
+    gap: var(--gap);
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0 var(--px);
+    font: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    border-radius: inherit;
+    outline: none;
+}
+
+.ab-chip-slot {
+    display: inline-flex;
+    align-items: center;
+    // icons sit 2px closer to the edge than plain text
+    margin-left: -2px;
+
+    &:empty {
+        display: none;
+    }
+
+    &_avatar {
+        justify-content: center;
+        width: var(--av);
+        height: var(--av);
+        // avatars are inset evenly on the leading edge
+        margin-left: calc((var(--h) - var(--av)) / 2 - var(--px));
+        overflow: hidden;
+        flex: none;
+        font-size: calc(var(--av) * 0.4);
+        font-weight: var(--ab-fw-bold);
+        background: var(--avatar-background);
+        color: var(--ab-primary-contrast);
+        border-radius: var(--avatar-radius);
+    }
+}
+
+.ab-chip-check,
+.ab-chip-remove svg {
+    flex: none;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.ab-chip-check {
+    width: var(--ic);
+    height: var(--ic);
+    margin-left: -2px;
+}
+
+.ab-chip-remove svg {
+    width: calc(var(--ic) - 2px);
+    height: calc(var(--ic) - 2px);
+}
+
+.ab-chip-remove {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    width: var(--rm);
+    height: var(--rm);
+    margin: 0 calc((var(--h) - var(--rm)) / 2 - var(--px)) 0 0;
+    padding: 0;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    border-radius: var(--ab-radius-full);
+    opacity: 0.72;
+    cursor: pointer;
+    transition:
+        background-color var(--ab-dur-fast) var(--ab-ease-standard),
+        opacity var(--ab-dur-fast) var(--ab-ease-standard);
+
+    &:hover {
+        opacity: 1;
+        background: color-mix(in srgb, currentColor 14%, transparent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host.ab-chip,
+    .ab-chip-remove {
+        transition: none;
+    }
+}
