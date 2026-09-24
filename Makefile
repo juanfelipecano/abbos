@@ -5,10 +5,12 @@ init:
 
 serve:
 	$(REMOVE) .angular
-	npm run start --host=0.0.0.0
+	npm run start:host
 
 playground:
 	$(REMOVE) .angular
+	$(REMOVE) dist
+	npm run build:abbos
 	npm run dev
 
 build-abbos:

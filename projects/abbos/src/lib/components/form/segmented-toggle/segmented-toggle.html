@@ -1,0 +1,43 @@
+<div
+    #group
+    class="ab-segmented-toggle-track"
+    role="radiogroup"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-disabled]="isDisabled() || null"
+    [class.ab-segmented-toggle-track_end]="checked()"
+    [class.ab-segmented-toggle-track_dragging]="dragOffset() !== null"
+    [style.--drag.px]="dragOffset()"
+    (keydown)="onKeydown($event, group)"
+    (pointerdown)="onPointerDown($event, group)"
+    (pointermove)="onPointerMove($event, group)"
+    (pointerup)="onPointerUp($event, group)"
+    (pointercancel)="onPointerCancel()"
+>
+    <span class="ab-segmented-toggle-thumb" aria-hidden="true"></span>
+    <button
+        type="button"
+        role="radio"
+        class="ab-segmented-toggle-segment"
+        [class.ab-segmented-toggle-segment_active]="!thumbAtEnd()"
+        [attr.aria-checked]="!checked()"
+        [attr.aria-disabled]="isDisabled() || null"
+        [attr.tabindex]="checked() ? -1 : 0"
+        (click)="onSegmentClick(false)"
+        (blur)="onTouched()"
+    >
+        {{ startLabel() }}
+    </button>
+    <button
+        type="button"
+        role="radio"
+        class="ab-segmented-toggle-segment"
+        [class.ab-segmented-toggle-segment_active]="thumbAtEnd()"
+        [attr.aria-checked]="checked()"
+        [attr.aria-disabled]="isDisabled() || null"
+        [attr.tabindex]="checked() ? 0 : -1"
+        (click)="onSegmentClick(true)"
+        (blur)="onTouched()"
+    >
+        {{ endLabel() }}
+    </button>
+</div>

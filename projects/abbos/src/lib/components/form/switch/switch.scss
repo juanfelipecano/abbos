@@ -60,12 +60,19 @@
         background: var(--ab-border-strong);
         cursor: pointer;
         outline: none;
+        touch-action: pan-y;
+        -webkit-tap-highlight-color: transparent;
         transition:
             background var(--ab-dur-normal) var(--ab-ease-standard),
             box-shadow var(--ab-dur-fast) var(--ab-ease-standard);
 
-        &[aria-checked='true'] {
+        &[aria-checked='true'],
+        &.ab-switch-control_on {
             background: var(--ab-primary);
+        }
+
+        &.ab-switch-control_dragging:not(.ab-switch-control_on) {
+            background: var(--ab-border-strong);
         }
 
         &:focus-visible {
@@ -92,6 +99,14 @@
 
     button[aria-checked='true'] .ab-switch-knob {
         left: calc(100% - var(--knob) - var(--padding));
+    }
+
+    // While dragging the knob tracks the finger; the track colour follows whichever side it is nearest.
+    button.ab-switch-control_dragging {
+        .ab-switch-knob {
+            left: calc(var(--padding) + var(--drag, 0px));
+            transition: none;
+        }
     }
 
     .ab-switch-label:empty {

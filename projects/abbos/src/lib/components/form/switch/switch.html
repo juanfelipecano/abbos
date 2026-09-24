@@ -1,11 +1,19 @@
 <label>
     <button
+        #control
         type="button"
         role="switch"
         [attr.aria-checked]="checked()"
         [attr.aria-label]="ariaLabel() ?? null"
         [attr.aria-disabled]="isDisabled() || null"
+        [class.ab-switch-control_on]="visuallyOn()"
+        [class.ab-switch-control_dragging]="dragOffset() !== null"
+        [style.--drag.px]="dragOffset()"
         (click)="toggle()"
+        (pointerdown)="onPointerDown($event, control)"
+        (pointermove)="onPointerMove($event, control)"
+        (pointerup)="onPointerUp($event, control)"
+        (pointercancel)="onPointerCancel()"
         (blur)="onTouched()"
     >
         <span class="ab-switch-knob"></span>

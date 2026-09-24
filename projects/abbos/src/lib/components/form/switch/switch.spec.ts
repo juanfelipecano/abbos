@@ -210,3 +210,121 @@ describe('AbSwitch ControlValueAccessor / Reactive Forms', () => {
         expect(getButton(fixture).getAttribute('aria-disabled')).toBe('true');
     });
 });
+
+function pointer(el: HTMLElement, type: string, clientX: number, timeStamp: number): void {
+    const event = new PointerEvent(type, {
+        bubbles: true,
+        cancelable: true,
+        isPrimary: true,
+        pointerId: 1,
+        pointerType: 'touch',
+        clientX,
+    });
+    Object.defineProperty(event, 'timeStamp', { value: timeStamp });
+    el.dispatchEvent(event);
+}
+
+describe('AbSwitch drag', () => {
+    // Track 40x22, knob 18 with 2px padding => 18px of travel.
+    let fixture: ComponentFixture<TestHost>;
+    let button: HTMLButtonElement;
+
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [TestHost],
+            providers: CONTROL_TOKEN_PROVIDERS,
+        }).compileComponents();
+        fixture = TestBed.createComponent(TestHost);
+        await fixture.whenStable();
+
+        button = getButton(fixture);
+        const knob = button.querySelector('.ab-switch-knob') as HTMLElement;
+        button.getBoundingClientRect = () => ({ width: 40, height: 22 }) as DOMRect;
+        knob.getBoundingClientRect = () => ({ width: 18, height: 18 }) as DOMRect;
+        button.setPointerCapture = () => {};
+        button.releasePointerCapture = () => {};
+        button.hasPointerCapture = () => true;
+    });
+
+    async function drag(from: number, to: number): Promise<void> {
+        pointer(button, 'pointerdown', from, 0);
+        pointer(button, 'pointermove', (from + to) / 2, 400);
+        pointer(button, 'pointermove', to, 800);
+        pointer(button, 'pointerup', to, 800);
+        await fixture.whenStable();
+    }
+
+    it('drags the knob past the midpoint to switch on', async () => {
+        await drag(0, 14);
+        expect(button.getAttribute('aria-checked')).toBe('true');
+        expect(fixture.componentInstance.on).toBe(true);
+    });
+
+    it('snaps back when released before the midpoint', async () => {
+        await drag(0, 5);
+        expect(button.getAttribute('aria-checked')).toBe('false');
+    });
+
+    it('drags back to switch off', async () => {
+        button.click();
+        await fixture.whenStable();
+
+        await drag(18, 2);
+        expect(fixture.componentInstance.on).toBe(false);
+    });
+
+    it('moves the knob with the finger and colours the track by nearest side', async () => {
+        pointer(button, 'pointerdown', 0, 0);
+        pointer(button, 'pointermove', 12, 400);
+        await fixture.whenStable();
+
+        expect(button.classList.contains('ab-switch-control_dragging')).toBe(true);
+        expect(button.style.getPropertyValue('--drag')).toBe('12px');
+        expect(button.classList.contains('ab-switch-control_on')).toBe(true);
+    });
+
+    it('ignores the trailing click after a drag', async () => {
+        await drag(0, 16);
+        button.click();
+        await fixture.whenStable();
+
+        expect(fixture.componentInstance.on).toBe(true);
+    });
+
+    it('still toggles on a plain tap', async () => {
+        pointer(button, 'pointerdown', 10, 0);
+        pointer(button, 'pointerup', 10, 50);
+        button.click();
+        await fixture.whenStable();
+
+        expect(fixture.componentInstance.on).toBe(true);
+    });
+
+    it('does not commit on pointercancel', async () => {
+        pointer(button, 'pointerdown', 0, 0);
+        pointer(button, 'pointermove', 18, 800);
+        pointer(button, 'pointercancel', 18, 800);
+        await fixture.whenStable();
+
+        expect(fixture.componentInstance.on).toBe(false);
+        expect(button.classList.contains('ab-switch-control_dragging')).toBe(false);
+    });
+
+    it('does not drag while disabled', async () => {
+        const disabled = TestBed.createComponent(AbSwitch);
+        disabled.componentRef.setInput('disabled', true);
+        disabled.detectChanges();
+        const el = getButton(disabled);
+        const knob = el.querySelector('.ab-switch-knob') as HTMLElement;
+        el.getBoundingClientRect = () => ({ width: 40, height: 22 }) as DOMRect;
+        knob.getBoundingClientRect = () => ({ width: 18, height: 18 }) as DOMRect;
+        el.setPointerCapture = () => {};
+
+        pointer(el, 'pointerdown', 0, 0);
+        pointer(el, 'pointermove', 18, 800);
+        pointer(el, 'pointerup', 18, 800);
+        await disabled.whenStable();
+
+        expect(disabled.componentInstance.checked()).toBe(false);
+    });
+});
