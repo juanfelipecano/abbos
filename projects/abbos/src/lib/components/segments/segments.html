@@ -1,0 +1,41 @@
+<div
+    #group
+    class="ab-segments-track"
+    [attr.role]="hasContent() ? 'tablist' : 'radiogroup'"
+    [attr.aria-label]="ariaLabel() ?? null"
+    [attr.aria-disabled]="isDisabled() || null"
+    [class.ab-segments-track_empty]="activeIndex() < 0"
+    [style.--count]="segments().length"
+    [style.--index]="activeIndex()"
+    (keydown)="onKeydown($event, group)"
+>
+    <span class="ab-segments-thumb" aria-hidden="true"></span>
+    @for (segment of segments(); track segment) {
+        <button
+            type="button"
+            class="ab-segments-item"
+            [class.ab-segments-item_active]="$index === activeIndex()"
+            [id]="uid + '-tab-' + $index"
+            [attr.role]="hasContent() ? 'tab' : 'radio'"
+            [attr.aria-selected]="hasContent() ? $index === activeIndex() : null"
+            [attr.aria-checked]="hasContent() ? null : $index === activeIndex()"
+            [attr.aria-controls]="hasContent() && $index === activeIndex() ? uid + '-panel' : null"
+            [attr.aria-disabled]="isDisabled() || segment.disabled() || null"
+            [attr.tabindex]="$index === focusIndex() ? 0 : -1"
+            (click)="select($index)"
+            (blur)="onTouched()"
+        >
+            <ng-container [ngTemplateOutlet]="segment.label()" />
+        </button>
+    }
+</div>
+@if (activeContent(); as content) {
+    <div
+        class="ab-segments-panel"
+        role="tabpanel"
+        [id]="uid + '-panel'"
+        [attr.aria-labelledby]="uid + '-tab-' + activeIndex()"
+    >
+        <ng-container [ngTemplateOutlet]="content" />
+    </div>
+}

@@ -1,6 +1,7 @@
 import { BUTTON_ENTRY } from '../../features/components/button/button.entry';
 import { ICON_ENTRY } from '../../features/components/icon/icon.entry';
 import { INPUT_ENTRY } from '../../features/components/input/input.entry';
+import { SEGMENTS_ENTRY } from '../../features/components/segments/segments.entry';
 import { SEGMENTED_TOGGLE_ENTRY } from '../../features/components/segmented-toggle/segmented-toggle.entry';
 import { SETTINGS_LIST_ENTRY } from '../../features/components/settings-list/settings-list.entry';
 import { SWITCH_ENTRY } from '../../features/components/switch/switch.entry';
@@ -18,6 +19,7 @@ export const DOC_ENTRIES: readonly DocEntry[] = [
     INPUT_ENTRY,
     SWITCH_ENTRY,
     SEGMENTED_TOGGLE_ENTRY,
+    SEGMENTS_ENTRY,
     ICON_ENTRY,
     SETTINGS_LIST_ENTRY,
     AUTOFOCUS_ENTRY,

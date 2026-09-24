@@ -1,0 +1,14 @@
+<ab-segments [(value)]="type" ariaLabel="Transaction type" [fullWidth]="true">
+    <ab-segment value="expense">
+        Expense
+        <ng-template abSegmentContent>Money going out: rent, food, bills.</ng-template>
+    </ab-segment>
+    <ab-segment value="income">
+        Income
+        <ng-template abSegmentContent>Money coming in: salary, refunds.</ng-template>
+    </ab-segment>
+    <ab-segment value="transfer">
+        Transfer
+        <ng-template abSegmentContent>Move money between your accounts.</ng-template>
+    </ab-segment>
+</ab-segments>
