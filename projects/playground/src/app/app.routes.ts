@@ -14,6 +14,13 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/switch-demo/switch-demo').then((m) => m.SwitchDemo),
     },
     {
+        path: 'segmented-toggle',
+        loadComponent: () =>
+            import('./pages/segmented-toggle-demo/segmented-toggle-demo').then(
+                (m) => m.SegmentedToggleDemo,
+            ),
+    },
+    {
         path: 'logo',
         loadComponent: () => import('./pages/logo-demo/logo-demo').then((m) => m.LogoDemo),
     },

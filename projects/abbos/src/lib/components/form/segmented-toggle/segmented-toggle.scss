@@ -1,0 +1,106 @@
+:host {
+    --height: var(--ab-control-h-md);
+    --padding: 4px;
+    --radius: var(--ab-radius-control);
+    --thumb-radius: calc(var(--radius) - var(--padding));
+
+    display: inline-flex;
+
+    &.ab-segmented-toggle_sm {
+        --height: var(--ab-control-h-sm);
+        --padding: 3px;
+    }
+
+    &.ab-segmented-toggle_lg {
+        --height: var(--ab-control-h-lg);
+    }
+
+    &.ab-segmented-toggle_square {
+        --radius: var(--ab-radius-none);
+        --thumb-radius: var(--ab-radius-none);
+    }
+
+    &.ab-segmented-toggle_circle {
+        --radius: var(--ab-radius-full);
+        --thumb-radius: var(--ab-radius-full);
+    }
+
+    .ab-segmented-toggle-track {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        box-sizing: border-box;
+        height: var(--height);
+        padding: var(--padding);
+        border: 1px solid var(--ab-border);
+        border-radius: var(--radius);
+        background: var(--ab-surface-sunken);
+        touch-action: pan-y;
+        user-select: none;
+    }
+
+    .ab-segmented-toggle-thumb {
+        position: absolute;
+        top: var(--padding);
+        bottom: var(--padding);
+        left: var(--padding);
+        width: calc((100% - 2 * var(--padding)) / 2);
+        border-radius: var(--thumb-radius);
+        background: var(--ab-primary);
+        transition: transform var(--ab-dur-normal) var(--ab-ease-out);
+    }
+
+    .ab-segmented-toggle-track_end .ab-segmented-toggle-thumb {
+        transform: translateX(100%);
+    }
+
+    .ab-segmented-toggle-track_dragging {
+        cursor: grabbing;
+
+        .ab-segmented-toggle-thumb {
+            transform: translateX(var(--drag, 0px));
+            transition: none;
+        }
+    }
+
+    .ab-segmented-toggle-segment {
+        position: relative;
+        min-width: 3em;
+        padding: 0 var(--ab-space-5);
+        border: none;
+        border-radius: var(--thumb-radius);
+        background: transparent;
+        font: var(--ab-text-body);
+        font-weight: 700;
+        color: var(--ab-text-secondary);
+        cursor: pointer;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: color var(--ab-dur-fast) var(--ab-ease-standard);
+
+        &.ab-segmented-toggle-segment_active {
+            color: var(--ab-text-on-primary);
+        }
+
+        &:focus-visible {
+            box-shadow: var(--ab-focus-ring);
+        }
+
+        &[aria-disabled='true'] {
+            cursor: not-allowed;
+        }
+    }
+
+    &.ab-segmented-toggle_disabled .ab-segmented-toggle-track {
+        opacity: 0.6;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host {
+        .ab-segmented-toggle-thumb,
+        .ab-segmented-toggle-segment {
+            transition: none;
+        }
+    }
+}
