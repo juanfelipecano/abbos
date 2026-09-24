@@ -92,10 +92,10 @@ describe('AbSwitch size/shape/disabled (direct construction)', () => {
         await fixture.whenStable();
     });
 
-    it('defaults size to md and shape to round (from the injected CONTROL_SIZE/CONTROL_SHAPE tokens)', () => {
+    it('defaults size to md (from the injected CONTROL_SIZE token) and shape to circle', () => {
         const el: HTMLElement = fixture.nativeElement;
         expect(el.classList.contains('ab-switch_md')).toBe(true);
-        expect(el.classList.contains('ab-switch_round')).toBe(true);
+        expect(el.classList.contains('ab-switch_circle')).toBe(true);
     });
 
     const sizes: AbControlSize[] = ['sm', 'md', 'lg'];
