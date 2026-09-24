@@ -1,0 +1,93 @@
+:host {
+    display: block;
+
+    &:not(:first-child) {
+        border-top: 1px solid var(--ab-border);
+    }
+
+    .ab-settings-item-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--ab-space-4);
+        box-sizing: border-box;
+        width: 100%;
+        min-height: 3.25rem;
+        padding: var(--ab-space-3) var(--ab-space-4);
+        border: none;
+        background: none;
+        color: var(--ab-text);
+        font: var(--ab-text-body);
+        text-align: start;
+    }
+
+    button.ab-settings-item-row {
+        cursor: pointer;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        transition: background var(--ab-dur-fast) var(--ab-ease-standard);
+
+        &:hover {
+            background: var(--ab-surface-hover);
+        }
+
+        &:focus-visible {
+            // Inset so the ring isn't clipped by the list's rounded overflow.
+            box-shadow: inset 0 0 0 3px var(--ab-ring);
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background: none;
+        }
+    }
+
+    &.ab-settings-item_disabled .ab-settings-item-row {
+        opacity: 0.6;
+    }
+
+    .ab-settings-item-text {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    .ab-settings-item-label {
+        font-weight: var(--ab-fw-medium);
+    }
+
+    .ab-settings-item-description {
+        color: var(--ab-text-secondary);
+        font: var(--ab-text-caption);
+    }
+
+    .ab-settings-item-trailing {
+        display: flex;
+        flex: none;
+        align-items: center;
+        gap: var(--ab-space-2);
+        min-width: 0;
+        max-width: 60%;
+    }
+
+    .ab-settings-item-value {
+        overflow: hidden;
+        min-width: 0;
+        color: var(--ab-text);
+        font-weight: var(--ab-fw-semibold);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ab-settings-item-chevron {
+        margin-inline: calc(-1 * var(--ab-space-2));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host button.ab-settings-item-row {
+        transition: none;
+    }
+}

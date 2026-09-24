@@ -21,7 +21,12 @@ export const routes: Routes = [
             ),
     },
     {
-        path: 'logo',
-        loadComponent: () => import('./pages/logo-demo/logo-demo').then((m) => m.LogoDemo),
+        path: 'settings-list',
+        loadComponent: () =>
+            import('./pages/settings-list-demo/settings-list-demo').then((m) => m.SettingsListDemo),
+    },
+    {
+        path: 'icon',
+        loadComponent: () => import('./pages/icon-demo/icon-demo').then((m) => m.IconDemo),
     },
 ];

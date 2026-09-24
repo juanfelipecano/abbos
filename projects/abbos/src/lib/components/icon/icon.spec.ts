@@ -2,12 +2,12 @@ import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LucideIconInput, LucideMail } from '@lucide/angular';
 import { AbControlShape } from '../../constants';
-import { AbLogo, AbLogoAppearance, AbLogoSize, AbLogoTone } from './logo';
+import { AbIcon, AbIconAppearance, AbIconSize, AbIconTone } from './icon';
 
 @Component({
-    imports: [AbLogo],
+    imports: [AbIcon],
     template: `
-        <ab-logo
+        <ab-icon
             [icon]="icon()"
             [tone]="tone()"
             [appearance]="appearance()"
@@ -19,18 +19,18 @@ import { AbLogo, AbLogoAppearance, AbLogoSize, AbLogoTone } from './logo';
 })
 class TestHost {
     public icon = signal<LucideIconInput>(LucideMail.icon);
-    public tone = signal<AbLogoTone>('success');
-    public appearance = signal<AbLogoAppearance>('clear');
-    public size = signal<AbLogoSize>('lg');
+    public tone = signal<AbIconTone>('success');
+    public appearance = signal<AbIconAppearance>('clear');
+    public size = signal<AbIconSize>('lg');
     public shape = signal<AbControlShape>('circle');
     public label = signal<string | null>(null);
 }
 
-describe('AbLogo', () => {
+describe('AbIcon', () => {
     let fixture: ComponentFixture<TestHost>;
     let host: TestHost;
 
-    const el = (): HTMLElement => fixture.nativeElement.querySelector('ab-logo');
+    const el = (): HTMLElement => fixture.nativeElement.querySelector('ab-icon');
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TestHost);
@@ -40,11 +40,11 @@ describe('AbLogo', () => {
 
     it('defaults to success / clear / lg / circle', () => {
         const classes = el().classList;
-        expect(classes).toContain('ab-logo');
-        expect(classes).toContain('ab-logo_success');
-        expect(classes).toContain('ab-logo_clear');
-        expect(classes).toContain('ab-logo_lg');
-        expect(classes).toContain('ab-logo_circle');
+        expect(classes).toContain('ab-icon');
+        expect(classes).toContain('ab-icon_success');
+        expect(classes).toContain('ab-icon_clear');
+        expect(classes).toContain('ab-icon_lg');
+        expect(classes).toContain('ab-icon_circle');
     });
 
     it('renders the lucide icon as an svg', () => {
@@ -52,34 +52,34 @@ describe('AbLogo', () => {
         expect(el().querySelectorAll('svg *').length).toBeGreaterThan(0);
     });
 
-    it.each(['primary', 'success', 'info', 'warning', 'danger', 'neutral'] as AbLogoTone[])(
+    it.each(['primary', 'success', 'info', 'warning', 'danger', 'neutral'] as AbIconTone[])(
         'applies tone %s',
         (tone) => {
             host.tone.set(tone);
             fixture.detectChanges();
-            expect(el().classList).toContain(`ab-logo_${tone}`);
+            expect(el().classList).toContain(`ab-icon_${tone}`);
         },
     );
 
-    it.each(['soft', 'solid', 'outline', 'clear'] as AbLogoAppearance[])(
+    it.each(['soft', 'solid', 'outline', 'clear'] as AbIconAppearance[])(
         'applies appearance %s',
         (a) => {
             host.appearance.set(a);
             fixture.detectChanges();
-            expect(el().classList).toContain(`ab-logo_${a}`);
+            expect(el().classList).toContain(`ab-icon_${a}`);
         },
     );
 
-    it.each(['sm', 'md', 'lg', 'xl'] as AbLogoSize[])('applies size %s', (size) => {
+    it.each(['sm', 'md', 'lg', 'xl'] as AbIconSize[])('applies size %s', (size) => {
         host.size.set(size);
         fixture.detectChanges();
-        expect(el().classList).toContain(`ab-logo_${size}`);
+        expect(el().classList).toContain(`ab-icon_${size}`);
     });
 
     it.each(['square', 'round', 'circle'] as AbControlShape[])('applies shape %s', (shape) => {
         host.shape.set(shape);
         fixture.detectChanges();
-        expect(el().classList).toContain(`ab-logo_${shape}`);
+        expect(el().classList).toContain(`ab-icon_${shape}`);
     });
 
     it('is decorative without a label', () => {
