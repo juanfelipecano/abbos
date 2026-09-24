@@ -1,4 +1,5 @@
 import { BUTTON_ENTRY } from '../../features/components/button/button.entry';
+import { CHIP_ENTRY } from '../../features/components/chip/chip.entry';
 import { ICON_ENTRY } from '../../features/components/icon/icon.entry';
 import { INPUT_ENTRY } from '../../features/components/input/input.entry';
 import { SEGMENTS_ENTRY } from '../../features/components/segments/segments.entry';
@@ -20,6 +21,7 @@ export const DOC_ENTRIES: readonly DocEntry[] = [
     SWITCH_ENTRY,
     SEGMENTED_TOGGLE_ENTRY,
     SEGMENTS_ENTRY,
+    CHIP_ENTRY,
     ICON_ENTRY,
     SETTINGS_LIST_ENTRY,
     AUTOFOCUS_ENTRY,

@@ -1,0 +1,7 @@
+<div role="group" aria-label="Filter projects" class="pg-row">
+    @for (filter of filters; track filter) {
+        <ab-chip selectable variant="outline" [(selected)]="selection[filter]">
+            {{ filter }}
+        </ab-chip>
+    }
+</div>
