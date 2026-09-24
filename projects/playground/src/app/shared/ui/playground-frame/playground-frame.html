@@ -1,0 +1,64 @@
+<div class="frame">
+    <app-preview-canvas class="canvas" label="Preview" themeToggle>
+        <ng-content />
+    </app-preview-canvas>
+
+    <div class="controls" role="group" [attr.aria-labelledby]="uid + '-title'">
+        <div class="controls-head">
+            <span class="controls-title" [id]="uid + '-title'">Controls</span>
+            <button type="button" class="reset" (click)="model().reset()">Reset</button>
+        </div>
+
+        @for (control of model().controls; track control.key) {
+            @switch (control.kind) {
+                @case ('select') {
+                    <div class="field">
+                        <label [for]="uid + control.key">{{ control.label }}</label>
+                        <span class="select">
+                            <select
+                                [id]="uid + control.key"
+                                (change)="onInput(control.key, $event)"
+                            >
+                                @for (option of control.options; track option) {
+                                    <option
+                                        [value]="option"
+                                        [selected]="option === model().read(control.key)"
+                                    >
+                                        {{ option }}
+                                    </option>
+                                }
+                            </select>
+                            <svg lucideChevronDown [size]="16" aria-hidden="true"></svg>
+                        </span>
+                    </div>
+                }
+                @case ('toggle') {
+                    <div class="toggle">
+                        <span aria-hidden="true">{{ control.label }}</span>
+                        <ab-switch
+                            size="sm"
+                            [ariaLabel]="control.label"
+                            [checked]="model().read(control.key) === true"
+                            (checkedChange)="model().write(control.key, $event)"
+                        />
+                    </div>
+                }
+                @case ('text') {
+                    <div class="field">
+                        <label [for]="uid + control.key">{{ control.label }}</label>
+                        <input
+                            ab-input
+                            size="sm"
+                            type="text"
+                            [id]="uid + control.key"
+                            [value]="text(model().read(control.key))"
+                            (input)="onInput(control.key, $event)"
+                        />
+                    </div>
+                }
+            }
+        }
+    </div>
+</div>
+
+<app-code-block class="code" lang="html" [code]="code()" [fileName]="fileName()" />

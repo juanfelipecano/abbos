@@ -1,0 +1,15 @@
+<ab-settings-list ariaLabel="Display">
+    <ab-settings-item label="Decimals" description="Pesos are whole numbers">
+        <ab-segmented-toggle
+            abControl
+            size="sm"
+            startLabel="0"
+            endLabel="2"
+            ariaLabel="Decimals"
+            [(checked)]="twoDecimals"
+        />
+    </ab-settings-item>
+    <ab-settings-item label="Compact mode">
+        <ab-switch abControl size="sm" ariaLabel="Compact mode" [(checked)]="compact" />
+    </ab-settings-item>
+</ab-settings-list>

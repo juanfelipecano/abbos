@@ -1,0 +1,124 @@
+:host {
+    display: block;
+}
+
+.frame {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid var(--ab-border);
+    border-radius: 12px;
+    background: var(--ab-surface);
+}
+
+.canvas {
+    flex: 1;
+    min-height: 320px;
+}
+
+.controls {
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    gap: var(--ab-space-4);
+    width: 272px;
+    padding: var(--ab-space-5);
+    border-left: 1px solid var(--ab-border);
+    background: var(--ab-surface);
+}
+
+.controls-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.controls-title {
+    font: var(--ab-fw-semibold) var(--ab-fs-14) / 1 var(--ab-font-sans);
+}
+
+.reset {
+    height: 26px;
+    padding: 0 var(--ab-space-2);
+    border: 0;
+    border-radius: 6px;
+    background: none;
+    color: var(--ab-text-secondary);
+    font: var(--ab-fw-semibold) var(--ab-fs-12) / 1 var(--ab-font-sans);
+    cursor: pointer;
+
+    &:hover {
+        background: var(--ab-surface-hover);
+        color: var(--ab-text);
+    }
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    label {
+        font: var(--ab-text-label);
+    }
+}
+
+.toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ab-space-3);
+    min-height: 24px;
+    font: var(--ab-text-label);
+}
+
+.select {
+    position: relative;
+    display: block;
+
+    select {
+        width: 100%;
+        height: var(--ab-control-h-sm);
+        padding: 0 var(--ab-space-8) 0 10px;
+        border: 1px solid var(--ab-border-strong);
+        border-radius: var(--ab-radius-control);
+        background: var(--ab-surface);
+        color: var(--ab-text);
+        font: var(--ab-text-body);
+        appearance: none;
+        cursor: pointer;
+
+        &:focus-visible {
+            outline: none;
+            border-color: var(--ab-primary);
+            box-shadow: var(--ab-focus-ring);
+        }
+    }
+
+    svg {
+        position: absolute;
+        top: 8px;
+        right: 10px;
+        color: var(--ab-text-tertiary);
+        pointer-events: none;
+    }
+}
+
+.code {
+    margin-top: var(--ab-space-3);
+}
+
+@media (max-width: 959px) {
+    .frame {
+        flex-direction: column;
+    }
+
+    .canvas {
+        min-height: 220px;
+    }
+
+    .controls {
+        width: auto;
+        border-top: 1px solid var(--ab-border);
+        border-left: 0;
+    }
+}

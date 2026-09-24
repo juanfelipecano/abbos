@@ -1,0 +1,51 @@
+<a class="skip" href="#main" (click)="skipToContent($event)">Skip to content</a>
+
+<app-header (menu)="drawerOpen.set(true)" />
+
+<div class="body">
+    @if (!isMobile()) {
+        <div class="aside">
+            <app-sidebar />
+        </div>
+    }
+
+    <main #main id="main" class="main" tabindex="-1">
+        <div class="content" [class.wide]="wide()">
+            @if (isMobile() && toc.sections().length) {
+                <app-mobile-toc />
+            }
+            <router-outlet (activate)="onActivate()" />
+        </div>
+        @if (!isMobile() && toc.sections().length) {
+            <app-page-toc />
+        }
+    </main>
+</div>
+
+<dialog
+    #drawer
+    class="drawer"
+    aria-label="Navigation"
+    (close)="drawerOpen.set(false)"
+    (click)="onDrawerClick($event)"
+>
+    <div class="drawer-panel">
+        <div class="drawer-head">
+            <app-logo
+                ><span class="version">v{{ version }}</span></app-logo
+            >
+            <button
+                app-icon-button
+                type="button"
+                autofocus
+                aria-label="Close navigation"
+                (click)="drawerOpen.set(false)"
+            >
+                <svg lucideX [size]="18" aria-hidden="true"></svg>
+            </button>
+        </div>
+        <app-sidebar (navigate)="drawerOpen.set(false)" />
+    </div>
+</dialog>
+
+<app-search-dialog />

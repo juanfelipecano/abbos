@@ -1,0 +1,96 @@
+<article class="page">
+    <app-doc-header [entry]="entry()" />
+
+    <app-section-heading anchor="sec-import" heading="Import" />
+    <app-code-block inline lang="ts" [code]="importCode()" />
+
+    <app-section-heading
+        anchor="sec-playground"
+        heading="Playground"
+        lead="Change the inputs — the preview and code update together."
+    />
+    <ng-content select="[playground]" />
+
+    <app-section-heading anchor="sec-examples" heading="Examples" />
+    @for (example of doc().examples; track example.id) {
+        <app-example [example]="example" />
+    }
+
+    <app-section-heading anchor="sec-api" heading="API reference" />
+    @for (api of doc().api; track api.name) {
+        @if (multipleApis()) {
+            <app-section-heading [anchor]="'api-' + api.name" [heading]="api.name" [level]="3" />
+        }
+        <ng-template #tableTitle let-title>
+            @if (multipleApis()) {
+                <h4>{{ title }}</h4>
+            } @else {
+                <app-section-heading
+                    [anchor]="'sec-' + title.toLowerCase().replaceAll(' ', '-')"
+                    [heading]="title"
+                    [level]="3"
+                />
+            }
+        </ng-template>
+
+        <ng-container *ngTemplateOutlet="tableTitle; context: { $implicit: 'Inputs' }" />
+        <app-data-table
+            [caption]="api.name + ' inputs'"
+            [columns]="columns.inputs"
+            [rows]="inputRows(api)"
+            minWidth="640px"
+        />
+        @if (api.outputs?.length) {
+            <ng-container *ngTemplateOutlet="tableTitle; context: { $implicit: 'Outputs' }" />
+            <app-data-table
+                [caption]="api.name + ' outputs'"
+                [columns]="columns.outputs"
+                [rows]="outputRows(api)"
+            />
+        }
+        @if (api.slots?.length) {
+            <ng-container *ngTemplateOutlet="tableTitle; context: { $implicit: 'Content slots' }" />
+            <app-data-table
+                [caption]="api.name + ' content slots'"
+                [columns]="columns.slots"
+                [rows]="slotRows(api)"
+                minWidth="420px"
+            />
+        }
+        @if (api.cssVars?.length) {
+            <ng-container
+                *ngTemplateOutlet="tableTitle; context: { $implicit: 'CSS custom properties' }"
+            />
+            <p class="hint">Override on the element or any ancestor.</p>
+            <app-data-table
+                [caption]="api.name + ' CSS custom properties'"
+                [columns]="columns.css"
+                [rows]="cssRows(api)"
+                minWidth="600px"
+            />
+        }
+    }
+
+    <app-section-heading anchor="sec-a11y" heading="Accessibility" />
+    <app-section-heading anchor="sec-keys" heading="Keyboard" [level]="3" />
+    <app-data-table
+        caption="Keyboard interactions"
+        [columns]="columns.keys"
+        [rows]="keyboardRows()"
+        minWidth="420px"
+    />
+    <app-section-heading anchor="sec-aria" heading="ARIA" [level]="3" />
+    <app-check-list [items]="doc().aria" />
+
+    @if (doc().bestPractices.length) {
+        <app-section-heading anchor="sec-best" heading="Best practices" />
+        <app-do-dont [items]="doc().bestPractices" />
+    }
+
+    @if (doc().related.length) {
+        <app-section-heading anchor="sec-related" heading="Related" />
+        <app-related-cards [slugs]="doc().related" />
+    }
+
+    <app-prev-next />
+</article>

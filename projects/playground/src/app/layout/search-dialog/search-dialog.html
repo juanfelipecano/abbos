@@ -1,0 +1,116 @@
+<dialog
+    #dialog
+    class="dialog"
+    aria-label="Search documentation"
+    (cancel)="search.close()"
+    (close)="search.close()"
+    (click)="onDialogClick($event)"
+>
+    <div class="panel">
+        <div class="field">
+            <svg lucideSearch [size]="18" aria-hidden="true"></svg>
+            <input
+                #input
+                type="text"
+                role="combobox"
+                aria-label="Search"
+                aria-autocomplete="list"
+                aria-controls="search-results"
+                [attr.aria-expanded]="search.view().flat.length > 0"
+                [attr.aria-activedescendant]="
+                    search.view().flat.length ? optionId(search.activeIndex()) : null
+                "
+                autocomplete="off"
+                spellcheck="false"
+                placeholder="Search components, directives, pipes…"
+                [value]="search.query()"
+                (input)="onInput($event)"
+                (keydown)="onKeydown($event)"
+            />
+            @if (isMobile()) {
+                <button type="button" class="cancel" (click)="search.close()">Cancel</button>
+            } @else {
+                <kbd aria-hidden="true">esc</kbd>
+            }
+        </div>
+
+        <div class="results">
+            <div id="search-results" role="listbox" aria-label="Results">
+                @for (group of search.view().groups; track group.label; let g = $index) {
+                    <div role="group" [attr.aria-labelledby]="'search-group-' + g">
+                        <div class="group-label" [id]="'search-group-' + g">{{ group.label }}</div>
+                        @for (hit of group.hits; track hit.title; let h = $index) {
+                            @let index = indexOf(g, h);
+                            <div
+                                role="option"
+                                class="option"
+                                [id]="optionId(index)"
+                                [attr.aria-selected]="index === search.activeIndex()"
+                                (click)="search.go(hit)"
+                                (mousemove)="search.setActive(index)"
+                            >
+                                <span class="option-icon" aria-hidden="true">
+                                    @switch (group.label === 'Recent' ? 'Recent' : hit.group) {
+                                        @case ('Recent') {
+                                            <svg lucideClock [size]="16"></svg>
+                                        }
+                                        @case ('Directives') {
+                                            <svg lucideBraces [size]="16"></svg>
+                                        }
+                                        @case ('Pipes') {
+                                            <svg lucideArrowRightLeft [size]="16"></svg>
+                                        }
+                                        @case ('Docs') {
+                                            <svg lucideBookOpen [size]="16"></svg>
+                                        }
+                                        @default {
+                                            <svg lucideBox [size]="16"></svg>
+                                        }
+                                    }
+                                </span>
+                                <span class="option-text">
+                                    <span class="option-title"
+                                        >{{ hit.before }}<mark>{{ hit.match }}</mark
+                                        >{{ hit.after }}</span
+                                    >
+                                    <span class="option-desc">{{ hit.description }}</span>
+                                </span>
+                                @if (index === search.activeIndex()) {
+                                    <svg
+                                        class="enter"
+                                        lucideCornerDownLeft
+                                        [size]="16"
+                                        aria-hidden="true"
+                                    ></svg>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+
+            @if (search.query().trim() && !search.view().flat.length) {
+                <div class="empty">
+                    <strong>No results for “{{ search.query() }}”</strong>
+                    <span>Try “button”, “theming” or “switch”.</span>
+                </div>
+            }
+        </div>
+
+        @if (!isMobile()) {
+            <div class="footer">
+                <span><kbd>↑</kbd><kbd>↓</kbd>Navigate</span>
+                <span><kbd>↵</kbd>Open</span>
+                <span><kbd>esc</kbd>Close</span>
+                <span class="count" aria-live="polite">
+                    @if (search.query().trim()) {
+                        {{ search.view().flat.length }}
+                        {{ search.view().flat.length === 1 ? 'result' : 'results' }}
+                    } @else {
+                        Type to search
+                    }
+                </span>
+            </div>
+        }
+    </div>
+</dialog>

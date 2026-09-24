@@ -1,0 +1,48 @@
+:host {
+    --tone: var(--ab-info);
+    --tone-soft: var(--ab-info-soft);
+
+    display: flex;
+    gap: var(--ab-space-3);
+    padding: 14px var(--ab-space-4);
+    border: 1px solid color-mix(in srgb, var(--tone) 35%, transparent);
+    border-radius: 10px;
+    background: var(--tone-soft);
+}
+
+:host([data-tone='tip']) {
+    --tone: var(--ab-primary);
+    --tone-soft: var(--ab-primary-soft);
+}
+
+:host([data-tone='warning']) {
+    --tone: var(--ab-warning);
+    --tone-soft: var(--ab-warning-soft);
+}
+
+.icon {
+    display: flex;
+    padding-top: 2px;
+    color: var(--tone);
+}
+
+.content {
+    min-width: 0;
+}
+
+.title {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--ab-text);
+    font: var(--ab-fw-semibold) var(--ab-fs-14) / 1.4 var(--ab-font-sans);
+}
+
+.text {
+    color: var(--ab-text-secondary);
+    font: var(--ab-fs-14) / 1.55 var(--ab-font-sans);
+    text-wrap: pretty;
+
+    :host([data-tone='warning']) & {
+        color: var(--ab-text);
+    }
+}

@@ -1,0 +1,18 @@
+@let field = signup.email();
+@let showError = field.invalid() && field.touched();
+
+<div class="field">
+    <label for="signup-email">Email</label>
+    <input
+        ab-input
+        id="signup-email"
+        type="email"
+        [formField]="signup.email"
+        aria-describedby="signup-email-hint"
+    />
+    @if (showError) {
+        <small id="signup-email-hint" class="error">Enter a valid email address.</small>
+    } @else {
+        <small id="signup-email-hint">We'll never share it.</small>
+    }
+</div>

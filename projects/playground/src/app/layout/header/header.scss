@@ -1,0 +1,103 @@
+:host {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: block;
+}
+
+.bar {
+    display: flex;
+    align-items: center;
+    gap: var(--ab-space-4);
+    height: var(--pg-header-h);
+    padding: 0 var(--ab-space-6);
+    background: var(--ab-bg);
+    border-bottom: 1px solid var(--ab-border);
+}
+
+.chip {
+    padding: 3px 6px;
+    border: 1px solid var(--ab-border);
+    border-radius: 4px;
+    color: var(--ab-text-tertiary);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-mono);
+}
+
+.nav {
+    display: flex;
+    gap: var(--ab-space-1);
+    margin-left: var(--ab-space-2);
+
+    a {
+        display: flex;
+        align-items: center;
+        height: 32px;
+        padding: 0 var(--ab-space-3);
+        border-radius: 6px;
+        color: var(--ab-text-secondary);
+        font: var(--ab-fw-medium) var(--ab-fs-14) / 1 var(--ab-font-sans);
+        transition:
+            color var(--ab-dur-fast) var(--ab-ease-standard),
+            background var(--ab-dur-fast) var(--ab-ease-standard);
+
+        &:hover {
+            background: var(--ab-surface-hover);
+            color: var(--ab-text);
+            text-decoration: none;
+        }
+
+        &.active {
+            background: var(--ab-surface-2);
+            color: var(--ab-text);
+            font-weight: var(--ab-fw-semibold);
+        }
+    }
+}
+
+.spacer {
+    flex: 1;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    gap: var(--ab-space-2);
+    width: 256px;
+    height: 36px;
+    padding: 0 6px 0 var(--ab-space-3);
+    border: 1px solid var(--ab-border);
+    border-radius: var(--ab-radius);
+    background: var(--ab-surface);
+    color: var(--ab-text-tertiary);
+    font: var(--ab-text-body);
+    cursor: pointer;
+    transition: border-color var(--ab-dur-fast) var(--ab-ease-standard);
+
+    &:hover {
+        border-color: var(--ab-border-strong);
+    }
+}
+
+.search-text {
+    flex: 1;
+    text-align: left;
+}
+
+kbd {
+    display: flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 6px;
+    border: 1px solid var(--ab-border);
+    border-radius: 5px;
+    background: var(--ab-surface-2);
+    color: var(--ab-text-secondary);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-mono);
+}
+
+@media (max-width: 959px) {
+    .bar {
+        gap: var(--ab-space-1);
+        padding: 0 var(--ab-space-2) 0 var(--ab-space-1);
+    }
+}

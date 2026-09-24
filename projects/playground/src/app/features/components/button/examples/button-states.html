@@ -1,0 +1,5 @@
+<button ab-button [loading]="saving()" (click)="save()">
+    {{ saving() ? 'Saving' : 'Save changes' }}
+</button>
+<button ab-button variant="soft" loading>Uploading</button>
+<button ab-button variant="outline" disabled>Cancel</button>

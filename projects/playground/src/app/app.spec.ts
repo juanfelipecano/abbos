@@ -1,25 +1,35 @@
 import { TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
+import { provideAbbos } from 'abbos';
 import { App } from './app';
+import { routes } from './app.routes';
 
 describe('App', () => {
-    beforeEach(async () => {
-        await TestBed.configureTestingModule({
+    beforeEach(() => {
+        TestBed.configureTestingModule({
             imports: [App],
-            providers: [provideRouter([])],
-        }).compileComponents();
+            providers: [provideRouter(routes), provideAbbos()],
+        });
     });
 
-    it('should create the app', () => {
-        const fixture = TestBed.createComponent(App);
-        const app = fixture.componentInstance;
-        expect(app).toBeTruthy();
-    });
-
-    it('should render the router outlet', async () => {
+    it('renders the shell around the router outlet', async () => {
         const fixture = TestBed.createComponent(App);
         await fixture.whenStable();
-        const compiled = fixture.nativeElement as HTMLElement;
-        expect(compiled.querySelector('router-outlet')).toBeTruthy();
+        const element = fixture.nativeElement as HTMLElement;
+        expect(element.querySelector('app-header')).toBeTruthy();
+        expect(element.querySelector('main router-outlet')).toBeTruthy();
+    });
+
+    it('renders a component page with its title', async () => {
+        const harness = await RouterTestingHarness.create();
+        await harness.navigateByUrl('/components/button');
+        expect(harness.routeNativeElement?.querySelector('h1')?.textContent).toContain('Button');
+    });
+
+    it('redirects the old demo paths', async () => {
+        const harness = await RouterTestingHarness.create();
+        await harness.navigateByUrl('/switch');
+        expect(TestBed.inject(Router).url).toBe('/components/switch');
     });
 });

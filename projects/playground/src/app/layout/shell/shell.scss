@@ -1,0 +1,101 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: var(--ab-bg);
+    color: var(--ab-text);
+}
+
+.skip {
+    position: absolute;
+    top: var(--ab-space-2);
+    left: var(--ab-space-2);
+    z-index: 100;
+    padding: var(--ab-space-2) var(--ab-space-3);
+    border-radius: var(--ab-radius);
+    background: var(--ab-surface);
+    box-shadow: var(--ab-shadow-md);
+    transform: translateY(-200%);
+
+    &:focus {
+        transform: none;
+    }
+}
+
+.body {
+    display: flex;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.aside {
+    position: sticky;
+    top: var(--pg-header-h);
+    flex: none;
+    width: 264px;
+    height: calc(100vh - var(--pg-header-h));
+    overflow-y: auto;
+    padding: var(--ab-space-6) var(--ab-space-4) 40px;
+    border-right: 1px solid var(--ab-border);
+}
+
+.main {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    gap: 48px;
+    min-width: 0;
+    padding: 40px 48px 96px;
+    outline: none;
+}
+
+.content {
+    flex: 1;
+    min-width: 0;
+    max-width: 800px;
+
+    &.wide {
+        max-width: 1040px;
+    }
+}
+
+.drawer {
+    width: 300px;
+    max-width: calc(100% - 48px);
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-right: 1px solid var(--ab-border);
+    background: var(--ab-surface);
+    color: var(--ab-text);
+    box-shadow: var(--ab-shadow-xl);
+
+    &::backdrop {
+        background: color-mix(in srgb, var(--ab-grey-950) 45%, transparent);
+    }
+}
+
+.drawer-panel {
+    height: 100%;
+    overflow-y: auto;
+    padding: var(--ab-space-3) var(--ab-space-3) var(--ab-space-8);
+}
+
+.drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 var(--ab-space-5) 6px;
+}
+
+.version {
+    color: var(--ab-text-tertiary);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-mono);
+}
+
+@media (max-width: 959px) {
+    .main {
+        padding: var(--ab-space-6) var(--ab-space-4) 64px;
+    }
+}

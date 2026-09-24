@@ -1,0 +1,119 @@
+<article class="page">
+    <section class="hero">
+        <p class="pill">
+            <span class="pill-tag">New</span>v{{ version }} — Button, Input, Switch and more are
+            here
+        </p>
+        <h1 appTocEntry="sec-intro" tocLabel="Introduction">
+            Calm, configurable components for Angular
+        </h1>
+        <p class="lead">
+            Abbos is a friendly, minimal UI library for Angular 22 — accessible by default and
+            re-themed from a handful of CSS variables.
+        </p>
+        <div class="ctas">
+            <button ab-button size="lg" (click)="getStarted()">
+                Get started
+                <svg abEnd lucideArrowRight [size]="16" aria-hidden="true"></svg>
+            </button>
+            <a class="cta-link" routerLink="/components">Browse components</a>
+        </div>
+    </section>
+
+    <app-section-heading
+        anchor="sec-install"
+        heading="Installation"
+        lead="Add the package with your package manager of choice."
+    />
+    <app-seg-tabs
+        #tabs
+        label="Package manager"
+        panelId="install-panel"
+        [options]="managers"
+        [(value)]="manager"
+    />
+    <div id="install-panel" role="tabpanel" [attr.aria-labelledby]="tabs.tabId(manager())">
+        <app-code-block inline lang="bash" [code]="snippets.INSTALL_COMMANDS[manager()]" />
+    </div>
+    <p class="text">Then include the styles once in your global stylesheet:</p>
+    <app-code-block lang="scss" fileName="styles.scss" [code]="snippets.STYLES_SNIPPET" />
+    <p class="text">And register Abbos in your application config:</p>
+    <app-code-block lang="ts" fileName="app.config.ts" [code]="snippets.PROVIDERS_SNIPPET" />
+
+    <app-section-heading
+        anchor="sec-categories"
+        heading="Browse the library"
+        lead="Everything Abbos ships, grouped by what it does."
+    />
+    <div class="cats">
+        @for (category of categories; track category.id) {
+            <a class="cat" [routerLink]="category.path">
+                <span class="cat-icon" aria-hidden="true">
+                    @switch (category.id) {
+                        @case ('directives') {
+                            <svg lucideBraces [size]="20"></svg>
+                        }
+                        @case ('pipes') {
+                            <svg lucideArrowRightLeft [size]="20"></svg>
+                        }
+                        @default {
+                            <svg lucideBox [size]="20"></svg>
+                        }
+                    }
+                </span>
+                <span class="cat-text">
+                    <span class="cat-title">{{ category.title }}</span>
+                    <span class="cat-desc">{{ category.description }}</span>
+                </span>
+                <span class="cat-foot">
+                    <span class="cat-count">{{ category.count }}</span>
+                    @if (category.soon) {
+                        <app-status-badge label="Coming soon" />
+                    }
+                    <svg lucideArrowRight [size]="16" aria-hidden="true"></svg>
+                </span>
+            </a>
+        }
+    </div>
+
+    <app-section-heading
+        anchor="sec-usage"
+        heading="Quick usage"
+        lead="Every piece is standalone — import what you need straight into your component."
+    />
+    <app-code-block lang="ts" fileName="profile.ts" [code]="snippets.QUICK_USAGE_SNIPPET" />
+
+    <app-section-heading
+        anchor="sec-theming"
+        heading="Theming"
+        lead="Light and dark mode, five accents and every token can be set once at bootstrap."
+    />
+    <app-code-block lang="ts" fileName="app.config.ts" [code]="snippets.THEMING_SNIPPET" />
+    <p class="text">Change the theme or accent at runtime through AbThemeService:</p>
+    <app-code-block lang="ts" fileName="theme-toggle.ts" [code]="snippets.RUNTIME_THEME_SNIPPET" />
+
+    <div class="accents" role="group" aria-labelledby="accent-label">
+        <span id="accent-label" class="accents-label">Try an accent on this site</span>
+        <div class="accents-list">
+            @for (accent of accents; track accent) {
+                <button
+                    ab-button
+                    size="sm"
+                    variant="outline"
+                    [attr.aria-pressed]="theme.accent() === accent"
+                    (click)="theme.setAccent(accent)"
+                >
+                    <span abStart class="swatch" [attr.data-ab-accent]="accent"></span>
+                    {{ accent }}
+                </button>
+            }
+        </div>
+    </div>
+
+    <app-callout tone="tip" heading="Make it yours">
+        Override --ab-primary, --ab-radius or --ab-font-sans once and every component follows. No
+        rebuild, no overrides.
+    </app-callout>
+
+    <app-prev-next />
+</article>

@@ -1,0 +1,56 @@
+<article class="page">
+    <app-doc-header [entry]="entry" />
+
+    <app-section-heading anchor="sec-signature" heading="Signature" />
+    <div class="signature">
+        <code class="sig">
+            <span class="p">{{ '{{' }} </span><span class="v">value</span><span class="p"> | </span
+            ><span class="f">truncate</span><span class="p"> : </span><span class="a">length</span
+            ><span class="p"> : </span><span class="a">suffix</span
+            ><span class="p"> {{ '}}' }}</span>
+        </code>
+        <div class="facts">
+            <span>Accepts <code>string | null | undefined</code></span>
+            <span>Returns <code>string</code></span>
+            <span>Pure</span>
+        </div>
+    </div>
+
+    <app-section-heading anchor="sec-import" heading="Import" />
+    <app-code-block inline lang="ts" [code]="importCode" />
+
+    <app-section-heading
+        anchor="sec-try"
+        heading="Try it"
+        lead="Type a value and change the arguments — the output updates live."
+    />
+    <app-truncate-try />
+
+    <app-section-heading anchor="sec-params" heading="Parameters" />
+    <app-data-table
+        caption="truncate parameters"
+        [columns]="paramColumns"
+        [rows]="params"
+        minWidth="600px"
+    />
+    <app-callout tone="info" heading="Pure by default">
+        Angular only re-runs truncate when value, length or suffix change — safe to use inside large
+        lists.
+    </app-callout>
+
+    <app-section-heading anchor="sec-usage" heading="Usage" />
+    <app-section-heading anchor="sec-usage-tpl" heading="In a template" [level]="3" />
+    <app-code-block lang="html" fileName="post-card.html" [code]="templateUsage" />
+    <app-section-heading
+        anchor="sec-usage-ts"
+        heading="In TypeScript"
+        lead="Call the exported function — no need to inject the pipe."
+        [level]="3"
+    />
+    <app-code-block lang="ts" fileName="file-list.ts" [code]="tsUsage" />
+
+    <app-section-heading anchor="sec-related" heading="Related" />
+    <app-related-cards [slugs]="['input', 'autofocus']" />
+
+    <app-prev-next />
+</article>

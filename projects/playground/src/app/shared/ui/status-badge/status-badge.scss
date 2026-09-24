@@ -1,0 +1,43 @@
+:host {
+    --tone: var(--ab-text-tertiary);
+    --tone-soft: var(--ab-surface-2);
+
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 5px;
+    height: 20px;
+    padding: 0 7px;
+    border-radius: var(--ab-radius-full);
+    background: var(--tone-soft);
+    color: var(--ab-text);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-sans);
+    white-space: nowrap;
+}
+
+:host([data-tone='primary']) {
+    --tone: var(--ab-primary);
+    --tone-soft: var(--ab-primary-soft);
+}
+
+:host([data-tone='info']) {
+    --tone: var(--ab-info);
+    --tone-soft: var(--ab-info-soft);
+}
+
+:host([data-tone='warning']) {
+    --tone: var(--ab-warning);
+    --tone-soft: var(--ab-warning-soft);
+}
+
+:host([data-tone='success']) {
+    --tone: var(--ab-success);
+    --tone-soft: var(--ab-success-soft);
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--tone);
+}

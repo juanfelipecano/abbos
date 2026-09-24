@@ -1,0 +1,73 @@
+:host {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--ab-border);
+    border-radius: 12px;
+    background: var(--ab-surface);
+    box-shadow: var(--ab-shadow-sm);
+    transition:
+        border-color var(--ab-dur-fast) var(--ab-ease-standard),
+        box-shadow var(--ab-dur-fast) var(--ab-ease-standard);
+
+    &:hover,
+    &:focus-within {
+        border-color: var(--ab-border-strong);
+        box-shadow: var(--ab-shadow-md);
+    }
+}
+
+.thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 148px;
+    padding: var(--ab-space-4);
+    border-bottom: 1px solid var(--ab-border);
+    pointer-events: none;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: var(--ab-space-4);
+}
+
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ab-space-2);
+}
+
+// The title link covers the whole card, so the card is clickable without nesting controls.
+.title {
+    color: var(--ab-text);
+    font: var(--ab-fw-semibold) 15px / 1.3 var(--ab-font-sans);
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+    }
+
+    &:hover {
+        color: var(--ab-text);
+        text-decoration: none;
+    }
+}
+
+.card-desc {
+    margin: 0;
+    color: var(--ab-text-secondary);
+    font: var(--ab-fs-14) / 1.5 var(--ab-font-sans);
+}
+
+.selector {
+    margin-top: var(--ab-space-1);
+    color: var(--ab-text-tertiary);
+    font: var(--ab-fw-medium) var(--ab-fs-12) / 1 var(--ab-font-mono);
+}

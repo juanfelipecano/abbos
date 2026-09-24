@@ -1,0 +1,63 @@
+:host {
+    display: block;
+    min-width: 0;
+}
+
+.canvas {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: inherit;
+    padding: 40px var(--ab-space-6);
+    background-color: var(--ab-bg);
+    color: var(--ab-text);
+}
+
+.canvas.surface {
+    background-color: var(--ab-surface);
+}
+
+:host(.framed) .canvas {
+    padding: 64px var(--ab-space-6) 48px;
+}
+
+.label {
+    position: absolute;
+    top: 18px;
+    left: var(--ab-space-4);
+    color: var(--ab-text-tertiary);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-mono);
+}
+
+.themes {
+    position: absolute;
+    top: var(--ab-space-3);
+    right: var(--ab-space-3);
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--ab-border);
+    border-radius: var(--ab-radius);
+    background: var(--ab-surface-2);
+
+    button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 26px;
+        border: 0;
+        border-radius: 6px;
+        background: transparent;
+        color: var(--ab-text-secondary);
+        cursor: pointer;
+
+        &[aria-pressed='true'] {
+            background: var(--ab-surface);
+            color: var(--ab-text);
+            box-shadow: var(--ab-shadow-xs);
+        }
+    }
+}

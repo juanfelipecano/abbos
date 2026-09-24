@@ -33,6 +33,9 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
 
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
       - name: Install Application Dependencies
         run: npm ci
 
@@ -51,6 +54,7 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           coverage-file: ${{ env.ABBOS_COVERAGE_FILE_PATH }}
+          delete-old-comments: false
 
       - name: Build Playground
         run: npx ng build playground
@@ -64,3 +68,33 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           coverage-file: ${{ env.PLAYGROUND_COVERAGE_FILE_PATH }}
+          delete-old-comments: false
+
+      - name: Deploy Playground to Firebase Channel Preview
+        id: playgroundDeployment
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          PREVIEW_URL=$(firebase hosting:channel:deploy testing-${{ github.run_id }} --expires 1d --json | jq -r '.result[].url')
+          echo "preview_url=$PREVIEW_URL" >> "$GITHUB_OUTPUT"
+
+      - name: Add Preview URL to summary
+        run: |
+          echo "## 🚀 Playground Preview Available" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "${{ steps.playgroundDeployment.outputs.preview_url }}" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Comment Preview URL on Pull Request
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `🚀 Playground Preview Available: [Testing Preview](${{ steps.playgroundDeployment.outputs.preview_url }})
+                This preview will expire in 24 hours.
+              `
+            })
