@@ -1,7 +1,5 @@
 {
   "permissions": {
-    "additionalDirectories": [
-      "/Users/juano/Docs/Projects/Apollo"
-    ]
+    "additionalDirectories": ["/Users/juano/Docs/Projects/Apollo"]
   }
 }

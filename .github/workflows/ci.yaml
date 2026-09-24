@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
 env:
   NODE_VERSION: '26'
@@ -36,29 +36,29 @@ jobs:
       - name: Install Application Dependencies
         run: npm ci
 
-      - name: Check formatting
+      - name: Check Formatting
         run: npx prettier --check .
 
-      - name: Build Abbos library
+      - name: Build Abbos Library
         run: npx ng build abbos
 
-      - name: Test Abbos library
+      - name: Test Abbos Library
         run: npx ng test abbos --coverage --watch=false
 
-      - name: Post Abbos code coverage comments
+      - name: Post Abbos Code Coverage Comments
         if: github.event_name == 'pull_request'
         uses: kcjpop/coverage-comments@v2.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           coverage-file: ${{ env.ABBOS_COVERAGE_FILE_PATH }}
 
-      - name: Build playground
+      - name: Build Playground
         run: npx ng build playground
 
-      - name: Test playground
+      - name: Test Playground
         run: npx ng test playground --coverage --watch=false
 
-      - name: Post playground code coverage comments
+      - name: Post Playground Code Coverage Comments
         if: github.event_name == 'pull_request'
         uses: kcjpop/coverage-comments@v2.2
         with:

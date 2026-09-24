@@ -1,11 +1,11 @@
 ---
 name: ux-patterns
-description: "Use when choosing, comparing, or implementing UX patterns across the UX Patterns for Developers corpus."
+description: 'Use when choosing, comparing, or implementing UX patterns across the UX Patterns for Developers corpus.'
 metadata:
-  id: ux-patterns
-  category: global
-  source: uxpatterns.dev
-  url: https://uxpatterns.dev/skills/ux-patterns
+    id: ux-patterns
+    category: global
+    source: uxpatterns.dev
+    url: https://uxpatterns.dev/skills/ux-patterns
 ---
 
 # UX Patterns Global

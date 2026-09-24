@@ -55,7 +55,7 @@ Findings discovered during AIDD runs that are out of scope for the run that foun
   all 12 failures are in `input.spec.ts`). `specs/ab-input/spec.md`'s AC-F3/AC-F4/AC-Q2
   narrative (7 of 12 failing, due to a `data-size`/`data-shape`-vs-class mismatch) is now
   stale — the actual failure for every test in that file is `NG0201: No provider found for
-  InjectionToken ControlSize`. Root cause: at some point after that spec's last recorded
+InjectionToken ControlSize`. Root cause: at some point after that spec's last recorded
   amendment, `input.ts` started injecting `CONTROL_SIZE`/`CONTROL_SHAPE` (see
   `AbInput.size`/`.shape` defaults) with no default value and no `optional: true`, and
   `input.spec.ts`'s `TestBed.configureTestingModule` calls were never updated to provide
@@ -102,7 +102,7 @@ Findings discovered during AIDD runs that are out of scope for the run that foun
 - **Signal-input test flake recurred a second time**: `ab-button`'s Amendment #2
   (`specs/ab-button/spec.md`) root-caused a TestBed pattern where a plain (non-signal) field
   mutated on a wrapper host and rebound via a template binding does not reliably propagate to
-  a child component's signal `input()` on the *second* `detectChanges()` call, while
+  a child component's signal `input()` on the _second_ `detectChanges()` call, while
   `fixture.componentRef.setInput()` always works. This run (`ab-switch`) independently hit
   the exact same failure mode on its size/shape/disabled tests before knowing to avoid it.
   `ab-button`'s own retrospective already recommended adding this as a stated convention in

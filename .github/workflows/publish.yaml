@@ -31,7 +31,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Check tag matches library version
+      - name: Check tag Matches Library Version
         run: |
           version=$(node -p "require('./projects/abbos/package.json').version")
           if [ "v$version" != "$GITHUB_REF_NAME" ]; then
@@ -39,16 +39,16 @@ jobs:
             exit 1
           fi
 
-      - name: Check formatting
+      - name: Check Formatting
         run: npx prettier --check .
 
-      - name: Build library
+      - name: Build Library
         run: npx ng build abbos
 
-      - name: Test library
+      - name: Test Library
         run: npx ng test abbos --watch=false
 
-      - name: Test playground
+      - name: Test Playground
         run: npx ng test playground --watch=false
 
       - name: Publish

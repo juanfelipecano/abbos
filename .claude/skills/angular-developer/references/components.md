@@ -8,21 +8,21 @@ Use the `@Component` decorator to define a component's metadata.
 
 ```ts
 @Component({
-  selector: 'app-profile',
-  template: `
-    <img src="profile.jpg" alt="Profile photo" />
-    <button (click)="save()">Save</button>
-  `,
-  styles: `
-    img {
-      border-radius: 50%;
-    }
-  `,
+    selector: 'app-profile',
+    template: `
+        <img src="profile.jpg" alt="Profile photo" />
+        <button (click)="save()">Save</button>
+    `,
+    styles: `
+        img {
+            border-radius: 50%;
+        }
+    `,
 })
 export class Profile {
-  save() {
-    /* ... */
-  }
+    save() {
+        /* ... */
+    }
 }
 ```
 
@@ -41,9 +41,9 @@ To use a component, add it to the `imports` array of the consuming component and
 
 ```ts
 @Component({
-  selector: 'app-root',
-  imports: [Profile],
-  template: `<app-profile />`,
+    selector: 'app-root',
+    imports: [Profile],
+    template: `<app-profile />`,
 })
 export class App {}
 ```
@@ -80,11 +80,11 @@ The `@for` block iterates over collections. The `track` expression is **required
 
 ```html
 <ul>
-  @for (item of items(); track item.id; let i = $index, total = $count) {
-  <li>{{ i + 1 }}/{{ total }}: {{ item.name }}</li>
-  } @empty {
-  <li>No items to display.</li>
-  }
+    @for (item of items(); track item.id; let i = $index, total = $count) {
+    <li>{{ i + 1 }}/{{ total }}: {{ item.name }}</li>
+    } @empty {
+    <li>No items to display.</li>
+    }
 </ul>
 ```
 
