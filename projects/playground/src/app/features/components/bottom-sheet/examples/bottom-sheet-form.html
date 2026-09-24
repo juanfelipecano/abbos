@@ -1,0 +1,11 @@
+<button ab-button (click)="open.set(true)">Share project</button>
+
+<ab-bottom-sheet [(open)]="open" heading="Share project" subheading="Anyone with the link can view">
+    <input ab-input aria-label="Email address" placeholder="Add people by email" />
+    <p>Long content scrolls inside the sheet while the footer stays pinned.</p>
+
+    <div abSheetFooter class="footer">
+        <button ab-button variant="secondary" (click)="open.set(false)">Copy link</button>
+        <button ab-button (click)="open.set(false)">Done</button>
+    </div>
+</ab-bottom-sheet>

@@ -88,6 +88,9 @@
 
     // focus ring color (used with box-shadow)
     --ab-ring: color-mix(in srgb, var(--ab-primary) 35%, transparent);
+
+    // modal backdrop (same in both themes)
+    --ab-scrim: color-mix(in srgb, var(--ab-grey-950) 45%, transparent);
 }
 
 // ---- Semantic aliases — dark ----

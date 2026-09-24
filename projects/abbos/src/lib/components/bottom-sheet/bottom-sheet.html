@@ -1,0 +1,78 @@
+@if (!isModal()) {
+    <ng-container [ngTemplateOutlet]="sheet" />
+}
+
+<ng-template #sheet>
+    <div
+        class="ab-bottom-sheet"
+        [class.ab-bottom-sheet_modal]="isModal()"
+        [class.ab-bottom-sheet_standard]="!isModal()"
+        [class.ab-bottom-sheet_open]="shown()"
+        [class.ab-bottom-sheet_dragging]="dragging()"
+        [class.ab-bottom-sheet_compact]="compact()"
+        [style.--ab-sheet-dy.px]="dy()"
+        [style.--ab-sheet-peek.px]="peekHeight()"
+    >
+        @if (isModal()) {
+            <div
+                class="ab-bottom-sheet-scrim"
+                aria-hidden="true"
+                [style.opacity]="scrimOpacity()"
+                (click)="onScrimClick()"
+            ></div>
+        }
+        <section
+            class="ab-bottom-sheet-panel"
+            [attr.role]="isModal() ? 'dialog' : 'region'"
+            [attr.aria-modal]="isModal() ? 'true' : null"
+            [attr.aria-labelledby]="titleId"
+            [cdkTrapFocus]="isModal()"
+            [cdkTrapFocusAutoCapture]="isModal()"
+        >
+            <div
+                class="ab-bottom-sheet-head"
+                [class.ab-bottom-sheet-head_draggable]="canDrag()"
+                (pointerdown)="onDragStart($event)"
+                (pointermove)="onDragMove($event)"
+                (pointerup)="onDragEnd($event)"
+                (pointercancel)="onDragCancel()"
+            >
+                <div class="ab-bottom-sheet-handle" aria-hidden="true">
+                    @if (showHandle()) {
+                        <span class="ab-bottom-sheet-pill"></span>
+                    }
+                </div>
+                <header class="ab-bottom-sheet-header">
+                    <div class="ab-bottom-sheet-titles">
+                        <h3 class="ab-bottom-sheet-title" [id]="titleId">{{ heading() }}</h3>
+                        @if (subheading(); as sub) {
+                            <p class="ab-bottom-sheet-subtitle">{{ sub }}</p>
+                        }
+                    </div>
+                    @if (!isModal() || dismissible()) {
+                        <button
+                            ab-button
+                            type="button"
+                            variant="ghost"
+                            shape="circle"
+                            class="ab-bottom-sheet-action"
+                            [attr.aria-label]="actionLabel()"
+                            [attr.aria-expanded]="isModal() ? null : open()"
+                            (click)="onAction()"
+                        >
+                            <ab-icon [icon]="actionIcon()" tone="neutral" size="md" />
+                        </button>
+                    }
+                </header>
+            </div>
+            <div class="ab-bottom-sheet-body" [attr.inert]="collapsed() ? '' : null">
+                <ng-content />
+            </div>
+            @if (footer()) {
+                <div class="ab-bottom-sheet-footer" [attr.inert]="collapsed() ? '' : null">
+                    <ng-content select="[abSheetFooter]" />
+                </div>
+            }
+        </section>
+    </div>
+</ng-template>

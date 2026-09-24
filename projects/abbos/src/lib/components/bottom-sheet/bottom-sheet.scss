@@ -1,0 +1,159 @@
+// The template renders into a CDK overlay (modal) or in place (standard), so styles hang off
+// classes rather than :host.
+:host {
+    display: contents;
+}
+
+.ab-bottom-sheet {
+    --sheet-radius: var(--ab-radius-sheet, 20px);
+    --sheet-duration: 260ms;
+    --sheet-ease: cubic-bezier(0.2, 0, 0, 1);
+    --sheet-px: var(--ab-space-6);
+    --sheet-edge-gap: 56px;
+
+    // Modal: fills the viewport so the scrim and the panel share one positioning context.
+    &_modal {
+        position: fixed;
+        inset: 0;
+    }
+
+    // Standard: bottom of the nearest positioned ancestor when overridden to `absolute`.
+    &_standard {
+        position: var(--ab-bottom-sheet-position, fixed);
+        inset: auto 0 0;
+        pointer-events: none;
+    }
+
+    &_compact {
+        --sheet-px: var(--ab-space-2);
+    }
+}
+
+.ab-bottom-sheet-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: var(--ab-scrim);
+    transition: opacity var(--sheet-duration) var(--sheet-ease);
+}
+
+.ab-bottom-sheet-panel {
+    position: absolute;
+    z-index: 2;
+    inset: auto 0 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    max-width: 640px;
+    max-height: calc(100% - var(--sheet-edge-gap));
+    margin: 0 auto;
+    background: var(--ab-surface);
+    color: var(--ab-text);
+    border: 1px solid var(--ab-border);
+    border-bottom: 0;
+    border-radius: var(--sheet-radius) var(--sheet-radius) 0 0;
+    box-shadow: var(--ab-shadow-xl);
+    pointer-events: auto;
+    transform: translateY(var(--ab-sheet-dy, 0px));
+    transition: transform var(--sheet-duration) var(--sheet-ease);
+    outline: none;
+}
+
+.ab-bottom-sheet_standard .ab-bottom-sheet-panel {
+    position: relative;
+}
+
+.ab-bottom-sheet_modal:not(.ab-bottom-sheet_open) .ab-bottom-sheet-panel {
+    transform: translateY(calc(100% + 24px));
+}
+
+.ab-bottom-sheet_standard:not(.ab-bottom-sheet_open) .ab-bottom-sheet-panel {
+    transform: translateY(calc(100% - var(--ab-sheet-peek, 92px) + var(--ab-sheet-dy, 0px)));
+}
+
+.ab-bottom-sheet_dragging {
+    .ab-bottom-sheet-panel,
+    .ab-bottom-sheet-scrim {
+        transition: none;
+    }
+}
+
+.ab-bottom-sheet-head {
+    flex-shrink: 0;
+    user-select: none;
+
+    &_draggable {
+        touch-action: none;
+        cursor: grab;
+    }
+}
+
+.ab-bottom-sheet-handle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--ab-space-4);
+}
+
+.ab-bottom-sheet-pill {
+    width: 32px;
+    height: 4px;
+    border-radius: var(--ab-radius-full);
+    background: var(--ab-border-strong);
+}
+
+// Taller strip when the handle is shown.
+.ab-bottom-sheet-handle:has(.ab-bottom-sheet-pill) {
+    height: var(--ab-space-6);
+}
+
+.ab-bottom-sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ab-space-3);
+    padding: 0 var(--ab-space-4) var(--ab-space-3) var(--ab-space-6);
+}
+
+.ab-bottom-sheet-titles {
+    min-width: 0;
+}
+
+.ab-bottom-sheet-title {
+    margin: 0;
+    font: var(--ab-fw-bold) var(--ab-fs-18) / 1.3 var(--ab-font-sans);
+    letter-spacing: -0.01em;
+}
+
+.ab-bottom-sheet-subtitle {
+    margin: 2px 0 0;
+    font: var(--ab-fs-13) / 1.4 var(--ab-font-sans);
+    color: var(--ab-text-secondary);
+}
+
+.ab-bottom-sheet .ab-bottom-sheet-action.ab-button {
+    flex-shrink: 0;
+    width: var(--ab-control-h-md);
+    padding: 0;
+}
+
+.ab-bottom-sheet-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: var(--ab-space-1) var(--sheet-px) var(--ab-space-4);
+}
+
+.ab-bottom-sheet-footer {
+    flex-shrink: 0;
+    padding: var(--ab-space-3) var(--ab-space-6) 28px;
+    border-top: 1px solid var(--ab-border);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ab-bottom-sheet-panel,
+    .ab-bottom-sheet-scrim {
+        transition: none;
+    }
+}

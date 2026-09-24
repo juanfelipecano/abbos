@@ -1,0 +1,10 @@
+<button ab-button variant="secondary" (click)="open.set(true)">Photo options</button>
+
+<ab-bottom-sheet [(open)]="open" heading="Photo options" compact>
+    <div class="actions">
+        <button ab-button variant="ghost" full (click)="open.set(false)">Share</button>
+        <button ab-button variant="ghost" full (click)="open.set(false)">Copy link</button>
+        <button ab-button variant="ghost" full (click)="open.set(false)">Move to album</button>
+        <button ab-button variant="danger" full (click)="open.set(false)">Delete</button>
+    </div>
+</ab-bottom-sheet>
