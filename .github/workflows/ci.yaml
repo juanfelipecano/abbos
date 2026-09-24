@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+env:
+  NODE_VERSION: '26'
+  ABBOS_COVERAGE_FILE_PATH: './coverage/abbos/clover.xml'
+  PLAYGROUND_COVERAGE_FILE_PATH: './coverage/playground/clover.xml'
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - name: Install Application Dependencies
+        run: npm ci
+
+      - name: Check formatting
+        run: npx prettier --check .
+
+      - name: Build Abbos library
+        run: npx ng build abbos
+
+      - name: Test Abbos library
+        run: npx ng test abbos --coverage --watch=false
+
+      - name: Post Abbos code coverage comments
+        if: github.event_name == 'pull_request'
+        uses: kcjpop/coverage-comments@v2.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          coverage-file: ${{ env.ABBOS_COVERAGE_FILE_PATH }}
+
+      - name: Build playground
+        run: npx ng build playground
+
+      - name: Test playground
+        run: npx ng test playground --coverage --watch=false
+
+      - name: Post playground code coverage comments
+        if: github.event_name == 'pull_request'
+        uses: kcjpop/coverage-comments@v2.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          coverage-file: ${{ env.PLAYGROUND_COVERAGE_FILE_PATH }}
