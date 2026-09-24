@@ -1,0 +1,206 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ab-space-4);
+}
+
+.hero {
+    padding: var(--ab-space-2) 0 48px;
+    border-bottom: 1px solid var(--ab-border);
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ab-space-2);
+    height: 30px;
+    margin: 0;
+    padding: 0 var(--ab-space-3) 0 var(--ab-space-1);
+    border: 1px solid var(--ab-border);
+    border-radius: var(--ab-radius-full);
+    background: var(--ab-surface);
+    color: var(--ab-text-secondary);
+    font: var(--ab-fw-medium) var(--ab-fs-13) / 1 var(--ab-font-sans);
+}
+
+.pill-tag {
+    display: inline-flex;
+    align-items: center;
+    height: 22px;
+    padding: 0 var(--ab-space-2);
+    border-radius: var(--ab-radius-full);
+    background: var(--ab-primary-soft);
+    color: var(--ab-primary-active);
+    font: var(--ab-fw-semibold) var(--ab-fs-11) / 1 var(--ab-font-sans);
+}
+
+h1 {
+    margin: var(--ab-space-6) 0 var(--ab-space-4);
+    font: var(--ab-fw-extra) var(--ab-fs-64) / 1.05 var(--ab-font-sans);
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+}
+
+.lead {
+    max-width: 580px;
+    margin: 0 0 var(--ab-space-8);
+    color: var(--ab-text-secondary);
+    font: var(--ab-fs-18) / 1.55 var(--ab-font-sans);
+    text-wrap: pretty;
+}
+
+.ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ab-space-3);
+}
+
+// A link that looks like an outline lg button (AbButton only attaches to <button>).
+.cta-link {
+    display: inline-flex;
+    align-items: center;
+    height: var(--ab-control-h-lg);
+    padding: 0 var(--ab-space-5);
+    border: 1px solid var(--ab-border-strong);
+    border-radius: var(--ab-radius-control);
+    color: var(--ab-text);
+    font: var(--ab-fw-semibold) var(--ab-fs-16) / 1 var(--ab-font-sans);
+
+    &:hover {
+        background: var(--ab-surface-hover);
+        color: var(--ab-text);
+        text-decoration: none;
+    }
+}
+
+.text {
+    margin: var(--ab-space-2) 0 0;
+    color: var(--ab-text-secondary);
+    font: var(--ab-text-body-lg);
+}
+
+.cats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ab-space-4);
+}
+
+.cat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--ab-space-4);
+    padding: var(--ab-space-5);
+    border: 1px solid var(--ab-border);
+    border-radius: 12px;
+    background: var(--ab-surface);
+    box-shadow: var(--ab-shadow-sm);
+    color: var(--ab-text);
+    transition:
+        border-color var(--ab-dur-fast) var(--ab-ease-standard),
+        box-shadow var(--ab-dur-fast) var(--ab-ease-standard);
+
+    &:hover {
+        border-color: var(--ab-border-strong);
+        box-shadow: var(--ab-shadow-md);
+        color: var(--ab-text);
+        text-decoration: none;
+    }
+}
+
+.cat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--ab-primary-soft);
+    color: var(--ab-primary);
+}
+
+.cat-text {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cat-title {
+    font: var(--ab-fw-semibold) var(--ab-fs-16) / 1.3 var(--ab-font-sans);
+}
+
+.cat-desc {
+    color: var(--ab-text-secondary);
+    font: var(--ab-fs-14) / 1.5 var(--ab-font-sans);
+    text-wrap: pretty;
+}
+
+.cat-foot {
+    display: flex;
+    align-items: center;
+    gap: var(--ab-space-2);
+    width: 100%;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--ab-border);
+    color: var(--ab-text-tertiary);
+}
+
+.cat-count {
+    flex: 1;
+    color: var(--ab-text-secondary);
+    font: var(--ab-fw-medium) var(--ab-fs-13) / 1 var(--ab-font-sans);
+}
+
+.accents {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ab-space-3);
+    padding: var(--ab-space-4);
+    border: 1px solid var(--ab-border);
+    border-radius: 12px;
+    background: var(--ab-surface);
+}
+
+.accents-label {
+    font: var(--ab-text-label);
+}
+
+.accents-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ab-space-2);
+
+    [aria-pressed='true'] {
+        border-color: var(--ab-primary);
+        box-shadow: var(--ab-focus-ring);
+    }
+}
+
+// Each swatch re-scopes the accent so it shows its own --ab-primary.
+.swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--ab-primary);
+}
+
+@media (max-width: 959px) {
+    h1 {
+        font-size: 38px;
+    }
+
+    .lead {
+        font-size: var(--ab-fs-16);
+    }
+
+    .cats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+// Emerald is the default accent, so it has no attribute rule of its own.
+.swatch[data-ab-accent='emerald'] {
+    background: var(--ab-emerald-500);
+}

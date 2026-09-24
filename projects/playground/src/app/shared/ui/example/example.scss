@@ -1,0 +1,36 @@
+:host {
+    display: block;
+    margin-top: var(--ab-space-2);
+}
+
+.head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--ab-space-3);
+    margin-bottom: var(--ab-space-3);
+}
+
+.intro {
+    flex: 1 1 280px;
+    min-width: 0;
+}
+
+h3 {
+    margin: 0 0 var(--ab-space-1);
+    font: var(--ab-fw-semibold) var(--ab-fs-18) / 1.3 var(--ab-font-sans);
+}
+
+p {
+    margin: 0;
+    color: var(--ab-text-secondary);
+    text-wrap: pretty;
+}
+
+.preview {
+    min-height: 168px;
+    overflow: hidden;
+    border: 1px solid var(--ab-border);
+    border-radius: 12px;
+}

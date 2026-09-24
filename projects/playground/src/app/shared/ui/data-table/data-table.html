@@ -1,0 +1,52 @@
+<div class="scroll" role="region" [attr.aria-label]="caption()" tabindex="0">
+    <table [style.min-width]="minWidth()">
+        <caption class="pg-visually-hidden">
+            {{
+                caption()
+            }}
+        </caption>
+        <colgroup>
+            @for (column of columns(); track column.header) {
+                <col [style.width]="column.width ?? null" />
+            }
+        </colgroup>
+        <thead>
+            <tr>
+                @for (column of columns(); track column.header) {
+                    <th scope="col">{{ column.header }}</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (row of rows(); track $index) {
+                <tr>
+                    @for (column of columns(); track column.header; let c = $index) {
+                        <td>
+                            @switch (column.kind) {
+                                @case ('name') {
+                                    <code class="name">{{ asText(row[c]) }}</code>
+                                }
+                                @case ('code') {
+                                    <code class="chip">{{ asText(row[c]) }}</code>
+                                }
+                                @case ('mono') {
+                                    <code class="mono">{{ asText(row[c]) }}</code>
+                                }
+                                @case ('keys') {
+                                    <span class="keys">
+                                        @for (key of asList(row[c]); track key) {
+                                            <kbd>{{ key }}</kbd>
+                                        }
+                                    </span>
+                                }
+                                @default {
+                                    <span class="text">{{ asText(row[c]) }}</span>
+                                }
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

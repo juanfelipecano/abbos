@@ -1,32 +1,30 @@
 import { Routes } from '@angular/router';
+import { CATEGORIES, CATEGORY_ORDER } from './core/docs/categories';
+import { DOC_ENTRIES, entryPath } from './core/docs/docs-registry';
+
+const TITLE = 'Abbos';
+
+/** Paths of the old one-page demos, kept so existing bookmarks still land somewhere. */
+const LEGACY_PATHS = ['button', 'input', 'switch', 'segmented-toggle', 'icon', 'settings-list'];
 
 export const routes: Routes = [
     {
-        path: 'input',
-        loadComponent: () => import('./pages/input-demo/input-demo').then((m) => m.InputDemo),
+        path: '',
+        pathMatch: 'full',
+        title: `Getting started · ${TITLE}`,
+        loadComponent: () => import('./features/home/home'),
     },
-    {
-        path: 'button',
-        loadComponent: () => import('./pages/button-demo/button-demo').then((m) => m.ButtonDemo),
-    },
-    {
-        path: 'switch',
-        loadComponent: () => import('./pages/switch-demo/switch-demo').then((m) => m.SwitchDemo),
-    },
-    {
-        path: 'segmented-toggle',
-        loadComponent: () =>
-            import('./pages/segmented-toggle-demo/segmented-toggle-demo').then(
-                (m) => m.SegmentedToggleDemo,
-            ),
-    },
-    {
-        path: 'settings-list',
-        loadComponent: () =>
-            import('./pages/settings-list-demo/settings-list-demo').then((m) => m.SettingsListDemo),
-    },
-    {
-        path: 'icon',
-        loadComponent: () => import('./pages/icon-demo/icon-demo').then((m) => m.IconDemo),
-    },
+    ...CATEGORY_ORDER.map((id) => ({
+        path: id,
+        title: `${CATEGORIES[id].title} · ${TITLE}`,
+        data: { category: id, wide: true },
+        loadComponent: () => import('./features/category/category'),
+    })),
+    ...DOC_ENTRIES.map((entry) => ({
+        path: entryPath(entry).slice(1),
+        title: `${entry.title} · ${TITLE}`,
+        loadComponent: entry.loadPage,
+    })),
+    ...LEGACY_PATHS.map((path) => ({ path, redirectTo: `components/${path}` })),
+    { path: '**', redirectTo: '' },
 ];

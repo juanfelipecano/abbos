@@ -1,0 +1,65 @@
+@if (!inline()) {
+    <div class="bar">
+        @if (allFiles().length > 1) {
+            <div class="tabs" role="tablist" aria-label="Files" (keydown)="onTabKeydown($event)">
+                @for (file of allFiles(); track file.label; let i = $index) {
+                    <button
+                        type="button"
+                        role="tab"
+                        class="tab"
+                        [id]="uid + '-tab-' + i"
+                        [attr.aria-selected]="i === tab()"
+                        [attr.aria-controls]="uid + '-panel'"
+                        [attr.tabindex]="i === tab() ? 0 : -1"
+                        (click)="select(i)"
+                    >
+                        {{ file.label }}
+                    </button>
+                }
+            </div>
+            @if (current().name; as name) {
+                <span class="file file-end">{{ name }}</span>
+            }
+        } @else {
+            <span class="file">{{ current().name ?? current().lang }}</span>
+        }
+        <button type="button" class="copy" [class.done]="copied()" (click)="copy()">
+            @if (copied()) {
+                <svg lucideCheck [size]="14" aria-hidden="true"></svg>
+                <span>Copied!</span>
+            } @else {
+                <svg lucideCopy [size]="14" aria-hidden="true"></svg>
+                <span>Copy</span>
+            }
+        </button>
+    </div>
+}
+<div class="body">
+    <!-- prettier-ignore -->
+    <pre
+        class="code"
+        [class.numbered]="showNumbers()"
+        [id]="uid + '-panel'"
+        [attr.role]="allFiles().length > 1 ? 'tabpanel' : null"
+        [attr.aria-labelledby]="allFiles().length > 1 ? uid + '-tab-' + tab() : null"
+        tabindex="0"
+    ><code>@for (line of lines(); track $index) {<span class="line">@if (showNumbers()) {<span class="num" aria-hidden="true">{{ $index + 1 }}</span>}<span class="text">@for (token of line; track $index) {<span [class]="'t-' + token.kind">{{ token.text }}</span>}</span></span>}</code></pre>
+    @if (inline()) {
+        <button
+            type="button"
+            class="copy copy-inline"
+            [class.done]="copied()"
+            [attr.aria-label]="copied() ? 'Copied' : 'Copy command'"
+            (click)="copy()"
+        >
+            @if (copied()) {
+                <svg lucideCheck [size]="14" aria-hidden="true"></svg>
+            } @else {
+                <svg lucideCopy [size]="14" aria-hidden="true"></svg>
+            }
+        </button>
+    }
+</div>
+<span class="pg-visually-hidden" aria-live="polite">{{
+    copied() ? 'Copied to clipboard' : ''
+}}</span>

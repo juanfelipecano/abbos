@@ -53,9 +53,11 @@ Angular CLI v22 workspace (`angular.json`) with two projects under `projects/`:
 - **`abbos`** (`projectType: library`, prefix `ab`) — built via `@angular/build:ng-packagr`
   into `dist/abbos`. `src/public-api.ts` is the TS public surface; only what's re-exported
   there is importable by consumers.
-- **`playground`** (`projectType: application`, prefix `app`) — demo app, imports the library
-  from `dist/abbos` (TS) and its source Sass via `@use`. Not a Playwright test setup despite
-  past naming confusion.
+- **`playground`** (`projectType: application`, prefix `app`) — the docs/showcase site, imports
+  the library from `dist/abbos` (TS) and its source Sass via `@use`. Not a Playwright test setup
+  despite past naming confusion. Pages are derived from the registry in
+  `src/app/core/docs/docs-registry.ts`; see `projects/playground/docs/` for the structure and
+  the recipes for documenting new components, directives and pipes.
 
 ### Dual TS/Sass public surface
 

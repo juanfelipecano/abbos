@@ -1,0 +1,60 @@
+<div class="head">
+    <nav class="crumbs" aria-label="Breadcrumb">
+        <ol>
+            <li><a routerLink="/">Docs</a></li>
+            <li>
+                <svg lucideChevronRight [size]="16" aria-hidden="true"></svg>
+                <span aria-current="page">{{ info().title }}</span>
+            </li>
+        </ol>
+    </nav>
+    <h1>{{ info().title }}</h1>
+    <p class="desc">{{ info().description }}</p>
+</div>
+
+@if (shipped().length) {
+    <div class="toolbar">
+        <div class="chips" role="group" aria-label="Filter">
+            @for (chip of chips(); track chip.label) {
+                <button
+                    type="button"
+                    class="chip"
+                    [attr.aria-pressed]="filter() === chip.label"
+                    (click)="filter.set(chip.label)"
+                >
+                    {{ chip.label }}<span class="chip-count">{{ chip.count }}</span>
+                </button>
+            }
+        </div>
+        <div class="search">
+            <svg lucideSearch [size]="16" aria-hidden="true"></svg>
+            <input
+                ab-input
+                size="sm"
+                type="search"
+                aria-label="Filter {{ info().title.toLowerCase() }}"
+                placeholder="Filter {{ info().title.toLowerCase() }}"
+                [value]="query()"
+                (input)="onQuery($event)"
+            />
+        </div>
+    </div>
+
+    <p class="pg-visually-hidden" aria-live="polite">{{ visible().length }} shown</p>
+
+    @if (visible().length) {
+        <ul class="grid">
+            @for (entry of visible(); track entry.slug) {
+                <li><app-entry-card [entry]="entry" /></li>
+            }
+        </ul>
+    } @else {
+        <div class="none">
+            <strong>No {{ info().title.toLowerCase() }} match “{{ query() }}”</strong>
+            <span>Try a different name, or clear the filters.</span>
+            <button ab-button variant="soft" size="sm" (click)="clear()">Clear filters</button>
+        </div>
+    }
+} @else {
+    <app-category-empty [category]="category()" [sample]="sample()" />
+}

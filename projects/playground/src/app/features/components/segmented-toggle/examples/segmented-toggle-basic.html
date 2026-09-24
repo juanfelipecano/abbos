@@ -1,0 +1,7 @@
+<ab-segmented-toggle
+    startLabel="Monthly"
+    endLabel="Yearly"
+    ariaLabel="Billing period"
+    [(checked)]="yearly"
+/>
+<span class="status">Billed {{ yearly() ? 'yearly' : 'monthly' }}</span>

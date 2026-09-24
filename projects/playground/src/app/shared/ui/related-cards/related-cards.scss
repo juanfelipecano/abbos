@@ -1,0 +1,63 @@
+:host {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ab-space-3);
+}
+
+@media (max-width: 959px) {
+    :host {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: var(--ab-space-3);
+    padding: 14px;
+    border: 1px solid var(--ab-border);
+    border-radius: 10px;
+    background: var(--ab-surface);
+    color: var(--ab-text);
+    transition: border-color var(--ab-dur-fast) var(--ab-ease-standard);
+
+    &:hover {
+        border-color: var(--ab-border-strong);
+        color: var(--ab-text);
+        text-decoration: none;
+    }
+}
+
+.icon {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--ab-radius);
+    background: var(--ab-surface-2);
+    color: var(--ab-text-secondary);
+}
+
+.text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.title {
+    font: var(--ab-fw-semibold) var(--ab-fs-14) / 1.3 var(--ab-font-sans);
+}
+
+.kind {
+    color: var(--ab-text-secondary);
+    font: var(--ab-fs-12) / 1.3 var(--ab-font-sans);
+}
+
+.arrow {
+    flex: none;
+    color: var(--ab-text-tertiary);
+}

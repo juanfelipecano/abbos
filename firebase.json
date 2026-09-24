@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "jb-abbos-playground",
+    "public": "dist/playground/browser",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

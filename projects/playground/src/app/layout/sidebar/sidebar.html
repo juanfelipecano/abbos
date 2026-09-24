@@ -1,0 +1,67 @@
+<nav aria-label="Documentation">
+    @for (group of groups; track group.label) {
+        @let open = !collapsed().has(group.label);
+        <div class="group">
+            @if (group.collapsible) {
+                <button
+                    type="button"
+                    class="group-head"
+                    [attr.aria-expanded]="open"
+                    [attr.aria-controls]="groupId(group.label)"
+                    (click)="toggle(group.label)"
+                >
+                    <span class="group-label">{{ group.label }}</span>
+                    <span class="count" aria-hidden="true">{{ group.count }}</span>
+                    <svg
+                        class="chevron"
+                        [class.closed]="!open"
+                        lucideChevronDown
+                        [size]="16"
+                        aria-hidden="true"
+                    ></svg>
+                </button>
+            } @else {
+                <h2 class="group-head static" [id]="groupId(group.label) + '-label'">
+                    {{ group.label }}
+                </h2>
+            }
+            @if (open) {
+                <ul
+                    [id]="groupId(group.label)"
+                    [attr.aria-labelledby]="
+                        group.collapsible ? null : groupId(group.label) + '-label'
+                    "
+                    [attr.aria-label]="group.collapsible ? group.label : null"
+                >
+                    @for (item of group.items; track item.label) {
+                        <li>
+                            @if (item.fragment) {
+                                <a
+                                    class="item"
+                                    [routerLink]="item.path"
+                                    [fragment]="item.fragment"
+                                    (click)="navigate.emit()"
+                                    >{{ item.label }}</a
+                                >
+                            } @else {
+                                <a
+                                    class="item"
+                                    [routerLink]="item.path"
+                                    routerLinkActive="current"
+                                    ariaCurrentWhenActive="page"
+                                    [routerLinkActiveOptions]="{ exact: item.exact ?? false }"
+                                    (click)="navigate.emit()"
+                                >
+                                    <span class="item-label">{{ item.label }}</span>
+                                    @if (item.status) {
+                                        <app-status-badge [label]="item.status" />
+                                    }
+                                </a>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+</nav>

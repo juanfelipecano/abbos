@@ -1,0 +1,55 @@
+<article class="page">
+    <app-doc-header [entry]="entry" />
+
+    <app-section-heading
+        anchor="sec-selector"
+        heading="Selector"
+        lead="Add the attribute to any focusable element."
+    />
+    <div class="selector">
+        <div>
+            <div class="caption">Attribute selector</div>
+            <code class="attr">{{ entry.selector }}</code>
+        </div>
+        <div>
+            <div class="caption">Applies to</div>
+            <ul class="hosts">
+                @for (host of hosts; track host) {
+                    <li>
+                        <code>{{ host }}</code>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+    <app-section-heading anchor="sec-import" heading="Import" />
+    <app-code-block inline lang="ts" [code]="importCode" />
+
+    <app-section-heading
+        anchor="sec-example"
+        heading="Example"
+        lead="Applied to a regular input — focus lands in the field as soon as it renders."
+    />
+    <app-autofocus-demo />
+    <app-code-block [files]="files" />
+
+    <app-section-heading anchor="sec-inputs" heading="Inputs" />
+    <app-data-table
+        caption="abAutofocus inputs"
+        [columns]="inputColumns"
+        [rows]="inputs"
+        minWidth="640px"
+    />
+
+    <app-section-heading anchor="sec-a11y" heading="Accessibility" />
+    <app-callout tone="info" heading="Use sparingly">
+        Moving focus on load can disorient screen reader users. Reserve it for dialogs and
+        single-purpose screens where the next step is obvious.
+    </app-callout>
+
+    <app-section-heading anchor="sec-related" heading="Related" />
+    <app-related-cards [slugs]="['input', 'button', 'truncate']" />
+
+    <app-prev-next />
+</article>

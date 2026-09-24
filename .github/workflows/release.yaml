@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+env:
+  NODE_VERSION: '26'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@juanfelipecano'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check tag Matches Library Version
+        run: |
+          version=$(node -p "require('./projects/abbos/package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match projects/abbos/package.json version v$version" >&2
+            exit 1
+          fi
+
+      - name: Check tag Matches Playground Version
+        run: |
+          version=$(node -p "require('./projects/playground/package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match projects/playground/package.json version v$version" >&2
+            exit 1
+          fi
+
+      - name: Check Formatting
+        run: npx prettier --check .
+
+      - name: Build Library
+        run: npx ng build abbos
+
+      - name: Test Library
+        run: npx ng test abbos --watch=false
+
+      - name: Build Playground
+        run: npx ng build playground
+
+      - name: Test Playground
+        run: npx ng test playground --watch=false
+
+      - name: Publish library to GitHub Packages
+        run: npm publish
+        working-directory: dist/abbos
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Deploy Playground to Firebase Hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: firebase deploy --only hosting:jb-abbos-playground

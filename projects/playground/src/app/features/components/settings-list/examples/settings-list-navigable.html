@@ -1,0 +1,22 @@
+<ab-settings-list ariaLabel="Regional settings">
+    <ab-settings-item
+        label="Currency"
+        description="Other currencies allowed per account"
+        value="COP"
+        navigable
+        (activated)="opened.set('Currency')"
+    />
+    <ab-settings-item
+        label="Language & region"
+        value="es-CO"
+        navigable
+        (activated)="opened.set('Language & region')"
+    />
+    <ab-settings-item
+        label="Time zone"
+        value="America/Bogotá"
+        navigable
+        (activated)="opened.set('Time zone')"
+    />
+</ab-settings-list>
+<p class="status" aria-live="polite">Last opened: {{ opened() ?? 'none' }}</p>
