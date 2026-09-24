@@ -89,7 +89,7 @@ InjectionToken ControlSize`. Root cause: at some point after that spec's last re
   guessing at a better default. Worth a design review: either change `provideAbbos`'s
   default `controlShape` globally, or give `AbSwitch` its own component-local default-shape
   override (`input<AbControlShape>('circle')` instead of injecting `CONTROL_SHAPE`).
-- **`AbControlShape`/`AbControlSize` are not part of `@juanbetancur/abbos`'s public TS
+- **`AbControlShape`/`AbControlSize` are not part of `@juanfelipecano/abbos`'s public TS
   surface**: `public-api.ts` re-exports `./lib/components`, `./lib/services`, and
   `./lib/abbos-config-provider`, never `./lib/constants`; no component re-exports these two
   types locally either (unlike `AbButtonVariant`, which `button.ts` both defines and

@@ -5,7 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 An Angular component library (design system, in the spirit of PrimeNG) published as
-`@juanbetancur/abbos` — buttons, form controls, a theming service, and design tokens as CSS
+`@juanfelipecano/abbos` — buttons, form controls, a theming service, and design tokens as CSS
 custom properties — plus a `playground` app that hosts and demos the components as they're
 built. The design source of truth is the sibling `AbbosDesignSystem` React repo (not present
 here); this library is its Angular port.
@@ -67,7 +67,7 @@ The library ships two independent entry points, both rooted at `projects/abbos/s
 - **Sass**: `_index.scss` is the entry point, `@forward`-ing `core` (all `--ab-*` tokens +
   dark theme + accents), `base` (opt-in reset/defaults), and `fonts` from
   `lib/assets/styles/`. Exposed via the `sass` condition in `projects/abbos/package.json`'s
-  `exports`, so consumers do `@use '@juanbetancur/abbos' as abbos`. `ng-package.json` copies
+  `exports`, so consumers do `@use '@juanfelipecano/abbos' as abbos`. `ng-package.json` copies
   every `**/*.scss` under `src/` into `dist/abbos` as an asset, including each component's
   own co-located `.scss` (referenced via `styleUrl`, not a shared partial).
 
