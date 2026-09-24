@@ -15,9 +15,9 @@ export interface AbConfig {
     /** Initial accent. Defaults to 'emerald'. */
     accent?: AbAccent;
     /**
-    * Token overrides applied via AbThemeService.setCustomTokens: keys are
-    * token names WITHOUT the --ab- prefix, e.g. { 'primary': '#0e7490' }.
-    */
+     * Token overrides applied via AbThemeService.setCustomTokens: keys are
+     * token names WITHOUT the --ab- prefix, e.g. { 'primary': '#0e7490' }.
+     */
     tokens?: Record<string, string>;
     /**
      * Default control shape for all components. Defaults to 'round'.
@@ -30,17 +30,17 @@ export interface AbConfig {
 }
 
 /**
-* Configures the Abbos design system for an application (or any environment
-* injector, e.g. a lazy route). Eagerly instantiates AbThemeService so the
-* theme/accent attributes are reflected on <html> before first paint, even if
-* no component injects the service.
-*
-* ```ts
-* export const appConfig: ApplicationConfig = {
-*   providers: [provideAbbos({ theme: 'dark', accent: 'indigo' })],
-* };
-* ```
-*/
+ * Configures the Abbos design system for an application (or any environment
+ * injector, e.g. a lazy route). Eagerly instantiates AbThemeService so the
+ * theme/accent attributes are reflected on <html> before first paint, even if
+ * no component injects the service.
+ *
+ * ```ts
+ * export const appConfig: ApplicationConfig = {
+ *   providers: [provideAbbos({ theme: 'dark', accent: 'indigo' })],
+ * };
+ * ```
+ */
 export function provideAbbos(config: AbConfig = {}): EnvironmentProviders {
     return makeEnvironmentProviders([
         provideEnvironmentInitializer(() => {
@@ -59,6 +59,6 @@ export function provideAbbos(config: AbConfig = {}): EnvironmentProviders {
             }
         }),
         { provide: CONTROL_SHAPE, useValue: config.controlShape ?? 'round' },
-        { provide: CONTROL_SIZE, useValue: config.controlSize ?? 'md' }
+        { provide: CONTROL_SIZE, useValue: config.controlSize ?? 'md' },
     ]);
 }

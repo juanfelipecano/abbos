@@ -6,7 +6,9 @@ import { AbInput } from 'abbos';
     selector: 'app-input-demo',
     imports: [AbInput, ReactiveFormsModule],
     template: `
-        <main style="display: flex; flex-direction: column; gap: 1.5rem; padding: 2rem; max-width: 480px;">
+        <main
+            style="display: flex; flex-direction: column; gap: 1.5rem; padding: 2rem; max-width: 480px;"
+        >
             <h1>AbInput</h1>
 
             <section style="display: flex; flex-direction: column; gap: 0.75rem;">
@@ -43,7 +45,12 @@ import { AbInput } from 'abbos';
 
             <section style="display: flex; flex-direction: column; gap: 0.75rem;">
                 <h2>States</h2>
-                <input ab-input type="text" aria-label="Default state input" placeholder="default" />
+                <input
+                    ab-input
+                    type="text"
+                    aria-label="Default state input"
+                    placeholder="default"
+                />
                 <input
                     ab-input
                     type="text"

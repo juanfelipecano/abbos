@@ -62,7 +62,7 @@ Angular CLI v22 workspace (`angular.json`) with two projects under `projects/`:
 The library ships two independent entry points, both rooted at `projects/abbos/src/`:
 
 - **TS**: `public-api.ts` → `lib/components`, `lib/services`, `lib/abbos-config-provider`.
-  Note `lib/constants` (`AbControlShape`, `AbControlSize`) is *not* re-exported — a consumer
+  Note `lib/constants` (`AbControlShape`, `AbControlSize`) is _not_ re-exported — a consumer
   needing those types externally must currently use an inline literal/`as const` union.
 - **Sass**: `_index.scss` is the entry point, `@forward`-ing `core` (all `--ab-*` tokens +
   dark theme + accents), `base` (opt-in reset/defaults), and `fonts` from
@@ -80,7 +80,7 @@ as a breaking-change boundary along with `public-api.ts`/`_index.scss` themselve
 `AbThemeService` (`lib/services/theme.ts`, a `@Service()` singleton) holds `theme` and
 `accent` as signals and reflects them onto `<html data-ab-theme data-ab-accent>` via
 `effect()` — that's what the `core` Sass mixin's dark/accent overrides key off. Emerald is
-the default accent, so it maps to *no* `data-ab-accent` attribute. `setCustomTokens()` sets
+the default accent, so it maps to _no_ `data-ab-accent` attribute. `setCustomTokens()` sets
 inline `--ab-*` custom properties on `<html>` for runtime overrides.
 
 `provideAbbos(config)` (`lib/abbos-config-provider.ts`) is the app-level entry point: sets
@@ -101,7 +101,7 @@ this point; trust the component source and `PROJECT-CONTEXT.md`).
   plus `abStart`/`abEnd` icon slots and a conditional loading spinner. `variant` is
   `'primary' | 'secondary' | 'soft' | 'outline' | 'ghost' | 'danger'` (default `'primary'`),
   defined and exported by `button.ts` itself (unlike the shared `AbControlShape`/`Size`).
-- **`AbInput`** (`input[ab-input]`) — a `@Component` with an *empty* template (`template: ''`)
+- **`AbInput`** (`input[ab-input]`) — a `@Component` with an _empty_ template (`template: ''`)
   rather than a `@Directive`, because `@Directive` has no `styles`/`styleUrl` support in
   Angular — see ADR-0001's amendment. Renders no label and has no `ControlValueAccessor`;
   value read/write, `disabled`, and validity classes (`ng-invalid`/`ng-touched`) all come for

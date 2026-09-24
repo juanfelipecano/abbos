@@ -8,25 +8,25 @@
 Add supported E2E frameworks to the project using `ng add`:
 
 - **Playwright:**
-  ```shell
-  ng add playwright-ng-schematics
-  ```
+    ```shell
+    ng add playwright-ng-schematics
+    ```
 - **Cypress:**
-  ```shell
-  ng add @cypress/schematic
-  ```
+    ```shell
+    ng add @cypress/schematic
+    ```
 - **Nightwatch:**
-  ```shell
-  ng add @nightwatch/schematics
-  ```
+    ```shell
+    ng add @nightwatch/schematics
+    ```
 - **WebdriverIO:**
-  ```shell
-  ng add @wdio/schematics
-  ```
+    ```shell
+    ng add @wdio/schematics
+    ```
 - **Puppeteer:**
-  ```shell
-  ng add @puppeteer/ng-schematics
-  ```
+    ```shell
+    ng add @puppeteer/ng-schematics
+    ```
 
 Run E2E tests:
 

@@ -1,0 +1,58 @@
+name: Publish
+
+on:
+  push:
+    tags: ['v*']
+
+env:
+  NODE_VERSION: '26'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    name: Publish Package
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          registry-url: https://npm.pkg.github.com
+          scope: '@juanbetancur'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Check tag Matches Library Version
+        run: |
+          version=$(node -p "require('./projects/abbos/package.json').version")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match projects/abbos/package.json version v$version" >&2
+            exit 1
+          fi
+
+      - name: Check Formatting
+        run: npx prettier --check .
+
+      - name: Build Library
+        run: npx ng build abbos
+
+      - name: Test Library
+        run: npx ng test abbos --watch=false
+
+      - name: Test Playground
+        run: npx ng test playground --watch=false
+
+      - name: Publish
+        run: npm publish
+        working-directory: dist/abbos
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -10,7 +10,7 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes),
         provideAbbos({
             accent: 'indigo',
-            theme: 'dark'
-        })
+            theme: 'dark',
+        }),
     ],
 };

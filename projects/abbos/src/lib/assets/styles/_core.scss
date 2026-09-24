@@ -15,22 +15,22 @@
 @use 'tokens/accents';
 
 @mixin core {
-  :root {
-    @include colors.palette;
-    @include colors.light;
-    @include typography.typography;
-    @include spacing.spacing;
-    @include radius.radius;
-    @include shadows.light;
-    @include shadows.motion;
-  }
+    :root {
+        @include colors.palette;
+        @include colors.light;
+        @include typography.typography;
+        @include spacing.spacing;
+        @include radius.radius;
+        @include shadows.light;
+        @include shadows.motion;
+    }
 
-  [data-ab-theme='dark'] {
-    @include colors.dark;
-    @include shadows.dark;
-  }
+    [data-ab-theme='dark'] {
+        @include colors.dark;
+        @include shadows.dark;
+    }
 
-  @include accents.accents;
+    @include accents.accents;
 }
 
 /// Emits a flat map as --ab-* custom properties under the current selector.
@@ -39,7 +39,7 @@
 ///     @include ab.custom-theme((primary: #0e7490, primary-hover: #155e75));
 ///   }
 @mixin custom-theme($tokens) {
-  @each $name, $value in $tokens {
-    --ab-#{$name}: #{$value};
-  }
+    @each $name, $value in $tokens {
+        --ab-#{$name}: #{$value};
+    }
 }

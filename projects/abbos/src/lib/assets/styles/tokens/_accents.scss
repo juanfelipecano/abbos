@@ -5,48 +5,48 @@
 // These override only the --ab-primary-* group; everything else follows.
 // ============================================================
 @mixin accents {
-  [data-ab-accent='indigo'] {
-    --ab-primary: #5b5bd6;
-    --ab-primary-hover: #4a4ac0;
-    --ab-primary-active: #3d3da3;
-    --ab-primary-soft: #ecebfb;
-    --ab-primary-border: #c9c8f2;
-    --ab-primary-contrast: #ffffff;
-  }
+    [data-ab-accent='indigo'] {
+        --ab-primary: #5b5bd6;
+        --ab-primary-hover: #4a4ac0;
+        --ab-primary-active: #3d3da3;
+        --ab-primary-soft: #ecebfb;
+        --ab-primary-border: #c9c8f2;
+        --ab-primary-contrast: #ffffff;
+    }
 
-  [data-ab-accent='blue'] {
-    --ab-primary: #2e6bff;
-    --ab-primary-hover: #1f57e0;
-    --ab-primary-active: #1746ba;
-    --ab-primary-soft: #e7efff;
-    --ab-primary-border: #bcd2ff;
-    --ab-primary-contrast: #ffffff;
-  }
+    [data-ab-accent='blue'] {
+        --ab-primary: #2e6bff;
+        --ab-primary-hover: #1f57e0;
+        --ab-primary-active: #1746ba;
+        --ab-primary-soft: #e7efff;
+        --ab-primary-border: #bcd2ff;
+        --ab-primary-contrast: #ffffff;
+    }
 
-  [data-ab-accent='amber'] {
-    --ab-primary: #e08600;
-    --ab-primary-hover: #c47500;
-    --ab-primary-active: #a06000;
-    --ab-primary-soft: #fdf1d8;
-    --ab-primary-border: #f6d698;
-    --ab-primary-contrast: #2a1c00;
-  }
+    [data-ab-accent='amber'] {
+        --ab-primary: #e08600;
+        --ab-primary-hover: #c47500;
+        --ab-primary-active: #a06000;
+        --ab-primary-soft: #fdf1d8;
+        --ab-primary-border: #f6d698;
+        --ab-primary-contrast: #2a1c00;
+    }
 
-  [data-ab-accent='mono'] {
-    --ab-primary: #171c22;
-    --ab-primary-hover: #2a333c;
-    --ab-primary-active: #0d1116;
-    --ab-primary-soft: #f4f6f8;
-    --ab-primary-border: #d4dbe1;
-    --ab-primary-contrast: #ffffff;
-  }
+    [data-ab-accent='mono'] {
+        --ab-primary: #171c22;
+        --ab-primary-hover: #2a333c;
+        --ab-primary-active: #0d1116;
+        --ab-primary-soft: #f4f6f8;
+        --ab-primary-border: #d4dbe1;
+        --ab-primary-contrast: #ffffff;
+    }
 
-  [data-ab-theme='dark'][data-ab-accent='mono'] {
-    --ab-primary: #eef2f5;
-    --ab-primary-hover: #ffffff;
-    --ab-primary-active: #d4dbe1;
-    --ab-primary-soft: #2a333c;
-    --ab-primary-border: #46525d;
-    --ab-primary-contrast: #0d1116;
-  }
+    [data-ab-theme='dark'][data-ab-accent='mono'] {
+        --ab-primary: #eef2f5;
+        --ab-primary-hover: #ffffff;
+        --ab-primary-active: #d4dbe1;
+        --ab-primary-soft: #2a333c;
+        --ab-primary-border: #46525d;
+        --ab-primary-contrast: #0d1116;
+    }
 }
