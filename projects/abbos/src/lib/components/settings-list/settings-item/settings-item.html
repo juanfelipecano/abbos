@@ -1,0 +1,36 @@
+<ng-template #body>
+    <ng-content select="[abIcon]" />
+    <span class="ab-settings-item-text">
+        <span class="ab-settings-item-label">{{ label() }}</span>
+        @if (description(); as text) {
+            <span class="ab-settings-item-description" [id]="descriptionId">{{ text }}</span>
+        }
+    </span>
+    <span class="ab-settings-item-trailing">
+        @if (value(); as text) {
+            <span class="ab-settings-item-value">{{ text }}</span>
+        }
+
+        <ng-content select="[abControl]" />
+
+        @if (navigable()) {
+            <ab-icon class="ab-settings-item-chevron" [icon]="chevron" tone="neutral" />
+        }
+    </span>
+</ng-template>
+
+@if (navigable()) {
+    <button
+        type="button"
+        class="ab-settings-item-row"
+        [disabled]="disabled()"
+        [attr.aria-describedby]="description() ? descriptionId : null"
+        (click)="activated.emit()"
+    >
+        <ng-container [ngTemplateOutlet]="body" />
+    </button>
+} @else {
+    <div class="ab-settings-item-row">
+        <ng-container [ngTemplateOutlet]="body" />
+    </div>
+}
