@@ -1,0 +1,11 @@
+// ============================================================
+// Abbos — overlay Sass API
+// Structural styles for the CDK overlay container that hosts modal
+// surfaces (bottom sheet). Include once, alongside `core`.
+// Requires @angular/cdk (a peer dependency of the library).
+// ============================================================
+@use '@angular/cdk' as cdk;
+
+@mixin overlay {
+    @include cdk.overlay;
+}

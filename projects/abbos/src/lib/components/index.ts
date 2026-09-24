@@ -8,3 +8,5 @@ export * from './segments/segment';
 export * from './segments/segments';
 export * from './settings-list/settings-item/settings-item';
 export * from './settings-list/settings-list';
+export * from './bottom-sheet/bottom-sheet';
+export * from './bottom-sheet/bottom-sheet-controller';
