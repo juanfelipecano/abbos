@@ -1,0 +1,6 @@
+<ab-segments [value]="type()" (valueChange)="select($event)" ariaLabel="Transaction type">
+    <ab-segment value="expense">Expense</ab-segment>
+    <ab-segment value="income">Income</ab-segment>
+    <ab-segment value="transfer">Transfer</ab-segment>
+</ab-segments>
+<span class="status">?type={{ type() }}</span>
