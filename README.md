@@ -2,6 +2,26 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.4.
 
+## Components
+
+Each component folder has its own README with usage, inputs, and outputs.
+
+| Component                                                                             | Description                                                                                            |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| [Bottom sheet](projects/abbos/src/lib/components/bottom-sheet/README.md)              | Modal or standard surface anchored to the bottom edge, with a controller for opening components in it. |
+| [Button](projects/abbos/src/lib/components/button/README.md)                          | Styled native button with variants, sizes, loading state, and icon slots.                              |
+| [Chip](projects/abbos/src/lib/components/chip/README.md)                              | Static, removable, or selectable label.                                                                |
+| [Date picker](projects/abbos/src/lib/components/form/date-picker/README.md)           | Single-date or range picker with an inline calendar and a trigger directive.                           |
+| [Input](projects/abbos/src/lib/components/form/input/README.md)                       | Styled native text input.                                                                              |
+| [Segmented toggle](projects/abbos/src/lib/components/form/segmented-toggle/README.md) | Two-option toggle with a draggable thumb.                                                              |
+| [Switch](projects/abbos/src/lib/components/form/switch/README.md)                     | On/off toggle usable with Angular forms.                                                               |
+| [Icon](projects/abbos/src/lib/components/icon/README.md)                              | Lucide icon with tone, appearance, and shape.                                                          |
+| [Segments](projects/abbos/src/lib/components/segments/README.md)                      | Segmented control for choosing a value or switching content.                                           |
+| [Settings list](projects/abbos/src/lib/components/settings-list/README.md)            | Card of settings rows with values, controls, and navigation.                                           |
+| [Skeleton](projects/abbos/src/lib/components/skeleton/README.md)                      | Loading placeholder for text, rectangles, and circles.                                                 |
+| [Stepper](projects/abbos/src/lib/components/stepper/README.md)                        | Multi-step progress indicator with optional step content.                                              |
+| [Toast](projects/abbos/src/lib/components/toast/README.md)                            | Non-blocking messages shown through a controller.                                                      |
+
 ## Development server
 
 To start a local development server, run:

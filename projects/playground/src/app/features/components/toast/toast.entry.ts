@@ -30,7 +30,7 @@ export const TOAST_ENTRY: DocEntry = {
     kind: 'Component',
     title: 'Toast',
     description: 'A brief, non-blocking message with an optional action, shown from code.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Display'],
     selector: 'ab-toast',
     importNames: ['AbToast', 'AbToastController'],

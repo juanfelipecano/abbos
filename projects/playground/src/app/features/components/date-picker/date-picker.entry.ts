@@ -17,7 +17,7 @@ export const DATE_PICKER_ENTRY: DocEntry = {
     title: 'Date picker',
     description:
         'Picks a date or a range, inline or in a dropdown that opens from a button, an input or any clickable.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Form'],
     selector: 'ab-date-picker',
     importNames: ['AbDatePicker', 'AbDatePickerTrigger', 'AbCalendar'],

@@ -26,7 +26,7 @@ export const SETTINGS_LIST_ENTRY: DocEntry = {
     kind: 'Component',
     title: 'Settings list',
     description: 'Grouped rows for preferences — each one navigates or hosts an inline control.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Display'],
     selector: 'ab-settings-list, ab-settings-item',
     importNames: ['AbSettingsList', 'AbSettingsItem'],
