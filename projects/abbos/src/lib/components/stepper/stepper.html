@@ -1,0 +1,80 @@
+<ol class="ab-stepper-list" [attr.aria-label]="ariaLabel()">
+    @for (step of steps(); track step; let i = $index; let last = $last) {
+        @let state = stateOf(i);
+        <li
+            class="ab-stepper-step"
+            [class.ab-stepper-step_done]="state === 'done'"
+            [class.ab-stepper-step_current]="state === 'current'"
+            [class.ab-stepper-step_todo]="state === 'todo'"
+            [class.ab-stepper-step_last]="last"
+            [attr.aria-current]="state === 'current' ? 'step' : null"
+        >
+            <div class="ab-stepper-head">
+                @if (interactive() && state === 'done') {
+                    <button
+                        type="button"
+                        class="ab-stepper-marker"
+                        [attr.aria-label]="(step.title() ?? 'Step ' + (i + 1)) + ', completed'"
+                        (click)="select(i)"
+                    >
+                        <ng-container
+                            [ngTemplateOutlet]="markerContent"
+                            [ngTemplateOutletContext]="{ step, state, index: i }"
+                        />
+                    </button>
+                } @else {
+                    <span class="ab-stepper-marker" aria-hidden="true">
+                        <ng-container
+                            [ngTemplateOutlet]="markerContent"
+                            [ngTemplateOutletContext]="{ step, state, index: i }"
+                        />
+                    </span>
+                }
+                @if (!last) {
+                    <span class="ab-stepper-line" aria-hidden="true">
+                        <span class="ab-stepper-fill"></span>
+                    </span>
+                }
+            </div>
+            @if (showLabels()) {
+                <div class="ab-stepper-label">
+                    <span class="ab-stepper-title">{{ step.title() ?? 'Step ' + (i + 1) }}</span>
+                    @if (captionOf(step, state); as caption) {
+                        <span class="ab-stepper-caption">{{ caption }}</span>
+                    }
+                </div>
+            }
+            @if (!(interactive() && state === 'done')) {
+                <span class="ab-stepper-sr">
+                    @if (!showLabels()) {
+                        {{ step.title() ?? 'Step ' + (i + 1) }},
+                    }
+                    {{ statusOf(state) }}
+                </span>
+            }
+        </li>
+    }
+</ol>
+<div class="ab-stepper-sr" aria-live="polite">{{ announcement() }}</div>
+@if (activeContent(); as content) {
+    <div
+        class="ab-stepper-panel"
+        role="group"
+        [id]="uid + '-panel'"
+        [attr.aria-label]="activeStep()?.title() ?? null"
+    >
+        <ng-container [ngTemplateOutlet]="content" />
+    </div>
+}
+
+<ng-template #markerContent let-step="step" let-state="state" let-index="index">
+    @if (marker() === 'text') {
+        <!-- the text marker is a plain dot; the label carries the meaning -->
+    } @else if (marker() === 'icon' && step.icon()) {
+        <svg [lucideIcon]="step.icon()" [size]="18" [strokeWidth]="2"></svg>
+    } @else if (state === 'done') {
+        <svg [lucideIcon]="checkIcon" [size]="18" [strokeWidth]="2"></svg>
+    } @else {
+        <span>{{ index + 1 }}</span>
+    }
+</ng-template>

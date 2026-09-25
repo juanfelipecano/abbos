@@ -1,0 +1,167 @@
+:host {
+    --marker-size: 40px;
+    --line-height: 4px;
+
+    position: relative;
+    display: block;
+
+    &.ab-stepper_text {
+        --marker-size: 16px;
+    }
+
+    .ab-stepper-list {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ab-stepper-step {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        gap: var(--ab-space-3);
+        min-width: 0;
+
+        &.ab-stepper-step_last {
+            flex: 0 0 auto;
+        }
+    }
+
+    .ab-stepper-head {
+        display: flex;
+        align-items: center;
+        gap: var(--ab-space-2);
+    }
+
+    .ab-stepper-marker {
+        display: grid;
+        flex-shrink: 0;
+        place-items: center;
+        box-sizing: border-box;
+        width: var(--marker-size);
+        height: var(--marker-size);
+        padding: 0;
+        border: 2px solid var(--ab-border-strong);
+        border-radius: var(--ab-radius-full);
+        background: var(--ab-bg);
+        color: var(--ab-text-tertiary);
+        font: var(--ab-text-body);
+        font-weight: 700;
+        transition:
+            background-color var(--ab-dur-normal) var(--ab-ease-out),
+            border-color var(--ab-dur-normal) var(--ab-ease-out),
+            color var(--ab-dur-normal) var(--ab-ease-out);
+    }
+
+    &.ab-stepper_text .ab-stepper-marker {
+        background: var(--ab-surface);
+    }
+
+    .ab-stepper-step_current .ab-stepper-marker {
+        border-color: var(--ab-primary);
+        background: color-mix(in srgb, var(--ab-primary) 12%, var(--ab-surface));
+        color: var(--ab-primary);
+    }
+
+    &.ab-stepper_text .ab-stepper-step_current .ab-stepper-marker {
+        background: var(--ab-surface);
+    }
+
+    .ab-stepper-step_done .ab-stepper-marker {
+        border-color: var(--ab-primary);
+        background: var(--ab-primary);
+        color: var(--ab-primary-contrast);
+    }
+
+    button.ab-stepper-marker {
+        cursor: pointer;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+
+        &:hover {
+            background: var(--ab-primary-hover, var(--ab-primary));
+        }
+
+        &:focus-visible {
+            box-shadow: var(--ab-focus-ring);
+        }
+    }
+
+    .ab-stepper-line {
+        flex: 1;
+        height: var(--line-height);
+        margin-right: var(--ab-space-2);
+        border-radius: var(--ab-radius-full);
+        background: var(--ab-border);
+        overflow: hidden;
+    }
+
+    .ab-stepper-fill {
+        display: block;
+        width: 0;
+        height: 100%;
+        background: var(--ab-primary);
+        transition: width var(--ab-dur-normal) var(--ab-ease-out);
+    }
+
+    .ab-stepper-step_done .ab-stepper-fill {
+        width: 100%;
+    }
+
+    .ab-stepper-label {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        padding-right: var(--ab-space-3);
+    }
+
+    .ab-stepper-title {
+        font: var(--ab-text-body);
+        font-weight: 600;
+        color: var(--ab-text);
+    }
+
+    .ab-stepper-step_todo .ab-stepper-title {
+        color: var(--ab-text-secondary);
+    }
+
+    .ab-stepper-caption {
+        font: var(--ab-text-caption);
+        color: var(--ab-text-secondary);
+    }
+
+    .ab-stepper-sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .ab-stepper-panel {
+        margin-top: var(--ab-space-5);
+    }
+}
+
+// Narrow containers: only the current step keeps its label, so the row still fits.
+@media (max-width: 480px) {
+    :host .ab-stepper-step:not(.ab-stepper-step_current) .ab-stepper-label {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :host {
+        .ab-stepper-marker,
+        .ab-stepper-fill {
+            transition: none;
+        }
+    }
+}

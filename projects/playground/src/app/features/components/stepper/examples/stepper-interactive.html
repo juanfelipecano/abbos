@@ -1,0 +1,6 @@
+<ab-stepper [(value)]="step" [interactive]="true" ariaLabel="Checkout">
+    <ab-step value="cart" title="Cart" caption="3 items" />
+    <ab-step value="shipping" title="Shipping" caption="Where to?" />
+    <ab-step value="payment" title="Payment" caption="How to pay?" />
+</ab-stepper>
+<p class="status">Active: {{ step() }}. Completed steps are buttons.</p>

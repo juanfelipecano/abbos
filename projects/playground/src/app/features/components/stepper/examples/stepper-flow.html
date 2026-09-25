@@ -1,0 +1,28 @@
+<ab-stepper #stepper [(value)]="step" [(complete)]="done" ariaLabel="Sign up">
+    <ab-step value="account" title="Account" caption="Email and password" [icon]="user">
+        <ng-template abStepContent>
+            <p>Create your account with an email and a password.</p>
+        </ng-template>
+    </ab-step>
+    <ab-step value="workspace" title="Workspace" caption="Name your workspace" [icon]="briefcase">
+        <ng-template abStepContent>
+            <p>Pick a name for your workspace.</p>
+        </ng-template>
+    </ab-step>
+    <ab-step value="invite" title="Invite" caption="Add your team" [icon]="send">
+        <ng-template abStepContent>
+            <p>Invite the people you work with.</p>
+        </ng-template>
+    </ab-step>
+</ab-stepper>
+@if (done()) {
+    <p>You’re all set.</p>
+}
+<div class="actions">
+    <button ab-button variant="ghost" [disabled]="stepper.isFirst()" (click)="stepper.back()">
+        Back
+    </button>
+    <button ab-button (click)="stepper.next()">
+        {{ done() ? 'Start over' : stepper.isLast() ? 'Finish' : 'Continue' }}
+    </button>
+</div>

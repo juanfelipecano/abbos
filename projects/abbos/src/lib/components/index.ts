@@ -6,6 +6,8 @@ export * from './form/switch/switch';
 export * from './icon/icon';
 export * from './segments/segment';
 export * from './segments/segments';
+export * from './stepper/step';
+export * from './stepper/stepper';
 export * from './settings-list/settings-item/settings-item';
 export * from './settings-list/settings-list';
 export * from './bottom-sheet/bottom-sheet';
