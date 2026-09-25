@@ -15,7 +15,7 @@ export const SEGMENTED_TOGGLE_ENTRY: DocEntry = {
     kind: 'Component',
     title: 'Segmented toggle',
     description: 'Picks one of two options, like Monthly or Yearly, with a sliding thumb.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Form'],
     selector: 'ab-segmented-toggle',
     importNames: ['AbSegmentedToggle'],

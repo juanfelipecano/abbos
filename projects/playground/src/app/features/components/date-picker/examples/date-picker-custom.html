@@ -1,0 +1,4 @@
+<ab-chip [abDatePickerTrigger]="picker">
+    {{ picker.displayText() || 'Any date' }}
+</ab-chip>
+<ab-date-picker #picker [(value)]="date" ariaLabel="Filter by date" />

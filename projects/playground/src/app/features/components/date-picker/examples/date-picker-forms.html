@@ -1,0 +1,5 @@
+<button ab-button variant="outline" [abDatePickerTrigger]="picker">
+    {{ picker.displayText() || 'Pick a date' }}
+</button>
+<ab-date-picker #picker [formControl]="birthday" />
+<span class="status">Form value: {{ birthday.value }}</span>

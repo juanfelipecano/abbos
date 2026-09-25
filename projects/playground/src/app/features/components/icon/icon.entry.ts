@@ -23,7 +23,7 @@ export const ICON_ENTRY: DocEntry = {
     kind: 'Component',
     title: 'Icon',
     description: 'A Lucide icon with tone, appearance and shape — bare or inside a soft badge.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Display'],
     selector: 'ab-icon',
     importNames: ['AbIcon'],

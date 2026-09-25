@@ -1,0 +1,4 @@
+<button ab-button variant="outline" [abDatePickerTrigger]="picker">
+    {{ picker.displayText() || 'Pick a date' }}
+</button>
+<ab-date-picker #picker [(value)]="date" ariaLabel="Choose check-in date" />

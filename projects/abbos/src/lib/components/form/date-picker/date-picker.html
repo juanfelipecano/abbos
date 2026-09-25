@@ -1,0 +1,59 @@
+<ng-template #panel>
+    <div
+        role="dialog"
+        class="ab-date-picker-panel"
+        cdkTrapFocus
+        [id]="panelId"
+        [class.ab-date-picker-panel_above]="placement() === 'above'"
+        [attr.aria-label]="ariaLabel()"
+    >
+        <ab-calendar
+            [value]="calendarValue()"
+            (valueChange)="onCalendarChange($event)"
+            [mode]="mode()"
+            [format]="format()"
+            [locale]="locale()"
+            [min]="min()"
+            [max]="max()"
+            [disabledDates]="disabledDates()"
+            [weekStart]="weekStart()"
+            [shape]="shape()"
+        />
+        <div class="ab-date-picker-footer">
+            <button
+                ab-button
+                type="button"
+                variant="ghost"
+                size="sm"
+                [shape]="shape()"
+                (click)="clear()"
+            >
+                Clear
+            </button>
+            @if (isRange()) {
+                <div class="ab-date-picker-actions">
+                    <button
+                        ab-button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        [shape]="shape()"
+                        (click)="close()"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        ab-button
+                        type="button"
+                        size="sm"
+                        [shape]="shape()"
+                        [disabled]="applyDisabled()"
+                        (click)="apply()"
+                    >
+                        Apply
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</ng-template>

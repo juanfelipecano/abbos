@@ -1,0 +1,31 @@
+// The host renders nothing in place; the panel lives in a CDK overlay.
+:host {
+    display: contents;
+}
+
+.ab-date-picker-panel {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: fit-content;
+    color: var(--ab-text);
+    background: var(--ab-surface);
+    border: 1px solid var(--ab-border);
+    border-radius: var(--ab-radius-lg);
+    box-shadow: var(--ab-shadow-lg);
+    overflow: hidden;
+}
+
+.ab-date-picker-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ab-space-2);
+    padding: var(--ab-space-2) var(--ab-space-3) var(--ab-space-3);
+    border-top: 1px solid var(--ab-border);
+}
+
+.ab-date-picker-actions {
+    display: flex;
+    gap: var(--ab-space-2);
+}

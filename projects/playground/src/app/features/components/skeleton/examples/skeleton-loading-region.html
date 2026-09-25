@@ -1,0 +1,12 @@
+<section [attr.aria-busy]="loading()" aria-labelledby="projects-title">
+    <h3 id="projects-title">Projects</h3>
+    @if (loading()) {
+        <p class="visually-hidden" role="status">Loading projects…</p>
+        <ab-skeleton variant="text" lines="3" />
+    } @else {
+        <p>Atlas, Beacon and Compass.</p>
+    }
+</section>
+<button ab-button variant="outline" size="sm" (click)="loading.set(!loading())">
+    {{ loading() ? 'Finish loading' : 'Reload' }}
+</button>

@@ -1,0 +1,89 @@
+:host {
+    --delay: 150ms;
+    --skeleton-fill: var(--ab-surface-hover);
+    --skeleton-highlight: color-mix(in srgb, var(--ab-text) 6%, transparent);
+
+    &.ab-skeleton {
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: var(--skeleton-w, 100%);
+        // Held back for --delay so quick responses never paint a placeholder.
+        animation: ab-skeleton-in 0s linear var(--delay) backwards;
+
+        &.ab-skeleton_rect {
+            height: var(--skeleton-h, 48px);
+        }
+
+        &.ab-skeleton_circle {
+            --skeleton-w: 40px;
+            flex: none;
+            height: var(--skeleton-h, var(--skeleton-w));
+        }
+    }
+}
+
+.ab-skeleton-bar {
+    display: block;
+    flex: 1;
+    background-color: var(--skeleton-fill);
+    border-radius: var(--ab-radius-control);
+}
+
+:host(.ab-skeleton_text) .ab-skeleton-bar {
+    flex: none;
+    height: var(--skeleton-h, 14px);
+    border-radius: var(--ab-radius-xs);
+
+    &:last-child:not(:first-child) {
+        width: 60%;
+    }
+}
+
+:host(.ab-skeleton_circle) .ab-skeleton-bar {
+    border-radius: var(--ab-radius-full);
+}
+
+:host(.ab-skeleton_pulse) .ab-skeleton-bar {
+    animation: ab-skeleton-pulse 1.6s ease-in-out infinite;
+}
+
+:host(.ab-skeleton_shimmer) .ab-skeleton-bar {
+    background-image: linear-gradient(
+        90deg,
+        transparent 0,
+        var(--skeleton-highlight) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    background-repeat: no-repeat;
+    animation: ab-skeleton-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes ab-skeleton-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes ab-skeleton-pulse {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes ab-skeleton-shimmer {
+    from {
+        background-position: 200% 0;
+    }
+    to {
+        background-position: -200% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ab-skeleton-bar {
+        animation: none !important;
+    }
+}

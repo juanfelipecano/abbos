@@ -3,6 +3,11 @@ REMOVE = rm -rf
 init:
 	npm install
 
+dev:
+	$(MAKE) build-abbos
+	@echo "Starting development server..."
+	npm run start:host
+
 serve:
 	$(REMOVE) .angular
 	npm run start:host
@@ -14,8 +19,11 @@ playground:
 	npm run dev
 
 build-abbos:
+	@echo "Removing .angular folder..."
 	$(REMOVE) .angular
+	@echo "Building abbos..."
 	npm run build:abbos
+	@echo "Publishing abbos to yalc..."
 	npm run abbos:yalc:publish
 
 clean:

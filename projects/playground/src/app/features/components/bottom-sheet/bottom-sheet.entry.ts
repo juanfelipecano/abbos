@@ -32,7 +32,7 @@ export const BOTTOM_SHEET_ENTRY: DocEntry = {
     kind: 'Component',
     title: 'Bottom sheet',
     description: 'A surface anchored to the bottom edge for secondary actions and content.',
-    status: 'Beta',
+    status: 'New',
     tags: ['Display'],
     selector: 'ab-bottom-sheet',
     importNames: ['AbBottomSheet', 'AbSheetFooter', 'AbBottomSheetController'],

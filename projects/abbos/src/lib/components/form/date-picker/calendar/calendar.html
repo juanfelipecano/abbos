@@ -1,0 +1,96 @@
+<div class="ab-calendar-header">
+    <button type="button" class="ab-calendar-title" (click)="toggleView()">
+        <span aria-live="polite">{{ title() }}</span>
+        <ab-icon
+            class="ab-calendar-chevron"
+            [class.ab-calendar-chevron_open]="view() !== 'day'"
+            [icon]="icons.chevron"
+            tone="neutral"
+        />
+    </button>
+    <div class="ab-calendar-nav">
+        <button
+            type="button"
+            class="ab-calendar-step"
+            [attr.aria-label]="prevLabel()"
+            (click)="step(-1)"
+        >
+            <ab-icon [icon]="icons.prev" tone="neutral" />
+        </button>
+        <button
+            type="button"
+            class="ab-calendar-step"
+            [attr.aria-label]="nextLabel()"
+            (click)="step(1)"
+        >
+            <ab-icon [icon]="icons.next" tone="neutral" />
+        </button>
+    </div>
+</div>
+
+@if (view() === 'day') {
+    <div
+        role="grid"
+        class="ab-calendar-grid"
+        [attr.aria-label]="title()"
+        (keydown)="onGridKeydown($event)"
+        (mouseleave)="hover.set(null)"
+    >
+        <div role="row" class="ab-calendar-row">
+            @for (day of weekdays(); track day.long) {
+                <span role="columnheader" class="ab-calendar-weekday">
+                    <abbr [attr.title]="day.long">{{ day.short }}</abbr>
+                </span>
+            }
+        </div>
+        @for (week of weeks(); track $index) {
+            <div role="row" class="ab-calendar-row">
+                @for (cell of week; track cell.date.getTime()) {
+                    <div
+                        role="gridcell"
+                        class="ab-calendar-cell"
+                        [class.ab-calendar-cell_band-full]="cell.band === 'full'"
+                        [class.ab-calendar-cell_band-start]="cell.band === 'start'"
+                        [class.ab-calendar-cell_band-end]="cell.band === 'end'"
+                        [attr.aria-selected]="cell.inMonth ? cell.selected : null"
+                    >
+                        @if (cell.inMonth) {
+                            <button
+                                type="button"
+                                class="ab-calendar-day"
+                                [class.ab-calendar-day_edge]="cell.edge"
+                                [class.ab-calendar-day_today]="cell.today"
+                                [class.ab-calendar-day_preview]="cell.preview"
+                                [class.ab-calendar-day_disabled]="cell.disabled"
+                                [attr.tabindex]="cell.focusable ? 0 : -1"
+                                [attr.aria-label]="cell.ariaLabel"
+                                [attr.aria-current]="cell.today ? 'date' : null"
+                                [attr.aria-disabled]="cell.disabled || null"
+                                (click)="pick(cell.date)"
+                                (mouseenter)="onDayEnter(cell.date)"
+                            >
+                                {{ cell.label }}
+                            </button>
+                        }
+                    </div>
+                }
+            </div>
+        }
+    </div>
+} @else {
+    <div role="listbox" class="ab-calendar-options" [attr.aria-label]="optionsLabel()">
+        @for (option of view() === 'month' ? months() : years(); track option.value) {
+            <button
+                type="button"
+                role="option"
+                class="ab-calendar-option"
+                [class.ab-calendar-option_selected]="option.selected"
+                [class.ab-calendar-option_current]="option.current"
+                [attr.aria-selected]="option.selected"
+                (click)="view() === 'month' ? pickMonth(option.value) : pickYear(option.value)"
+            >
+                {{ option.label }}
+            </button>
+        }
+    </div>
+}

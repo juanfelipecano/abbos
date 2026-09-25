@@ -1,0 +1,8 @@
+<div class="field">
+    <label for="arrival">Arrival</label>
+    <input ab-input id="arrival" [abDatePickerTrigger]="picker" aria-describedby="arrival-hint" />
+    <span id="arrival-hint" class="hint">
+        Click or press Arrow Down to open the calendar, or just type a date.
+    </span>
+</div>
+<ab-date-picker #picker [(value)]="date" ariaLabel="Choose arrival date" />
