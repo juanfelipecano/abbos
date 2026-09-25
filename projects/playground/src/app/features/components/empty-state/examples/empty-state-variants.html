@@ -1,0 +1,30 @@
+<ab-empty-state
+    title="Create your first project"
+    description="Projects keep your files, tasks and people in one place."
+>
+    <ab-icon abMedia [icon]="folderPlus" tone="primary" appearance="soft" size="lg" />
+    <button ab-button abActions>New project</button>
+    <button ab-button abActions variant="ghost">Import projects</button>
+</ab-empty-state>
+<ab-empty-state
+    title="No results for “quarterly”"
+    description="Check the spelling or try a broader term."
+>
+    <ab-icon abMedia [icon]="searchX" tone="neutral" appearance="soft" size="lg" />
+    <button ab-button abActions variant="outline">Clear search</button>
+    <button ab-button abActions variant="ghost">Reset filters</button>
+</ab-empty-state>
+<ab-empty-state
+    title="You’re all caught up"
+    description="New requests show up here as soon as someone shares a project."
+>
+    <ab-icon abMedia [icon]="checkCheck" tone="success" appearance="soft" size="lg" />
+    <button ab-button abActions variant="ghost">View archive</button>
+</ab-empty-state>
+<ab-empty-state
+    title="We couldn’t load your projects"
+    description="Check your connection and try again. Your work is saved."
+>
+    <ab-icon abMedia [icon]="cloudOff" tone="danger" appearance="soft" size="lg" />
+    <button ab-button abActions>Try again</button>
+</ab-empty-state>
