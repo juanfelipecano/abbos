@@ -1,0 +1,17 @@
+@if (icon(); as severityIcon) {
+    <svg class="ab-toast-icon" aria-hidden="true" [lucideIcon]="severityIcon" [size]="20"></svg>
+}
+<span class="ab-toast-message">{{ message() }}</span>
+@if (actionLabel(); as label) {
+    <button type="button" class="ab-toast-action" (click)="action.emit()">{{ label }}</button>
+}
+@if (dismissible()) {
+    <button
+        type="button"
+        class="ab-toast-close"
+        [attr.aria-label]="closeLabel()"
+        (click)="dismissed.emit()"
+    >
+        <svg aria-hidden="true" [lucideIcon]="closeIcon" [size]="18"></svg>
+    </button>
+}

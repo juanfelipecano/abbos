@@ -1,0 +1,99 @@
+:host {
+    display: contents;
+}
+
+// One fixed container per position, so a position never blocks another.
+.ab-toast-container {
+    --ab-toast-shift: 8px; // slide distance of the enter/exit transition
+    --toast-peek: 8px; // how much of each older toast shows in a stacked pile
+    --toast-dir: -1; // which way the pile fans: up from the bottom, down from the top
+
+    position: fixed;
+    inset-inline: 0;
+    z-index: 1100; // above the CDK overlay container (1000), so above a modal bottom sheet
+    box-sizing: border-box;
+    display: flex;
+    padding-inline: var(--ab-space-4);
+    pointer-events: none;
+
+    &[data-position^='top'] {
+        --ab-toast-shift: -8px;
+        --toast-dir: 1;
+        top: 0;
+        padding-top: calc(
+            var(--ab-toast-offset, var(--ab-space-4)) + env(safe-area-inset-top, 0px)
+        );
+    }
+
+    &[data-position^='bottom'] {
+        bottom: 0;
+        padding-bottom: calc(
+            var(--ab-toast-offset, var(--ab-space-4)) + env(safe-area-inset-bottom, 0px)
+        );
+    }
+
+    &[data-position='center'] {
+        --ab-toast-shift: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &[data-position$='left'] {
+        justify-content: flex-start;
+    }
+
+    &[data-position$='center'] {
+        justify-content: center;
+    }
+
+    &[data-position$='right'] {
+        justify-content: flex-end;
+    }
+}
+
+// The hover/focus target: it hugs the toasts, so the page stays clickable around them.
+.ab-toast-column {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: min(100%, 560px);
+    pointer-events: auto;
+}
+
+.ab-toast-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--ab-space-2);
+
+    &_filled + &_filled {
+        margin-top: var(--ab-space-2);
+    }
+}
+
+.ab-toast-item {
+    transition: transform var(--ab-dur-normal, 200ms) var(--ab-ease-standard, ease);
+}
+
+// A stacked pile that is not being explored: every toast shares one cell, the newest in front,
+// older ones peeking out behind it.
+.ab-toast-container[data-mode='stacked']:not(.ab-toast-container_expanded) {
+    .ab-toast-stack {
+        display: grid;
+    }
+
+    .ab-toast-item {
+        --depth: var(--ab-toast-depth, 0);
+
+        grid-area: 1 / 1;
+        z-index: calc(10 - var(--depth));
+        transform-origin: center;
+        transform: translateY(calc(var(--depth) * var(--toast-peek) * var(--toast-dir)))
+            scale(calc(1 - var(--depth) * 0.05));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ab-toast-item {
+        transition: none;
+    }
+}
