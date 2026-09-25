@@ -13,5 +13,6 @@ export * from './settings-list/settings-item/settings-item';
 export * from './settings-list/settings-list';
 export * from './bottom-sheet/bottom-sheet';
 export * from './bottom-sheet/bottom-sheet-controller';
+export * from './skeleton/skeleton';
 export * from './toast/toast';
 export * from './toast/toast-controller';

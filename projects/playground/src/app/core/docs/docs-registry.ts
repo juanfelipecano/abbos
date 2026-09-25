@@ -1,5 +1,6 @@
 import { BUTTON_ENTRY } from '../../features/components/button/button.entry';
 import { TOAST_ENTRY } from '../../features/components/toast/toast.entry';
+import { SKELETON_ENTRY } from '../../features/components/skeleton/skeleton.entry';
 import { BOTTOM_SHEET_ENTRY } from '../../features/components/bottom-sheet/bottom-sheet.entry';
 import { EMPTY_STATE_ENTRY } from '../../features/components/empty-state/empty-state.entry';
 import { CHIP_ENTRY } from '../../features/components/chip/chip.entry';
@@ -30,6 +31,7 @@ export const DOC_ENTRIES: readonly DocEntry[] = [
     EMPTY_STATE_ENTRY,
     BOTTOM_SHEET_ENTRY,
     TOAST_ENTRY,
+    SKELETON_ENTRY,
     ICON_ENTRY,
     SETTINGS_LIST_ENTRY,
     AUTOFOCUS_ENTRY,
