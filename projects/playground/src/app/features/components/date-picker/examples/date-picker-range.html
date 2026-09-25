@@ -1,0 +1,4 @@
+<button ab-button variant="outline" [abDatePickerTrigger]="picker">
+    {{ picker.displayText() || 'Select dates' }}
+</button>
+<ab-date-picker #picker mode="range" [(value)]="stay" ariaLabel="Choose stay dates" />

@@ -1,0 +1,10 @@
+<div class="field">
+    <label for="iso">ISO, yyyy-MM-dd</label>
+    <input ab-input id="iso" [abDatePickerTrigger]="iso" />
+    <ab-date-picker #iso format="yyyy-MM-dd" [(value)]="isoDate" />
+</div>
+<div class="field">
+    <label for="long">Long, d MMM yyyy</label>
+    <input ab-input id="long" [abDatePickerTrigger]="long" />
+    <ab-date-picker #long format="d MMM yyyy" [(value)]="longDate" />
+</div>

@@ -10,6 +10,7 @@ import { SEGMENTS_ENTRY } from '../../features/components/segments/segments.entr
 import { SEGMENTED_TOGGLE_ENTRY } from '../../features/components/segmented-toggle/segmented-toggle.entry';
 import { SETTINGS_LIST_ENTRY } from '../../features/components/settings-list/settings-list.entry';
 import { STEPPER_ENTRY } from '../../features/components/stepper/stepper.entry';
+import { DATE_PICKER_ENTRY } from '../../features/components/date-picker/date-picker.entry';
 import { SWITCH_ENTRY } from '../../features/components/switch/switch.entry';
 import { AUTOFOCUS_ENTRY } from '../../features/directives/autofocus/autofocus.entry';
 import { TRUNCATE_ENTRY } from '../../features/pipes/truncate/truncate.entry';
@@ -23,6 +24,7 @@ import { DocCategoryId, DocEntry } from './doc.model';
 export const DOC_ENTRIES: readonly DocEntry[] = [
     BUTTON_ENTRY,
     INPUT_ENTRY,
+    DATE_PICKER_ENTRY,
     SWITCH_ENTRY,
     SEGMENTED_TOGGLE_ENTRY,
     SEGMENTS_ENTRY,

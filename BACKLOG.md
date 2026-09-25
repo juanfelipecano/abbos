@@ -117,3 +117,19 @@ InjectionToken ControlSize`. Root cause: at some point after that spec's last re
 - **`AbIconButton`**: documented in `CLAUDE.md`, present in the reference implementation
   (`abbos.old`), still not built. Out of scope for the `ab-switch` run, which only covered
   `AbSwitch`.
+
+## From `specs/date-picker/` (2026-09-25)
+
+- **Visual and AXE verification not done**: the date picker was verified by unit tests and builds
+  only. It has not been opened in a browser, and AXE was not run (see the automated a11y item
+  above). Overlay stacking, the focus trap and the flip in a real viewport need a manual pass in
+  the playground, in light and dark and with each accent.
+- **UI strings are English constants**: "Clear", "Cancel", "Apply", "Choose date",
+  "Previous month", "today", "unavailable". Needs a labels input or provider before the library
+  is localised. Month and weekday names already follow `locale`.
+- **No `AbIconButton`**: the design uses an icon button for the calendar steps. The calendar uses
+  its own styled buttons instead. Replace them once `AbIconButton` exists.
+- **Playground initial bundle** was already over budget (644 kB against 500 kB) and grew by about
+  30 kB with the date picker thumbnail. Worth checking what the thumbnail pulls into `main`.
+- **Design file and `AbCalendar` disagree on `min`**: the design demos disable past dates in the
+  dropdown only. The component has no default `min`, by design.
