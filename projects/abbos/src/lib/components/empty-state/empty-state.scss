@@ -1,0 +1,74 @@
+:host {
+    --title-fs: var(--ab-fs-18);
+    --description-fs: var(--ab-fs-14);
+    --gap: 20px;
+
+    &.ab-empty-state {
+        container-type: inline-size;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--gap);
+        width: 100%;
+        text-align: center;
+        color: var(--ab-text);
+        font-family: var(--ab-font-sans);
+
+        &.ab-empty-state_sm {
+            --title-fs: var(--ab-fs-16);
+            --gap: 16px;
+        }
+    }
+}
+
+.ab-empty-state-media {
+    display: flex;
+    justify-content: center;
+}
+
+.ab-empty-state-media:empty,
+.ab-empty-state-actions:empty {
+    display: none;
+}
+
+.ab-empty-state-body {
+    display: flex;
+    max-width: 380px;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.ab-empty-state-title {
+    font-size: var(--title-fs);
+    font-weight: var(--ab-fw-bold);
+    letter-spacing: -0.01em;
+}
+
+.ab-empty-state-description {
+    margin: 0;
+    font-size: var(--description-fs);
+    line-height: var(--ab-lh-normal);
+    color: var(--ab-text-secondary);
+    text-wrap: pretty;
+}
+
+.ab-empty-state-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+}
+
+// Narrow containers (phones): full-width stacked actions, as in the mobile design.
+@container (max-width: 420px) {
+    .ab-empty-state-actions {
+        flex-direction: column;
+        align-self: stretch;
+        margin-top: 4px;
+
+        > * {
+            width: 100%;
+        }
+    }
+}

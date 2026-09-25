@@ -1,0 +1,11 @@
+<div class="ab-empty-state-media"><ng-content select="[abMedia]" /></div>
+<div class="ab-empty-state-body">
+    <div class="ab-empty-state-title" role="heading" [attr.aria-level]="headingLevel()">
+        {{ title() }}
+    </div>
+    @if (description()) {
+        <p class="ab-empty-state-description">{{ description() }}</p>
+    }
+    <ng-content />
+</div>
+<div class="ab-empty-state-actions"><ng-content select="[abActions]" /></div>
